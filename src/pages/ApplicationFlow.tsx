@@ -2,13 +2,10 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight, ArrowLeft, Home, MapPin, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import OCRStep from '../components/OCRStep';
-
 const steps = [
   { id: 1, title: '選擇社區與方案' },
   { id: 2, title: '填寫資訊' },
-  { id: 3, title: '身分驗證' },
-  { id: 4, title: '完成申請' }
+  { id: 3, title: '完成申請' }
 ];
 
 const taiwanCities = [
@@ -100,7 +97,7 @@ export default function ApplicationFlow() {
       }
       setErrorMsg('');
     }
-    if (currentStep < 4) setCurrentStep(currentStep + 1);
+    if (currentStep < 3) setCurrentStep(currentStep + 1);
   };
 
   const handlePrev = () => {
@@ -113,7 +110,6 @@ export default function ApplicationFlow() {
   if (currentStep === 1) visualStep = 1;
   if (currentStep === 2) visualStep = 2;
   if (currentStep === 3) visualStep = 3;
-  if (currentStep === 4) visualStep = 4;
 
   return (
     <div className="flex-1 bg-gray-50 flex flex-col pt-10 pb-20">
@@ -475,28 +471,6 @@ export default function ApplicationFlow() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="w-full flex-1 flex flex-col pt-8"
-                >
-                  <OCRStep 
-                    formData={{
-                      name: formData.contactName,
-                      idNumber: formData.idNumber,
-                      birthday: formData.birthday,
-                      address: formData.installAddress
-                    }}
-                    onComplete={() => {
-                      handleNext();
-                    }} 
-                  />
-                </motion.div>
-              )}
-
-              {currentStep === 4 && (
-                <motion.div
-                  key="step4"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
                   className="w-full flex flex-col items-center max-w-2xl mx-auto"
                 >
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">確認申請資料</h2>
@@ -617,8 +591,7 @@ export default function ApplicationFlow() {
                     <ChevronRight size={18} />
                   </button>
                 )}
-                {/* 步驟 3 為 OCR 身份驗證，依賴 OCRStep 內部按鈕進行下一步 */}
-                {currentStep === 4 && (
+                {currentStep === 3 && (
                   <button 
                     onClick={() => setShowSuccessModal(true)}
                     className="flex items-center justify-center gap-2 px-8 py-3 bg-shrek-600 hover:bg-shrek-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
