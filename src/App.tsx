@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import ApplicationFlow from './pages/ApplicationFlow';
 
@@ -16,11 +16,11 @@ function App() {
               史瑞克社區網路
             </div>
             <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-              <a href="/" className="hover:text-shrek-600 transition-colors">首頁</a>
+              <Link to="/" className="hover:text-shrek-600 transition-colors">首頁</Link>
             </nav>
-            <a href="/apply" className="px-5 py-2.5 bg-shrek-600 hover:bg-shrek-700 text-white text-sm font-medium rounded-full shadow-lg shadow-shrek-500/30 transition-all hover:scale-105 active:scale-95">
+            <Link to="/apply" className="px-5 py-2.5 bg-shrek-600 hover:bg-shrek-700 text-white text-sm font-medium rounded-full shadow-lg shadow-shrek-500/30 transition-all hover:scale-105 active:scale-95">
               線上申辦
-            </a>
+            </Link>
           </div>
         </header>
 
