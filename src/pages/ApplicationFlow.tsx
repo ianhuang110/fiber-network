@@ -1,0 +1,744 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check, ChevronRight, ArrowLeft, Home, MapPin, ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import OCRStep from '../components/OCRStep';
+
+const steps = [
+  { id: 1, title: '選擇社區與方案' },
+  { id: 2, title: '填寫資訊' },
+  { id: 3, title: '身分驗證' },
+  { id: 4, title: '完成申請' }
+];
+
+const taiwanCities = [
+  "臺北市", "新北市", "基隆市", "桃園市", "新竹縣", "新竹市", "苗栗縣", 
+  "臺中市", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "嘉義市", "臺南市", 
+  "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"
+];
+
+const taiwanDistricts: Record<string, string[]> = {
+  "臺北市": ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
+  "新北市": ["板橋區", "三重區", "中和區", "永和區", "新莊區", "新店區", "土城區", "蘆洲區", "樹林區", "汐止區", "鶯歌區", "三峽區", "淡水區", "瑞芳區", "五股區", "泰山區", "林口區", "深坑區", "石碇區", "坪林區", "三芝區", "石門區", "八里區", "平溪區", "雙溪區", "貢寮區", "金山區", "萬里區", "烏來區"],
+  "基隆市": ["仁愛區", "信義區", "中正區", "中山區", "安樂區", "暖暖區", "七堵區"],
+  "桃園市": ["桃園區", "中壢區", "大溪區", "楊梅區", "蘆竹區", "大園區", "龜山區", "八德區", "龍潭區", "平鎮區", "新屋區", "觀音區", "復興區"],
+  "新竹縣": ["竹北市", "竹東鎮", "新埔鎮", "關西鎮", "湖口鄉", "新豐鄉", "芎林鄉", "橫山鄉", "北埔鄉", "寶山鄉", "峨眉鄉", "尖石鄉", "五峰鄉"],
+  "新竹市": ["東區", "北區", "香山區"],
+  "苗栗縣": ["苗栗市", "苑裡鎮", "通霄鎮", "竹南鎮", "頭份市", "後龍鎮", "卓蘭鎮", "大湖鄉", "公館鄉", "銅鑼鄉", "南庄鄉", "頭屋鄉", "三義鄉", "西湖鄉", "造橋鄉", "三灣鄉", "獅潭鄉", "泰安鄉"],
+  "臺中市": ["中區", "東區", "南區", "西區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "東勢區", "大甲區", "清水區", "沙鹿區", "梧棲區", "后里區", "神岡區", "潭子區", "大雅區", "新社區", "石岡區", "外埔區", "大安區", "烏日區", "大肚區", "龍井區", "霧峰區", "太平區", "大里區", "和平區"],
+  "彰化縣": ["彰化市", "鹿港鎮", "和美鎮", "線西鄉", "伸港鄉", "福興鄉", "秀水鄉", "花壇鄉", "芬園鄉", "員林市", "溪湖鎮", "田中鎮", "大村鄉", "埔鹽鄉", "埔心鄉", "永靖鄉", "社頭鄉", "二水鄉", "北斗鎮", "二林鎮", "田尾鄉", "埤頭鄉", "芳苑鄉", "大城鄉", "竹塘鄉", "溪州鄉"],
+  "南投縣": ["南投市", "埔里鎮", "草屯鎮", "竹山鎮", "集集鎮", "名間鄉", "鹿谷鄉", "中寮鄉", "魚池鄉", "國姓鄉", "水里鄉", "信義鄉", "仁愛鄉"],
+  "雲林縣": ["斗六市", "斗南鎮", "虎尾鎮", "西螺鎮", "土庫鎮", "北港鎮", "古坑鄉", "大埤鄉", "莿桐鄉", "林內鄉", "二崙鄉", "崙背鄉", "麥寮鄉", "東勢鄉", "褒忠鄉", "臺西鄉", "元長鄉", "四湖鄉", "口湖鄉", "水林鄉"],
+  "嘉義縣": ["太保市", "朴子市", "布袋鎮", "大林鎮", "民雄鄉", "溪口鄉", "新港鄉", "六腳鄉", "東石鄉", "義竹鄉", "鹿草鄉", "水上鄉", "中埔鄉", "竹崎鄉", "梅山鄉", "番路鄉", "大埔鄉", "阿里山鄉"],
+  "嘉義市": ["東區", "西區"],
+  "臺南市": ["新營區", "鹽水區", "白河區", "柳營區", "後壁區", "東山區", "麻豆區", "下營區", "六甲區", "官田區", "大內區", "佳里區", "學甲區", "西港區", "七股區", "將軍區", "北門區", "新化區", "善化區", "新市區", "安定區", "山上區", "玉井區", "楠西區", "南化區", "左鎮區", "仁德區", "歸仁區", "關廟區", "龍崎區", "永康區", "東區", "南區", "北區", "安南區", "安平區", "中西區"],
+  "高雄市": ["鹽埕區", "鼓山區", "左營區", "楠梓區", "三民區", "新興區", "前金區", "苓雅區", "前鎮區", "旗津區", "小港區", "鳳山區", "林園區", "大寮區", "大樹區", "大社區", "仁武區", "鳥松區", "岡山區", "橋頭區", "燕巢區", "田寮區", "阿蓮區", "路竹區", "湖內區", "茄萣區", "永安區", "彌陀區", "梓官區", "旗山區", "美濃區", "六龜區", "甲仙區", "杉林區", "內門區", "茂林區", "桃源區", "那瑪夏區"],
+  "屏東縣": ["屏東市", "潮州鎮", "東港鎮", "恆春鎮", "萬丹鄉", "長治鄉", "麟洛鄉", "九如鄉", "里港鄉", "鹽埔鄉", "高樹鄉", "萬巒鄉", "內埔鄉", "竹田鄉", "新埤鄉", "枋寮鄉", "新園鄉", "崁頂鄉", "林邊鄉", "南州鄉", "佳冬鄉", "琉球鄉", "車城鄉", "滿州鄉", "枋山鄉", "三地門鄉", "霧臺鄉", "瑪家鄉", "泰武鄉", "來義鄉", "春日鄉", "獅子鄉", "牡丹鄉"],
+  "宜蘭縣": ["宜蘭市", "羅東鎮", "蘇澳鎮", "頭城鎮", "礁溪鄉", "壯圍鄉", "員山鄉", "冬山鄉", "五結鄉", "三星鄉", "大同鄉", "南澳鄉"],
+  "花蓮縣": ["花蓮市", "鳳林鎮", "玉里鎮", "新城鄉", "吉安鄉", "壽豐鄉", "光復鄉", "豐濱鄉", "瑞穗鄉", "富里鄉", "秀林鄉", "萬榮鄉", "卓溪鄉"],
+  "臺東縣": ["臺東市", "成功鎮", "關山鎮", "卑南鄉", "大武鄉", "太麻里鄉", "東河鄉", "長濱鄉", "鹿野鄉", "池上鄉", "綠島鄉", "延平鄉", "海端鄉", "達仁鄉", "金峰鄉", "蘭嶼鄉"],
+  "澎湖縣": ["馬公市", "湖西鄉", "白沙鄉", "西嶼鄉", "望安鄉", "七美鄉"],
+  "金門縣": ["金城鎮", "金湖鎮", "金沙鎮", "金寧鄉", "烈嶼鄉", "烏坵鄉"],
+  "連江縣": ["南竿鄉", "北竿鄉", "莒光鄉", "東引鄉"]
+};
+
+const planPrices: Record<string, string> = {
+  '300M-24M': '8,900',
+  '300M-14M': '6,000',
+  '300M-12M': '5,400'
+};
+
+export default function ApplicationFlow() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({ 
+    city: '', district: '', street: '', community: '', plan: '',
+    contactName: '', idNumber: '', birthday: '', mobile: '', email: '', installAddress: '',
+    remark: '', referrer: '', agreePrivacy: false, agreeTerms: false
+  });
+  const [errorMsg, setErrorMsg] = useState('');
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    if (currentStep === 1) {
+      if (!formData.city || !formData.district || !formData.street || !formData.community) {
+        setErrorMsg('所有社區資訊請務必選擇，才能進行下一步');
+        return;
+      }
+      if (!formData.plan) {
+        setErrorMsg('請選擇欲申請的網路方案，才能進行下一步');
+        return;
+      }
+      setErrorMsg('');
+    }
+    if (currentStep === 2) {
+      if (!formData.contactName.trim() || !formData.idNumber.trim() || !formData.birthday.trim() || !formData.mobile.trim() || !formData.email.trim() || !formData.installAddress.trim()) {
+        setErrorMsg('聯絡資訊請務必填寫完整，才能進行下一步');
+        return;
+      }
+      if (!/^[A-Z][1-2]\d{8}$/.test(formData.idNumber)) {
+        setErrorMsg('身分證字號格式錯誤，請重新輸入');
+        return;
+      }
+      if (!/^\d{4}\/\d{2}\/\d{2}$/.test(formData.birthday)) {
+        setErrorMsg('出生年月日格式錯誤（請輸入 YYYY/MM/DD），請重新輸入');
+        return;
+      }
+      if (!/^09\d{8}$/.test(formData.mobile)) {
+        setErrorMsg('手機號碼格式錯誤（請輸入 09 開頭 10 碼數字），請重新輸入');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        setErrorMsg('Email 格式錯誤，請重新輸入');
+        return;
+      }
+      if (!formData.agreePrivacy || !formData.agreeTerms) {
+        setErrorMsg('請詳細閱讀並勾選同意相關條款與說明，才能進行下一步唷！');
+        return;
+      }
+      setErrorMsg('');
+    }
+    if (currentStep < 4) setCurrentStep(currentStep + 1);
+  };
+
+  const handlePrev = () => {
+    setErrorMsg('');
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    else navigate('/');
+  };
+
+  let visualStep = 1;
+  if (currentStep === 1) visualStep = 1;
+  if (currentStep === 2) visualStep = 2;
+  if (currentStep === 3) visualStep = 3;
+  if (currentStep === 4) visualStep = 4;
+
+  return (
+    <div className="flex-1 bg-gray-50 flex flex-col pt-10 pb-20">
+      <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+        
+        {/* Header / Back button */}
+        <button 
+          onClick={handlePrev}
+          className="flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-8 transition-colors"
+        >
+          <ArrowLeft size={20} />
+          返回
+        </button>
+
+        {/* Custom Progress Bar */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between relative">
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-200 -z-10 rounded-full"></div>
+            <div 
+              className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-shrek-500 -z-10 rounded-full transition-all duration-500 ease-in-out"
+              style={{ width: `${((visualStep - 1) / (steps.length - 1)) * 100}%` }}
+            ></div>
+            
+            {steps.map((step) => (
+              <div key={step.id} className="flex flex-col items-center gap-2 bg-gray-50 px-2 relative">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition-colors duration-500 ${
+                  visualStep > step.id 
+                    ? 'bg-shrek-500 text-white' 
+                    : visualStep === step.id 
+                      ? 'bg-shrek-600 text-white ring-4 ring-shrek-100' 
+                      : 'bg-white text-gray-400 border border-gray-200'
+                }`}>
+                  {visualStep > step.id ? <Check size={18} /> : step.id}
+                </div>
+                <span className={`text-xs font-medium absolute -bottom-6 w-max ${
+                  visualStep >= step.id ? 'text-gray-900' : 'text-gray-400'
+                }`}>
+                  {step.title}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden min-h-[500px] flex flex-col relative">
+          <div className="p-8 sm:p-12 flex-1">
+            <AnimatePresence mode="wait">
+              {currentStep === 1 && (
+                <motion.div
+                  key="step1"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
+                >
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">選擇社區與方案</h2>
+                  
+                  <div className="grid grid-cols-1 gap-6">
+                    {/* 新增的裝機地址 / 選擇社區 UI */}
+                    <div className="md:col-span-2 mt-4 bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                      <div className="bg-blue-50/50 px-6 py-4 border-b border-gray-100 flex items-center gap-2">
+                        <Home className="text-blue-800" size={20} />
+                        <h3 className="text-lg font-bold text-blue-900">選擇社區</h3>
+                      </div>
+                      <div className="p-6">
+                        <div className="flex border-b border-gray-200 mb-8 overflow-x-auto">
+                          <button className="px-6 py-3 border-b-2 border-blue-600 text-blue-700 font-bold flex items-center gap-2 whitespace-nowrap">
+                            <MapPin size={18} /> 依地址選擇
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-10">
+                          {/* 縣市 */}
+                          <div className="relative">
+                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-700 font-bold tracking-wide z-10">
+                              <span className="text-red-500 mr-1">*</span>縣市
+                            </label>
+                            <div className="relative">
+                              <select 
+                                value={formData.city} 
+                                onChange={(e) => setFormData({...formData, city: e.target.value, district: '', street: '', community: ''})} 
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white hover:border-gray-400 transition-colors"
+                              >
+                                <option value="" disabled hidden></option>
+                                {taiwanCities.map(city => (
+                                  <option key={city} value={city}>{city}</option>
+                                ))}
+                              </select>
+                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                            </div>
+                          </div>
+                          
+                          {/* 鄉鎮市區 */}
+                          <div className="relative">
+                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-700 font-bold tracking-wide z-10">
+                              <span className="text-red-500 mr-1">*</span>鄉鎮市區
+                            </label>
+                            <div className="relative">
+                              <select 
+                                value={formData.district} 
+                                onChange={(e) => setFormData({...formData, district: e.target.value, street: '', community: ''})} 
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white hover:border-gray-400 transition-colors"
+                              >
+                                <option value="" disabled hidden></option>
+                                {formData.city && taiwanDistricts[formData.city]?.map(district => (
+                                  <option key={district} value={district}>{district}</option>
+                                ))}
+                              </select>
+                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                            </div>
+                          </div>
+
+                          {/* 道路或街名 */}
+                          <div className="relative">
+                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-700 font-bold tracking-wide z-10">
+                              <span className="text-red-500 mr-1">*</span>道路或街名
+                            </label>
+                            <div className="relative">
+                              <input 
+                                type="text"
+                                value={formData.street} 
+                                onChange={(e) => setFormData({...formData, street: e.target.value})} 
+                                placeholder="例如：中正路"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white hover:border-gray-400 transition-colors"
+                              />
+                            </div>
+                          </div>
+
+                          {/* 社區名稱 */}
+                          <div className="relative">
+                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-400 font-bold tracking-wide z-10">
+                              <span className="text-red-400 mr-1">*</span>社區名稱
+                            </label>
+                            <div className="relative">
+                              <input 
+                                type="text"
+                                value={formData.community} 
+                                onChange={(e) => setFormData({...formData, community: e.target.value})} 
+                                placeholder="例如：巴黎花都"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white hover:border-gray-400 transition-colors"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* 新增的選擇方案 UI */}
+                    <div className="md:col-span-2 mt-8">
+                      <div className="flex items-center gap-2 mb-6 text-gray-900 border-b border-gray-100 pb-3">
+                        <h3 className="text-xl font-bold">選擇方案</h3>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {/* 方案 1 */}
+                        <div 
+                          onClick={() => setFormData({...formData, plan: '300M-24M'})}
+                          className={`relative flex flex-col bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-24M' ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-200 hover:border-blue-300'}`}
+                        >
+                          <div className="h-44 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" alt="Family using tablet" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-blue-600 font-bold text-xl drop-shadow-sm tracking-wide">300M網路24個月</h4>
+                          </div>
+                          <div className="p-6 flex flex-col flex-1">
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-24M' ? 'border-blue-500 bg-white' : 'border-gray-300'}`}>
+                                {formData.plan === '300M-24M' && <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>}
+                              </div>
+                              <span className="text-gray-700 font-medium">300M網路24個月</span>
+                            </div>
+                            <div className="mt-auto pt-4 border-t border-gray-100">
+                              <p className="text-gray-600 font-medium">總價 <span className="text-2xl font-bold text-gray-900 ml-1">$8,900</span></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 方案 2 */}
+                        <div 
+                          onClick={() => setFormData({...formData, plan: '300M-14M'})}
+                          className={`relative flex flex-col bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-14M' ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-200 hover:border-blue-300'}`}
+                        >
+                          <div className="h-44 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800" alt="Man at desktop" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-blue-600 font-bold text-xl drop-shadow-sm tracking-wide">300M網路14個月</h4>
+                          </div>
+                          <div className="p-6 flex flex-col flex-1">
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-14M' ? 'border-blue-500 bg-white' : 'border-gray-300'}`}>
+                                {formData.plan === '300M-14M' && <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>}
+                              </div>
+                              <span className="text-gray-700 font-medium">300M網路14個月</span>
+                            </div>
+                            <div className="mt-auto pt-4 border-t border-gray-100">
+                              <p className="text-gray-600 font-medium">總價 <span className="text-2xl font-bold text-gray-900 ml-1">$6,000</span></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 方案 3 */}
+                        <div 
+                          onClick={() => setFormData({...formData, plan: '300M-12M'})}
+                          className={`relative flex flex-col bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-12M' ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-200 hover:border-blue-300'}`}
+                        >
+                          <div className="h-44 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800" alt="Woman on laptop" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-blue-600 font-bold text-xl drop-shadow-sm tracking-wide">300M網路12個月</h4>
+                          </div>
+                          <div className="p-6 flex flex-col flex-1">
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-12M' ? 'border-blue-500 bg-white' : 'border-gray-300'}`}>
+                                {formData.plan === '300M-12M' && <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>}
+                              </div>
+                              <span className="text-gray-700 font-medium">300M網路12個月</span>
+                            </div>
+                            <div className="mt-auto pt-4 border-t border-gray-100">
+                              <p className="text-gray-600 font-medium">總價 <span className="text-2xl font-bold text-gray-900 ml-1">$5,400</span></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              
+              {currentStep === 2 && (
+                <motion.div
+                  key="step2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="flex flex-col items-center justify-center h-full"
+                >
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">填寫基本資訊</h2>
+                  <p className="text-gray-500 text-sm mb-8 text-center max-w-md">請輸入您的真實資料，以便後續流程順利進行。</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl mb-10">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">聯絡姓名</label>
+                      <input 
+                        type="text" 
+                        value={formData.contactName}
+                        onChange={(e) => setFormData({...formData, contactName: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        placeholder="例如：王小明" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">身分證字號</label>
+                      <input 
+                        type="text" 
+                        value={formData.idNumber}
+                        onChange={(e) => setFormData({...formData, idNumber: e.target.value.toUpperCase()})}
+                        maxLength={10}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        placeholder="例如：A123456789" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">出生年月日</label>
+                      <input 
+                        type="text" 
+                        value={formData.birthday}
+                        onChange={(e) => setFormData({...formData, birthday: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        placeholder="例如：1990/01/01" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">手機號碼</label>
+                      <input 
+                        type="tel" 
+                        value={formData.mobile}
+                        onChange={(e) => setFormData({...formData, mobile: e.target.value})}
+                        maxLength={10}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        placeholder="例如：0912345678" 
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                      <input 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        placeholder="例如：example@gmail.com" 
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">預計裝機地址</label>
+                      <input 
+                        type="text" 
+                        value={formData.installAddress}
+                        onChange={(e) => setFormData({...formData, installAddress: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        placeholder="例如：桃園市中壢區中正路100號5樓之1" 
+                      />
+                    </div>
+                  </div>
+
+                  {/* Additional Fields: Remarks & Referrer */}
+                  <div className="w-full max-w-2xl flex flex-col gap-6 mb-10">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-800 mb-2">如有需要，可備註您的問題</label>
+                      <div className="relative">
+                        <textarea 
+                          value={formData.remark}
+                          onChange={(e) => setFormData({...formData, remark: e.target.value})}
+                          maxLength={200}
+                          rows={4}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all resize-none" 
+                          placeholder="請輸入備註" 
+                        />
+                        <span className="absolute bottom-3 right-4 text-xs text-gray-400">
+                          {formData.remark.length} / 200
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div className="flex flex-col gap-4 mt-4">
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreePrivacy ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-300 group-hover:border-[#14b8a6]'}`}>
+                          {formData.agreePrivacy && <Check size={16} className="text-white" />}
+                        </div>
+                        <input 
+                          type="checkbox" 
+                          className="hidden" 
+                          checked={formData.agreePrivacy}
+                          onChange={(e) => setFormData({...formData, agreePrivacy: e.target.checked})}
+                        />
+                        <span className="text-gray-700 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《個人資料使用授權同意書》</span></span>
+                      </label>
+
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreeTerms ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-300 group-hover:border-[#14b8a6]'}`}>
+                          {formData.agreeTerms && <Check size={16} className="text-white" />}
+                        </div>
+                        <input 
+                          type="checkbox" 
+                          className="hidden" 
+                          checked={formData.agreeTerms}
+                          onChange={(e) => setFormData({...formData, agreeTerms: e.target.checked})}
+                        />
+                        <span className="text-gray-700 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《網路申裝與服務權益說明》</span></span>
+                      </label>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {currentStep === 3 && (
+                <motion.div
+                  key="step3"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="w-full flex-1 flex flex-col pt-8"
+                >
+                  <OCRStep 
+                    formData={{
+                      name: formData.contactName,
+                      idNumber: formData.idNumber,
+                      birthday: formData.birthday,
+                      address: formData.installAddress
+                    }}
+                    onComplete={() => {
+                      handleNext();
+                    }} 
+                  />
+                </motion.div>
+              )}
+
+              {currentStep === 4 && (
+                <motion.div
+                  key="step4"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="w-full flex flex-col items-center max-w-2xl mx-auto"
+                >
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">確認申請資料</h2>
+                  <p className="text-gray-500 text-[15px] mb-8 text-center">請仔細核對以下您的申辦資訊，確認無誤後點擊送出即可完成！</p>
+                  
+                  <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-10 text-left">
+                    {/* Part 1: Plan and Location */}
+                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
+                      <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                        <Check size={18} className="text-[#14b8a6]" />
+                        申請方案與社區
+                      </h3>
+                    </div>
+                    <div className="p-6 space-y-5">
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">選擇方案</span>
+                        <span className="font-bold text-gray-900 border-b-2 border-[#14b8a6]/30 pb-1 inline-block">
+                          {formData.plan || '未選擇'} <span className="text-[#14b8a6] ml-2 font-black">${formData.plan ? planPrices[formData.plan] : '0'}</span>/月
+                        </span>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">社區地址</span>
+                        <span className="font-medium text-gray-800 leading-relaxed">
+                          {formData.city}{formData.district}{formData.street}{formData.community}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Part 2: Contact Details */}
+                    <div className="px-6 py-4 bg-gray-50 border-y border-gray-100">
+                      <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                        <Check size={18} className="text-[#14b8a6]" />
+                        聯絡與裝機資訊
+                      </h3>
+                    </div>
+                    <div className="p-6 space-y-5">
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">聯絡姓名</span>
+                        <span className="font-medium text-gray-800">{formData.contactName || '-'}</span>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">身分證字號</span>
+                        <span className="font-medium text-gray-800">{formData.idNumber || '-'}</span>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">手機號碼</span>
+                        <span className="font-medium text-gray-800">{formData.mobile || '-'}</span>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">電子信箱</span>
+                        <span className="font-medium text-gray-800">{formData.email || '-'}</span>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">裝機地址</span>
+                        <span className="font-medium text-gray-800 leading-relaxed">{formData.installAddress || '-'}</span>
+                      </div>
+                      {formData.remark && (
+                        <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4 pt-4 border-t border-gray-50">
+                          <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0 mt-1">特殊備註</span>
+                          <span className="font-medium text-gray-700 whitespace-pre-wrap bg-gray-50 p-4 rounded-xl flex-1 text-sm border border-gray-100">
+                            {formData.remark}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Footer Actions / Sticky Footer */}
+          <div className="bg-white border-t border-gray-100 flex flex-col rounded-b-3xl sticky bottom-0 z-20 shadow-[0_-4px_25px_-5px_rgba(0,0,0,0.06)]">
+            {errorMsg && (
+              <div className="px-6 py-3 bg-red-50 text-red-600 text-sm font-bold border-b border-red-100 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></div>
+                {errorMsg}
+              </div>
+            )}
+            
+            <div className={`p-4 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 ${currentStep !== 1 ? 'bg-gray-50 rounded-b-3xl' : ''}`}>
+              {currentStep === 1 ? (
+                <div className="flex items-center gap-4 md:gap-8">
+                  <div className="flex flex-col">
+                    <span className="text-gray-700 font-bold text-lg leading-tight">預估金額</span>
+                    <span className="text-gray-400 text-sm">安裝完成後收費</span>
+                  </div>
+                  <div className="text-gray-700 text-3xl font-medium tracking-tight">
+                    ${formData.plan ? planPrices[formData.plan] : '0'}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex-1">
+                  <button 
+                    onClick={handlePrev}
+                    className="px-6 py-3 font-medium text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+                  >
+                    <ArrowLeft size={18} /> 上一步
+                  </button>
+                </div>
+              )}
+
+              <div className="flex items-center gap-4 justify-end md:w-auto w-full">
+                {currentStep === 1 && (
+                  <button 
+                    onClick={handleNext}
+                    className="flex items-center justify-center gap-2 px-10 py-3.5 bg-[#14b8a6] hover:bg-teal-600 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto text-lg"
+                  >
+                    下一步
+                  </button>
+                )}
+                {currentStep === 2 && (
+                  <button 
+                    onClick={handleNext}
+                    className="flex items-center justify-center gap-2 px-8 py-3 bg-shrek-600 hover:bg-shrek-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
+                  >
+                    下一步
+                    <ChevronRight size={18} />
+                  </button>
+                )}
+                {/* 步驟 3 為 OCR 身份驗證，依賴 OCRStep 內部按鈕進行下一步 */}
+                {currentStep === 4 && (
+                  <button 
+                    onClick={() => setShowSuccessModal(true)}
+                    className="flex items-center justify-center gap-2 px-8 py-3 bg-shrek-600 hover:bg-shrek-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
+                  >
+                    確認送出
+                    <Check size={18} />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Policy Modals */}
+      <AnimatePresence>
+        {showPrivacyModal && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowPrivacyModal(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
+            >
+              <h3 className="text-2xl font-bold mb-6 text-gray-900 border-b pb-4">《個人資料使用授權同意書》</h3>
+              <div className="text-gray-600 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
+                <p>為了提供您最佳的網路申辦與安裝服務，史瑞克社區網路需要收集您的基本個人資料。本同意書旨在說明我們如何收集、處理及利用您的個人資料，請仔細閱讀。</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">一、 蒐集目的</h4>
+                <p>僅供辦理申裝網路服務、客戶服務、帳務管理、以及必要之系統建置與本公司派工聯繫使用。</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">二、 蒐集類別</h4>
+                <p>聯絡人真實姓名、身分證字號（如需）、聯絡電話、電子郵件地址及終端裝機服務地址等必要欄位。</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">三、 個人資料利用之期間、地區、對象及方式</h4>
+                <p>於本公司營運期間內，限台灣地區，僅由本公司及簽約合作之派工維修單位為業務執行之合理善意利用。我們保證不會將您的資料出售給其他第三方機構。</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">四、 當事人權利</h4>
+                <p>您可依個人資料保護法規定，隨時向本公司客服中心查詢、閱覽、製給複製本、補充或更正、停止電腦處理及利用或刪除您的個人資料。</p>
+              </div>
+              <div className="flex justify-end pt-4 border-t">
+                <button 
+                  onClick={() => setShowPrivacyModal(false)}
+                  className="px-8 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-bold shadow-sm"
+                >
+                  確認並關閉
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {showTermsModal && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowTermsModal(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
+            >
+              <h3 className="text-2xl font-bold mb-6 text-gray-900 border-b pb-4">《網路申裝與服務權益說明》</h3>
+              <div className="text-gray-600 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
+                <p>感謝您選擇史瑞克社區網路服務！為保障雙方權益，請在完成申辦前詳閱以下申裝及網路服務使用說明：</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">一、 服務申辦與裝機</h4>
+                <p>我們將於您線上完成申請並審核無誤後的 3 個工作天內，指派專責工程人員與您透過電話聯繫，以確認確切的到府裝機時間段。請確保您填寫的手機與聯絡方式準確無誤並保持暢通。</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">二、 收費標準與繳費原則</h4>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>網路服務之首期相關費用，將於工程師到府將設備安裝完畢，並協助您測試確認網路連線可正常運作後，才會與您進行收取。</li>
+                  <li>首期收取之費用僅包含您所選該方案之期數總價（如 24 個月方案即收取 24 個月之總額），除非由客戶額外要求特別佈線工程，否則絕無隱藏之到府安裝費或手續費。</li>
+                </ul>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">三、 網路速率與使用品質</h4>
+                <p>本服務所提供之網路頻寬為「最高可達」速率（如最高可達 300M）。提醒您，實際測速與體感網速可能因您自備的終端上網設備差異（如舊款網卡、分享器性能）、室內物理環境干擾（如隔牆、訊號死角）或同時間社區內骨幹網路分享的尖峰狀況而有所合理波動，此為網際網路傳輸之自然現象。</p>
+                <h4 className="font-bold text-gray-800 mt-6 mb-2">四、 終止合約與退費規則</h4>
+                <p>如您於方案合約期間內，因搬家等個人因素導致需提早終止服務，本公司將依據政府既定之電信服務定型化契約規範與裝機時所簽署之實體紙本合約，向您酌收相應之違約補貼款或相關撤機費用。</p>
+              </div>
+              <div className="flex justify-end pt-4 border-t">
+                <button 
+                  onClick={() => setShowTermsModal(false)}
+                  className="px-8 py-3 bg-[#14b8a6] text-white rounded-xl hover:bg-teal-600 transition-colors font-bold shadow-sm"
+                >
+                  確認並關閉
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Success Modal */}
+        {showSuccessModal && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 10 }} animate={{ scale: 1, opacity: 1, y: 0 }}
+              className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
+                <Check size={32} className="text-[#14b8a6]" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">申請已送出！</h3>
+              <p className="text-gray-500 text-sm mb-8 leading-relaxed">
+                感謝您選擇史瑞克社區網路服務，我們的專員將於三個工作天內與您電話聯繫，安排後續施工事宜。
+              </p>
+              <button 
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  navigate('/');
+                }}
+                className="w-full py-3.5 bg-[#14b8a6] text-white font-bold rounded-xl hover:bg-teal-600 transition-colors shadow-md active:scale-95"
+              >
+                確定
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
