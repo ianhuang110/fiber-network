@@ -35,7 +35,7 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-xl text-gray-400 mb-10 leading-relaxed font-light">
-                雙向 300M 極速光纖，遊戲不卡頓，追劇不轉圈。免綁約，免設定費，為您打造最穩定的居家網路體驗。
+                雙向 300M 極速光纖，遊戲不卡頓，追劇不轉圈。每月只需 300 元，綁約 3 年即送光纖設備，為您打造最穩定的居家網路體驗。
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
