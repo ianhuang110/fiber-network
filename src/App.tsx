@@ -5,22 +5,19 @@ import ApplicationFlow from './pages/ApplicationFlow';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col font-sans bg-gray-50">
+      <div className="min-h-screen flex flex-col font-sans bg-[#0B0F19] text-gray-200">
         {/* Global Header */}
-        <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <header className="bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-shrek-700 font-bold text-2xl tracking-tight">
-              <span className="w-8 h-8 bg-gradient-to-br from-shrek-400 to-shrek-600 rounded-lg flex items-center justify-center text-white">
+            <div className="flex items-center gap-2 text-white font-bold text-2xl tracking-tight">
+              <span className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-600 rounded-lg flex items-center justify-center text-white">
                 S
               </span>
-              史瑞克社區網路
+              社區網路
             </div>
-            <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-              <Link to="/" className="hover:text-shrek-600 transition-colors">首頁</Link>
+            <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+              <Link to="/" className="hover:text-teal-400 transition-colors">首頁</Link>
             </nav>
-            <Link to="/apply" className="px-5 py-2.5 bg-shrek-600 hover:bg-shrek-700 text-white text-sm font-medium rounded-full shadow-lg shadow-shrek-500/30 transition-all hover:scale-105 active:scale-95">
-              線上申辦
-            </Link>
           </div>
         </header>
 
@@ -33,9 +30,9 @@ function App() {
         </main>
         
         {/* Global Footer */}
-        <footer className="bg-gray-900 text-gray-400 py-8 text-sm">
+        <footer className="bg-[#05080f] text-gray-500 py-8 text-sm border-t border-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            &copy; 2026 史瑞克社區網路股份有限公司. All rights reserved.
+            &copy; 2026 社區網路股份有限公司. All rights reserved.
           </div>
         </footer>
       </div>

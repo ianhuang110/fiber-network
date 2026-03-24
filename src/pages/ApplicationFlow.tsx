@@ -112,13 +112,13 @@ export default function ApplicationFlow() {
   if (currentStep === 3) visualStep = 3;
 
   return (
-    <div className="flex-1 bg-gray-50 flex flex-col pt-10 pb-20">
+    <div className="flex-1 bg-[#0B0F19] flex flex-col pt-10 pb-20">
       <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         
         {/* Header / Back button */}
         <button 
           onClick={handlePrev}
-          className="flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-8 transition-colors"
+          className="flex items-center gap-2 text-gray-500 hover:text-white mb-8 transition-colors"
         >
           <ArrowLeft size={20} />
           返回
@@ -129,23 +129,23 @@ export default function ApplicationFlow() {
           <div className="flex items-center justify-between relative">
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-200 -z-10 rounded-full"></div>
             <div 
-              className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-shrek-500 -z-10 rounded-full transition-all duration-500 ease-in-out"
+              className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-teal-500 -z-10 rounded-full transition-all duration-500 ease-in-out"
               style={{ width: `${((visualStep - 1) / (steps.length - 1)) * 100}%` }}
             ></div>
             
             {steps.map((step) => (
-              <div key={step.id} className="flex flex-col items-center gap-2 bg-gray-50 px-2 relative">
+              <div key={step.id} className="flex flex-col items-center gap-2 bg-[#0B0F19] px-2 relative">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition-colors duration-500 ${
                   visualStep > step.id 
-                    ? 'bg-shrek-500 text-white' 
+                    ? 'bg-teal-500 text-white' 
                     : visualStep === step.id 
-                      ? 'bg-shrek-600 text-white ring-4 ring-shrek-100' 
-                      : 'bg-white text-gray-400 border border-gray-200'
+                      ? 'bg-teal-600 text-white ring-4 ring-teal-500\/30' 
+                      : 'bg-[#131B2F] text-gray-500 border border-gray-800'
                 }`}>
                   {visualStep > step.id ? <Check size={18} /> : step.id}
                 </div>
                 <span className={`text-xs font-medium absolute -bottom-6 w-max ${
-                  visualStep >= step.id ? 'text-gray-900' : 'text-gray-400'
+                  visualStep >= step.id ? 'text-white' : 'text-gray-500'
                 }`}>
                   {step.title}
                 </span>
@@ -155,7 +155,7 @@ export default function ApplicationFlow() {
         </div>
 
         {/* Main Content Area */}
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden min-h-[500px] flex flex-col relative">
+        <div className="bg-[#131B2F] rounded-3xl shadow-xl border border-gray-800 overflow-hidden min-h-[500px] flex flex-col relative">
           <div className="p-8 sm:p-12 flex-1">
             <AnimatePresence mode="wait">
               {currentStep === 1 && (
@@ -166,65 +166,65 @@ export default function ApplicationFlow() {
                   exit={{ opacity: 0, x: -20 }}
                   className="space-y-6"
                 >
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">選擇社區與方案</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">選擇社區與方案</h2>
                   
                   <div className="grid grid-cols-1 gap-6">
                     {/* 新增的裝機地址 / 選擇社區 UI */}
-                    <div className="md:col-span-2 mt-4 bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                      <div className="bg-blue-50/50 px-6 py-4 border-b border-gray-100 flex items-center gap-2">
-                        <Home className="text-blue-800" size={20} />
-                        <h3 className="text-lg font-bold text-blue-900">選擇社區</h3>
+                    <div className="md:col-span-2 mt-4 bg-[#131B2F] border border-gray-800 rounded-2xl overflow-hidden shadow-sm">
+                      <div className="bg-teal-500/10 px-6 py-4 border-b border-gray-800 flex items-center gap-2">
+                        <Home className="text-teal-500" size={20} />
+                        <h3 className="text-lg font-bold text-teal-400">選擇社區</h3>
                       </div>
                       <div className="p-6">
-                        <div className="flex border-b border-gray-200 mb-8 overflow-x-auto">
-                          <button className="px-6 py-3 border-b-2 border-blue-600 text-blue-700 font-bold flex items-center gap-2 whitespace-nowrap">
+                        <div className="flex border-b border-gray-800 mb-8 overflow-x-auto">
+                          <button className="px-6 py-3 border-b-2 border-teal-500 text-teal-400 font-bold flex items-center gap-2 whitespace-nowrap">
                             <MapPin size={18} /> 依地址選擇
                           </button>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-10">
                           {/* 縣市 */}
                           <div className="relative">
-                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-700 font-bold tracking-wide z-10">
+                            <label className="absolute -top-3 left-3 bg-[#131B2F] px-2 text-sm text-gray-300 font-bold tracking-wide z-10">
                               <span className="text-red-500 mr-1">*</span>縣市
                             </label>
                             <div className="relative">
                               <select 
                                 value={formData.city} 
                                 onChange={(e) => setFormData({...formData, city: e.target.value, district: '', street: '', community: ''})} 
-                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white hover:border-gray-400 transition-colors"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none appearance-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
                               >
                                 <option value="" disabled hidden></option>
                                 {taiwanCities.map(city => (
                                   <option key={city} value={city}>{city}</option>
                                 ))}
                               </select>
-                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
                             </div>
                           </div>
                           
                           {/* 鄉鎮市區 */}
                           <div className="relative">
-                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-700 font-bold tracking-wide z-10">
+                            <label className="absolute -top-3 left-3 bg-[#131B2F] px-2 text-sm text-gray-300 font-bold tracking-wide z-10">
                               <span className="text-red-500 mr-1">*</span>鄉鎮市區
                             </label>
                             <div className="relative">
                               <select 
                                 value={formData.district} 
                                 onChange={(e) => setFormData({...formData, district: e.target.value, street: '', community: ''})} 
-                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white hover:border-gray-400 transition-colors"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none appearance-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
                               >
                                 <option value="" disabled hidden></option>
                                 {formData.city && taiwanDistricts[formData.city]?.map(district => (
                                   <option key={district} value={district}>{district}</option>
                                 ))}
                               </select>
-                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
                             </div>
                           </div>
 
                           {/* 道路或街名 */}
                           <div className="relative">
-                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-700 font-bold tracking-wide z-10">
+                            <label className="absolute -top-3 left-3 bg-[#131B2F] px-2 text-sm text-gray-300 font-bold tracking-wide z-10">
                               <span className="text-red-500 mr-1">*</span>道路或街名
                             </label>
                             <div className="relative">
@@ -233,14 +233,14 @@ export default function ApplicationFlow() {
                                 value={formData.street} 
                                 onChange={(e) => setFormData({...formData, street: e.target.value})} 
                                 placeholder="例如：中正路"
-                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white hover:border-gray-400 transition-colors"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
                               />
                             </div>
                           </div>
 
                           {/* 社區名稱 */}
                           <div className="relative">
-                            <label className="absolute -top-3 left-3 bg-white px-2 text-sm text-gray-400 font-bold tracking-wide z-10">
+                            <label className="absolute -top-3 left-3 bg-[#131B2F] px-2 text-sm text-gray-500 font-bold tracking-wide z-10">
                               <span className="text-red-400 mr-1">*</span>社區名稱
                             </label>
                             <div className="relative">
@@ -249,7 +249,7 @@ export default function ApplicationFlow() {
                                 value={formData.community} 
                                 onChange={(e) => setFormData({...formData, community: e.target.value})} 
                                 placeholder="例如：巴黎花都"
-                                className="w-full px-4 py-3.5 rounded-lg border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white hover:border-gray-400 transition-colors"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
                               />
                             </div>
                           </div>
@@ -259,7 +259,7 @@ export default function ApplicationFlow() {
                     
                     {/* 新增的選擇方案 UI */}
                     <div className="md:col-span-2 mt-8">
-                      <div className="flex items-center gap-2 mb-6 text-gray-900 border-b border-gray-100 pb-3">
+                      <div className="flex items-center gap-2 mb-6 text-white border-b border-gray-800 pb-3">
                         <h3 className="text-xl font-bold">選擇方案</h3>
                       </div>
                       
@@ -267,22 +267,22 @@ export default function ApplicationFlow() {
                         {/* 方案 1 */}
                         <div 
                           onClick={() => setFormData({...formData, plan: '300M-24M'})}
-                          className={`relative flex flex-col bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-24M' ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-200 hover:border-blue-300'}`}
+                          className={`relative flex flex-col bg-[#131B2F] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-24M' ? 'border-teal-500 ring-4 ring-teal-500/20' : 'border-gray-800 hover:border-blue-300'}`}
                         >
                           <div className="h-44 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" alt="Family using tablet" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
-                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-blue-600 font-bold text-xl drop-shadow-sm tracking-wide">300M網路24個月</h4>
+                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-teal-400 font-bold text-xl drop-shadow-sm tracking-wide">300M網路24個月</h4>
                           </div>
                           <div className="p-6 flex flex-col flex-1">
                             <div className="flex items-center gap-3 mb-6">
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-24M' ? 'border-blue-500 bg-white' : 'border-gray-300'}`}>
-                                {formData.plan === '300M-24M' && <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>}
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-24M' ? 'border-teal-500 bg-[#131B2F]' : 'border-gray-700'}`}>
+                                {formData.plan === '300M-24M' && <div className="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>}
                               </div>
-                              <span className="text-gray-700 font-medium">300M網路24個月</span>
+                              <span className="text-gray-300 font-medium">300M網路24個月</span>
                             </div>
-                            <div className="mt-auto pt-4 border-t border-gray-100">
-                              <p className="text-gray-600 font-medium">總價 <span className="text-2xl font-bold text-gray-900 ml-1">$8,900</span></p>
+                            <div className="mt-auto pt-4 border-t border-gray-800">
+                              <p className="text-gray-500 font-medium">總價 <span className="text-2xl font-bold text-white ml-1">$8,900</span></p>
                             </div>
                           </div>
                         </div>
@@ -290,22 +290,22 @@ export default function ApplicationFlow() {
                         {/* 方案 2 */}
                         <div 
                           onClick={() => setFormData({...formData, plan: '300M-14M'})}
-                          className={`relative flex flex-col bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-14M' ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-200 hover:border-blue-300'}`}
+                          className={`relative flex flex-col bg-[#131B2F] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-14M' ? 'border-teal-500 ring-4 ring-teal-500/20' : 'border-gray-800 hover:border-blue-300'}`}
                         >
                           <div className="h-44 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800" alt="Man at desktop" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
-                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-blue-600 font-bold text-xl drop-shadow-sm tracking-wide">300M網路14個月</h4>
+                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-teal-400 font-bold text-xl drop-shadow-sm tracking-wide">300M網路14個月</h4>
                           </div>
                           <div className="p-6 flex flex-col flex-1">
                             <div className="flex items-center gap-3 mb-6">
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-14M' ? 'border-blue-500 bg-white' : 'border-gray-300'}`}>
-                                {formData.plan === '300M-14M' && <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>}
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-14M' ? 'border-teal-500 bg-[#131B2F]' : 'border-gray-700'}`}>
+                                {formData.plan === '300M-14M' && <div className="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>}
                               </div>
-                              <span className="text-gray-700 font-medium">300M網路14個月</span>
+                              <span className="text-gray-300 font-medium">300M網路14個月</span>
                             </div>
-                            <div className="mt-auto pt-4 border-t border-gray-100">
-                              <p className="text-gray-600 font-medium">總價 <span className="text-2xl font-bold text-gray-900 ml-1">$6,000</span></p>
+                            <div className="mt-auto pt-4 border-t border-gray-800">
+                              <p className="text-gray-500 font-medium">總價 <span className="text-2xl font-bold text-white ml-1">$6,000</span></p>
                             </div>
                           </div>
                         </div>
@@ -313,22 +313,22 @@ export default function ApplicationFlow() {
                         {/* 方案 3 */}
                         <div 
                           onClick={() => setFormData({...formData, plan: '300M-12M'})}
-                          className={`relative flex flex-col bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-12M' ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-200 hover:border-blue-300'}`}
+                          className={`relative flex flex-col bg-[#131B2F] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M-12M' ? 'border-teal-500 ring-4 ring-teal-500/20' : 'border-gray-800 hover:border-blue-300'}`}
                         >
                           <div className="h-44 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800" alt="Woman on laptop" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
-                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-blue-600 font-bold text-xl drop-shadow-sm tracking-wide">300M網路12個月</h4>
+                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-teal-400 font-bold text-xl drop-shadow-sm tracking-wide">300M網路12個月</h4>
                           </div>
                           <div className="p-6 flex flex-col flex-1">
                             <div className="flex items-center gap-3 mb-6">
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-12M' ? 'border-blue-500 bg-white' : 'border-gray-300'}`}>
-                                {formData.plan === '300M-12M' && <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>}
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.plan === '300M-12M' ? 'border-teal-500 bg-[#131B2F]' : 'border-gray-700'}`}>
+                                {formData.plan === '300M-12M' && <div className="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>}
                               </div>
-                              <span className="text-gray-700 font-medium">300M網路12個月</span>
+                              <span className="text-gray-300 font-medium">300M網路12個月</span>
                             </div>
-                            <div className="mt-auto pt-4 border-t border-gray-100">
-                              <p className="text-gray-600 font-medium">總價 <span className="text-2xl font-bold text-gray-900 ml-1">$5,400</span></p>
+                            <div className="mt-auto pt-4 border-t border-gray-800">
+                              <p className="text-gray-500 font-medium">總價 <span className="text-2xl font-bold text-white ml-1">$5,400</span></p>
                             </div>
                           </div>
                         </div>
@@ -346,69 +346,69 @@ export default function ApplicationFlow() {
                   exit={{ opacity: 0, x: -20 }}
                   className="flex flex-col items-center justify-center h-full"
                 >
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">填寫基本資訊</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">填寫基本資訊</h2>
                   <p className="text-gray-500 text-sm mb-8 text-center max-w-md">請輸入您的真實資料，以便後續流程順利進行。</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl mb-10">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">聯絡姓名</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">聯絡姓名</label>
                       <input 
                         type="text" 
                         value={formData.contactName}
                         onChange={(e) => setFormData({...formData, contactName: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：王小明" 
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">身分證字號</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">身分證字號</label>
                       <input 
                         type="text" 
                         value={formData.idNumber}
                         onChange={(e) => setFormData({...formData, idNumber: e.target.value.toUpperCase()})}
                         maxLength={10}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：A123456789" 
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">出生年月日</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">出生年月日</label>
                       <input 
                         type="text" 
                         value={formData.birthday}
                         onChange={(e) => setFormData({...formData, birthday: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：1990/01/01" 
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">手機號碼</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">手機號碼</label>
                       <input 
                         type="tel" 
                         value={formData.mobile}
                         onChange={(e) => setFormData({...formData, mobile: e.target.value})}
                         maxLength={10}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：0912345678" 
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
                       <input 
                         type="email" 
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：example@gmail.com" 
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">預計裝機地址</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">預計裝機地址</label>
                       <input 
                         type="text" 
                         value={formData.installAddress}
                         onChange={(e) => setFormData({...formData, installAddress: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：桃園市中壢區中正路100號5樓之1" 
                       />
                     </div>
@@ -417,17 +417,17 @@ export default function ApplicationFlow() {
                   {/* Additional Fields: Remarks & Referrer */}
                   <div className="w-full max-w-2xl flex flex-col gap-6 mb-10">
                     <div>
-                      <label className="block text-sm font-bold text-gray-800 mb-2">如有需要，可備註您的問題</label>
+                      <label className="block text-sm font-bold text-gray-100 mb-2">如有需要，可備註您的問題</label>
                       <div className="relative">
                         <textarea 
                           value={formData.remark}
                           onChange={(e) => setFormData({...formData, remark: e.target.value})}
                           maxLength={200}
                           rows={4}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all resize-none" 
+                          className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all resize-none bg-[#0B0F19]" 
                           placeholder="請輸入備註" 
                         />
-                        <span className="absolute bottom-3 right-4 text-xs text-gray-400">
+                        <span className="absolute bottom-3 right-4 text-xs text-gray-500">
                           {formData.remark.length} / 200
                         </span>
                       </div>
@@ -436,7 +436,7 @@ export default function ApplicationFlow() {
 
                     <div className="flex flex-col gap-4 mt-4">
                       <label className="flex items-center gap-3 cursor-pointer group">
-                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreePrivacy ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-300 group-hover:border-[#14b8a6]'}`}>
+                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreePrivacy ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-700 group-hover:border-[#14b8a6]'}`}>
                           {formData.agreePrivacy && <Check size={16} className="text-white" />}
                         </div>
                         <input 
@@ -445,11 +445,11 @@ export default function ApplicationFlow() {
                           checked={formData.agreePrivacy}
                           onChange={(e) => setFormData({...formData, agreePrivacy: e.target.checked})}
                         />
-                        <span className="text-gray-700 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《個人資料使用授權同意書》</span></span>
+                        <span className="text-gray-300 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《個人資料使用授權同意書》</span></span>
                       </label>
 
                       <label className="flex items-center gap-3 cursor-pointer group">
-                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreeTerms ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-300 group-hover:border-[#14b8a6]'}`}>
+                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreeTerms ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-700 group-hover:border-[#14b8a6]'}`}>
                           {formData.agreeTerms && <Check size={16} className="text-white" />}
                         </div>
                         <input 
@@ -458,7 +458,7 @@ export default function ApplicationFlow() {
                           checked={formData.agreeTerms}
                           onChange={(e) => setFormData({...formData, agreeTerms: e.target.checked})}
                         />
-                        <span className="text-gray-700 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《網路申裝與服務權益說明》</span></span>
+                        <span className="text-gray-300 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《網路申裝與服務權益說明》</span></span>
                       </label>
                     </div>
                   </div>
@@ -473,64 +473,64 @@ export default function ApplicationFlow() {
                   exit={{ opacity: 0, x: -20 }}
                   className="w-full flex flex-col items-center max-w-2xl mx-auto"
                 >
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">確認申請資料</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">確認申請資料</h2>
                   <p className="text-gray-500 text-[15px] mb-8 text-center">請仔細核對以下您的申辦資訊，確認無誤後點擊送出即可完成！</p>
                   
-                  <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-10 text-left">
+                  <div className="w-full bg-[#131B2F] rounded-2xl shadow-sm border border-gray-800 overflow-hidden mb-10 text-left">
                     {/* Part 1: Plan and Location */}
-                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
-                      <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                    <div className="px-6 py-4 bg-[#0B0F19] border-b border-gray-800">
+                      <h3 className="font-bold text-gray-100 flex items-center gap-2">
                         <Check size={18} className="text-[#14b8a6]" />
                         申請方案與社區
                       </h3>
                     </div>
                     <div className="p-6 space-y-5">
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">選擇方案</span>
-                        <span className="font-bold text-gray-900 border-b-2 border-[#14b8a6]/30 pb-1 inline-block">
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">選擇方案</span>
+                        <span className="font-bold text-white border-b-2 border-[#14b8a6]/30 pb-1 inline-block">
                           {formData.plan || '未選擇'} <span className="text-[#14b8a6] ml-2 font-black">${formData.plan ? planPrices[formData.plan] : '0'}</span>/月
                         </span>
                       </div>
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">社區地址</span>
-                        <span className="font-medium text-gray-800 leading-relaxed">
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">社區地址</span>
+                        <span className="font-medium text-gray-100 leading-relaxed">
                           {formData.city}{formData.district}{formData.street}{formData.community}
                         </span>
                       </div>
                     </div>
 
                     {/* Part 2: Contact Details */}
-                    <div className="px-6 py-4 bg-gray-50 border-y border-gray-100">
-                      <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                    <div className="px-6 py-4 bg-[#0B0F19] border-y border-gray-800">
+                      <h3 className="font-bold text-gray-100 flex items-center gap-2">
                         <Check size={18} className="text-[#14b8a6]" />
                         聯絡與裝機資訊
                       </h3>
                     </div>
                     <div className="p-6 space-y-5">
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">聯絡姓名</span>
-                        <span className="font-medium text-gray-800">{formData.contactName || '-'}</span>
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">聯絡姓名</span>
+                        <span className="font-medium text-gray-100">{formData.contactName || '-'}</span>
                       </div>
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">身分證字號</span>
-                        <span className="font-medium text-gray-800">{formData.idNumber || '-'}</span>
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">身分證字號</span>
+                        <span className="font-medium text-gray-100">{formData.idNumber || '-'}</span>
                       </div>
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">手機號碼</span>
-                        <span className="font-medium text-gray-800">{formData.mobile || '-'}</span>
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">手機號碼</span>
+                        <span className="font-medium text-gray-100">{formData.mobile || '-'}</span>
                       </div>
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">電子信箱</span>
-                        <span className="font-medium text-gray-800">{formData.email || '-'}</span>
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">電子信箱</span>
+                        <span className="font-medium text-gray-100">{formData.email || '-'}</span>
                       </div>
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
-                        <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0">裝機地址</span>
-                        <span className="font-medium text-gray-800 leading-relaxed">{formData.installAddress || '-'}</span>
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">裝機地址</span>
+                        <span className="font-medium text-gray-100 leading-relaxed">{formData.installAddress || '-'}</span>
                       </div>
                       {formData.remark && (
                         <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4 pt-4 border-t border-gray-50">
-                          <span className="text-gray-400 font-medium text-sm md:w-24 shrink-0 mt-1">特殊備註</span>
-                          <span className="font-medium text-gray-700 whitespace-pre-wrap bg-gray-50 p-4 rounded-xl flex-1 text-sm border border-gray-100">
+                          <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0 mt-1">特殊備註</span>
+                          <span className="font-medium text-gray-300 whitespace-pre-wrap bg-[#0B0F19] p-4 rounded-xl flex-1 text-sm border border-gray-800">
                             {formData.remark}
                           </span>
                         </div>
@@ -543,7 +543,7 @@ export default function ApplicationFlow() {
           </div>
 
           {/* Footer Actions / Sticky Footer */}
-          <div className="bg-white border-t border-gray-100 flex flex-col rounded-b-3xl sticky bottom-0 z-20 shadow-[0_-4px_25px_-5px_rgba(0,0,0,0.06)]">
+          <div className="bg-[#131B2F] border-t border-gray-800 flex flex-col rounded-b-3xl sticky bottom-0 z-20 shadow-[0_-4px_25px_-5px_rgba(0,0,0,0.06)]">
             {errorMsg && (
               <div className="px-6 py-3 bg-red-50 text-red-600 text-sm font-bold border-b border-red-100 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></div>
@@ -551,14 +551,14 @@ export default function ApplicationFlow() {
               </div>
             )}
             
-            <div className={`p-4 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 ${currentStep !== 1 ? 'bg-gray-50 rounded-b-3xl' : ''}`}>
+            <div className={`p-4 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 ${currentStep !== 1 ? 'bg-[#0B0F19] rounded-b-3xl' : ''}`}>
               {currentStep === 1 ? (
                 <div className="flex items-center gap-4 md:gap-8">
                   <div className="flex flex-col">
-                    <span className="text-gray-700 font-bold text-lg leading-tight">預估金額</span>
-                    <span className="text-gray-400 text-sm">安裝完成後收費</span>
+                    <span className="text-gray-300 font-bold text-lg leading-tight">預估金額</span>
+                    <span className="text-gray-500 text-sm">安裝完成後收費</span>
                   </div>
-                  <div className="text-gray-700 text-3xl font-medium tracking-tight">
+                  <div className="text-gray-300 text-3xl font-medium tracking-tight">
                     ${formData.plan ? planPrices[formData.plan] : '0'}
                   </div>
                 </div>
@@ -566,7 +566,7 @@ export default function ApplicationFlow() {
                 <div className="flex-1">
                   <button 
                     onClick={handlePrev}
-                    className="px-6 py-3 font-medium text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+                    className="px-6 py-3 font-medium text-gray-500 hover:text-white transition-colors flex items-center gap-2"
                   >
                     <ArrowLeft size={18} /> 上一步
                   </button>
@@ -585,7 +585,7 @@ export default function ApplicationFlow() {
                 {currentStep === 2 && (
                   <button 
                     onClick={handleNext}
-                    className="flex items-center justify-center gap-2 px-8 py-3 bg-shrek-600 hover:bg-shrek-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
+                    className="flex items-center justify-center gap-2 px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
                   >
                     下一步
                     <ChevronRight size={18} />
@@ -594,7 +594,7 @@ export default function ApplicationFlow() {
                 {currentStep === 3 && (
                   <button 
                     onClick={() => setShowSuccessModal(true)}
-                    className="flex items-center justify-center gap-2 px-8 py-3 bg-shrek-600 hover:bg-shrek-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
+                    className="flex items-center justify-center gap-2 px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
                   >
                     確認送出
                     <Check size={18} />
@@ -612,30 +612,30 @@ export default function ApplicationFlow() {
         {showPrivacyModal && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
             onClick={() => setShowPrivacyModal(false)}
           >
             <motion.div 
               initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
+              className="bg-[#131B2F] rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
             >
-              <h3 className="text-2xl font-bold mb-6 text-gray-900 border-b pb-4">《個人資料使用授權同意書》</h3>
-              <div className="text-gray-600 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
-                <p>為了提供您最佳的網路申辦與安裝服務，史瑞克社區網路需要收集您的基本個人資料。本同意書旨在說明我們如何收集、處理及利用您的個人資料，請仔細閱讀。</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">一、 蒐集目的</h4>
+              <h3 className="text-2xl font-bold mb-6 text-white border-b pb-4">《個人資料使用授權同意書》</h3>
+              <div className="text-gray-500 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
+                <p>為了提供您最佳的網路申辦與安裝服務，社區網路需要收集您的基本個人資料。本同意書旨在說明我們如何收集、處理及利用您的個人資料，請仔細閱讀。</p>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">一、 蒐集目的</h4>
                 <p>僅供辦理申裝網路服務、客戶服務、帳務管理、以及必要之系統建置與本公司派工聯繫使用。</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">二、 蒐集類別</h4>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">二、 蒐集類別</h4>
                 <p>聯絡人真實姓名、身分證字號（如需）、聯絡電話、電子郵件地址及終端裝機服務地址等必要欄位。</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">三、 個人資料利用之期間、地區、對象及方式</h4>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">三、 個人資料利用之期間、地區、對象及方式</h4>
                 <p>於本公司營運期間內，限台灣地區，僅由本公司及簽約合作之派工維修單位為業務執行之合理善意利用。我們保證不會將您的資料出售給其他第三方機構。</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">四、 當事人權利</h4>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">四、 當事人權利</h4>
                 <p>您可依個人資料保護法規定，隨時向本公司客服中心查詢、閱覽、製給複製本、補充或更正、停止電腦處理及利用或刪除您的個人資料。</p>
               </div>
               <div className="flex justify-end pt-4 border-t">
                 <button 
                   onClick={() => setShowPrivacyModal(false)}
-                  className="px-8 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-bold shadow-sm"
+                  className="px-8 py-3 bg-gray-100 text-gray-300 rounded-xl hover:bg-gray-200 transition-colors font-bold shadow-sm"
                 >
                   確認並關閉
                 </button>
@@ -647,27 +647,27 @@ export default function ApplicationFlow() {
         {showTermsModal && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
             onClick={() => setShowTermsModal(false)}
           >
             <motion.div 
               initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
+              className="bg-[#131B2F] rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl"
             >
-              <h3 className="text-2xl font-bold mb-6 text-gray-900 border-b pb-4">《網路申裝與服務權益說明》</h3>
-              <div className="text-gray-600 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
-                <p>感謝您選擇史瑞克社區網路服務！為保障雙方權益，請在完成申辦前詳閱以下申裝及網路服務使用說明：</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">一、 服務申辦與裝機</h4>
+              <h3 className="text-2xl font-bold mb-6 text-white border-b pb-4">《網路申裝與服務權益說明》</h3>
+              <div className="text-gray-500 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
+                <p>感謝您選擇社區網路服務！為保障雙方權益，請在完成申辦前詳閱以下申裝及網路服務使用說明：</p>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">一、 服務申辦與裝機</h4>
                 <p>我們將於您線上完成申請並審核無誤後的 3 個工作天內，指派專責工程人員與您透過電話聯繫，以確認確切的到府裝機時間段。請確保您填寫的手機與聯絡方式準確無誤並保持暢通。</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">二、 收費標準與繳費原則</h4>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">二、 收費標準與繳費原則</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>網路服務之首期相關費用，將於工程師到府將設備安裝完畢，並協助您測試確認網路連線可正常運作後，才會與您進行收取。</li>
                   <li>首期收取之費用僅包含您所選該方案之期數總價（如 24 個月方案即收取 24 個月之總額），除非由客戶額外要求特別佈線工程，否則絕無隱藏之到府安裝費或手續費。</li>
                 </ul>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">三、 網路速率與使用品質</h4>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">三、 網路速率與使用品質</h4>
                 <p>本服務所提供之網路頻寬為「最高可達」速率（如最高可達 300M）。提醒您，實際測速與體感網速可能因您自備的終端上網設備差異（如舊款網卡、分享器性能）、室內物理環境干擾（如隔牆、訊號死角）或同時間社區內骨幹網路分享的尖峰狀況而有所合理波動，此為網際網路傳輸之自然現象。</p>
-                <h4 className="font-bold text-gray-800 mt-6 mb-2">四、 終止合約與退費規則</h4>
+                <h4 className="font-bold text-gray-100 mt-6 mb-2">四、 終止合約與退費規則</h4>
                 <p>如您於方案合約期間內，因搬家等個人因素導致需提早終止服務，本公司將依據政府既定之電信服務定型化契約規範與裝機時所簽署之實體紙本合約，向您酌收相應之違約補貼款或相關撤機費用。</p>
               </div>
               <div className="flex justify-end pt-4 border-t">
@@ -686,18 +686,18 @@ export default function ApplicationFlow() {
         {showSuccessModal && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           >
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 10 }} animate={{ scale: 1, opacity: 1, y: 0 }}
-              className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center"
+              className="bg-[#131B2F] rounded-3xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center"
             >
-              <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-teal-500/20 rounded-full flex items-center justify-center mb-6">
                 <Check size={32} className="text-[#14b8a6]" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">申請已送出！</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">申請已送出！</h3>
               <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-                感謝您選擇史瑞克社區網路服務，我們的專員將於三個工作天內與您電話聯繫，安排後續施工事宜。
+                感謝您選擇社區網路服務，我們的專員將於三個工作天內與您電話聯繫，安排後續施工事宜。
               </p>
               <button 
                 onClick={() => {
