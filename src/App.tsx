@@ -15,8 +15,8 @@ function App() {
               </span>
               社區網路
             </div>
-            <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-              <Link to="/" className="hover:text-teal-400 transition-colors">首頁</Link>
+            <nav className="hidden md:flex gap-8 text-lg font-bold text-gray-100">
+              <Link to="/" className="hover:text-teal-300 transition-colors tracking-wide">首頁</Link>
             </nav>
           </div>
         </header>
