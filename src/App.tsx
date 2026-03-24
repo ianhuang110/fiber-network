@@ -1,6 +1,7 @@
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import ApplicationFlow from './pages/ApplicationFlow';
+import UserPortal from './pages/UserPortal';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, FileText, Download, User } from 'lucide-react';
@@ -48,13 +49,13 @@ function App() {
               >
                 網路測速
               </a>
-              <button 
-                onClick={() => alert('用戶登入系統與即時帳單查詢功能建置中...')}
+              <Link 
+                to="/portal"
                 className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
               >
                 <User size={16} />
                 <span className="hidden sm:inline">用戶登入</span>
-              </button>
+              </Link>
             </nav>
           </div>
         </header>
@@ -64,6 +65,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/apply" element={<ApplicationFlow />} />
+            <Route path="/portal" element={<UserPortal />} />
           </Routes>
         </main>
         
