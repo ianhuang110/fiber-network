@@ -15,8 +15,21 @@ function App() {
               </span>
               社區網路
             </div>
-            <nav className="hidden md:flex gap-8 text-lg font-bold text-gray-100">
-              <Link to="/" className="hover:text-teal-300 transition-colors tracking-wide">首頁</Link>
+            <nav className="flex items-center gap-3 text-sm font-bold">
+              <Link 
+                to="/" 
+                className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/60 hover:text-[#58A6FF] hover:bg-[#58A6FF]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide"
+              >
+                首頁
+              </Link>
+              <a 
+                href="https://speed.cloudflare.com/" 
+                target="_blank" 
+                rel="noreferrer"
+                className="px-5 py-2 bg-[#238636]/20 border border-[#238636]/40 hover:bg-[#238636]/40 hover:border-[#238636]/70 text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+              >
+                網路測速
+              </a>
             </nav>
           </div>
         </header>
