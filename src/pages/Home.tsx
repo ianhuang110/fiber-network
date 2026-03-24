@@ -1,9 +1,37 @@
-import { ArrowRight, ArrowDownUp, Zap, Users } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Users, Search, CheckCircle2, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export default function Home() {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState<any>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      alert('請先輸入社區名稱');
+      setSearchResult(null);
+      setShowDropdown(false);
+      return;
+    }
+
+    setIsSearching(true);
+    setShowDropdown(true);
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/coverage?q=${encodeURIComponent(searchQuery)}`);
+      const data = await response.json();
+      setSearchResult(data);
+    } catch (error) {
+      console.error('Search API error:', error);
+      setSearchResult({ error: true, message: '系統連線異常，請稍後再試。' });
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   return (
     <div className="flex flex-col flex-1">
@@ -47,17 +75,77 @@ export default function Home() {
                 雙向 300M 極速光纖，遊戲不卡頓，追劇不轉圈。每月只需 300 元，綁約 3 年即送光纖設備，為您打造最穩定的居家網路體驗。
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={() => navigate('/apply')}
-                  className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff]">
-                    立即預約申請
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </button>
+              <div className="space-y-6">
+                {/* 1. 供裝/社區查詢框 */}
+                <div className="w-full max-w-md z-50">
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/20 to-[#238636]/20 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 -z-10"></div>
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Search className="h-5 w-5 text-gray-500 group-focus-within:text-[#58A6FF] transition-colors" />
+                    </div>
+                    <input 
+                      type="text" 
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        if (e.target.value === '') {
+                          setShowDropdown(false);
+                          setSearchResult(null);
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSearch();
+                      }}
+                      placeholder="輸入社區名稱查詢是否在供裝範圍..." 
+                      className="w-full pl-11 pr-24 py-4 bg-[#0D1117] border border-[#30363D] focus:border-[#58A6FF]/50 text-white rounded-2xl outline-none placeholder-gray-500 shadow-inner transition-colors"
+                    />
+                    <button 
+                      onClick={handleSearch}
+                      className="absolute right-2 top-2 bottom-2 px-6 bg-[#238636]/10 hover:bg-[#238636] text-[#238636] hover:text-white font-medium rounded-xl transition-all border border-[#238636]/30"
+                    >
+                      查詢
+                    </button>
+                  </div>
+
+                  {/* Dropdown Result */}
+                  {(showDropdown && (isSearching || searchResult)) && (
+                    <div className="mt-4 w-full bg-[#0D1117]/95 backdrop-blur-xl border border-[#30363D] rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
+                      <div className="p-4">
+                        {isSearching ? (
+                          <div className="flex items-center gap-3 text-gray-400 font-medium">
+                            <div className="w-4 h-4 rounded-full border-2 border-[#58A6FF] border-t-transparent animate-spin"></div>
+                            連線內部資料庫與外部線路系統中...
+                          </div>
+                        ) : searchResult ? (
+                          <div className={`p-4 rounded-xl border ${searchResult.error || (!searchResult.hasCoverage && searchResult.source === 'external_scraper') ? 'bg-red-900/10 border-red-500/30 text-red-400' : 'bg-[#238636]/10 border-[#238636]/30 text-[#238636] shadow-[0_0_15px_rgba(35,134,54,0.1)]'}`}>
+                            <p className="font-semibold text-lg leading-tight mb-1">{searchResult.message}</p>
+                            {searchResult.data && (
+                              <p className="text-sm opacity-90 mt-2 flex items-center gap-1">📍 匹配社區：{searchResult.data.name} <span className="px-2 py-0.5 ml-2 bg-[#238636]/20 rounded-md text-xs">{searchResult.data.speed}</span></p>
+                            )}
+                            {searchResult.source === 'external_scraper' && !searchResult.hasCoverage && (
+                              <p className="text-sm opacity-80 mt-2 font-light">👉 建議直接點擊下方按鈕預約申請，由專人為您人工勘查確認！</p>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="text-gray-500 text-sm font-light">請輸入社區大樓名稱、建案或地址進行查詢</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button 
+                    onClick={() => navigate('/apply')}
+                    className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff]">
+                      立即預約申請
+                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </button>
+                </div>
               </div>
             </motion.div>
 
@@ -88,6 +176,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
 
       {/* Why Fiber Section */}
       <section className="relative py-24 bg-[#05080f] border-y border-[#30363D]/50 z-10">
@@ -140,6 +229,58 @@ export default function Home() {
                 <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Comparison Section */}
+      <section className="relative py-24 bg-[#0D1117] z-10 border-b border-[#30363D]/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">真實對比，<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">高下立判</span></h2>
+            <p className="text-gray-400">不再被傳統合約綁架，用最合理的價格享受最優質的網路</p>
+          </motion.div>
+
+          <div className="overflow-hidden rounded-2xl border border-[#30363D] bg-[#05080f] py-2 md:py-0 shadow-2xl">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                  <tr>
+                    <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-400 font-medium w-1/4">比較項目</th>
+                    <th className="p-5 md:p-6 border-b border-t-4 border-[#238636] border-b-[#30363D] text-white font-bold text-lg bg-[#238636]/10 w-2/5 border-l border-r border-x-[#238636]/20 relative">
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#238636] text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(35,134,54,0.5)] whitespace-nowrap">
+                        專屬首選
+                      </div>
+                      社區網路
+                    </th>
+                    <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-500 font-medium w-[35%]">一般傳統電信</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#30363D]/50">
+                  {[
+                    { label: '月租費', us: '300 元 / 月', them: '約 899 - 1,299 元', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
+                    { label: '頻寬速率', us: '雙向 300M (上傳保證)', them: '300M / 150M (非對稱)', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
+                    { label: '硬體設備', us: '免費借用 WiFi 6 路由', them: '需額外每月加價租用', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
+                    { label: '維修服務', us: '24Hr 監控, 專屬快速報修', them: '層層轉接客服總機', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> }
+                  ].map((row, i) => (
+                    <tr key={i} className="group transition-colors hover:bg-white/[0.02]">
+                      <td className="p-5 md:p-6 text-gray-300 font-medium">{row.label}</td>
+                      <td className="p-5 md:p-6 text-[#79b8ff] font-semibold bg-[#238636]/5 border-x border-[#238636]/20 transition-colors group-hover:bg-[#238636]/10">
+                        {row.usIcon} {row.us}
+                      </td>
+                      <td className="p-5 md:p-6 text-gray-500">
+                        {row.themIcon} {row.them}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import ApplicationFlow from './pages/ApplicationFlow';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, FileText, Download } from 'lucide-react';
+import { X, FileText, Download, User } from 'lucide-react';
 
 function App() {
   const [showPlanModal, setShowPlanModal] = useState(false);
@@ -14,12 +14,12 @@ function App() {
         {/* Global Header */}
         <header className="bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-white font-bold text-2xl tracking-tight">
+            <Link to="/" className="flex items-center gap-2 text-white font-bold text-2xl tracking-tight hover:opacity-80 transition-opacity">
               <span className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-600 rounded-lg flex items-center justify-center text-white">
                 S
               </span>
               社區網路
-            </div>
+            </Link>
             <nav className="flex items-center gap-3 text-sm font-bold">
               <Link 
                 to="/" 
@@ -44,10 +44,17 @@ function App() {
                 href="https://speed.cloudflare.com/" 
                 target="_blank" 
                 rel="noreferrer"
-                className="px-5 py-2 bg-[#238636]/20 border border-[#238636]/40 hover:bg-[#238636]/40 hover:border-[#238636]/70 text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+                className="px-5 py-2 bg-[#238636]/20 border border-[#238636]/40 hover:bg-[#238636]/40 hover:border-[#238636]/70 text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2 hidden sm:flex"
               >
                 網路測速
               </a>
+              <button 
+                onClick={() => alert('用戶登入系統與即時帳單查詢功能建置中...')}
+                className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+              >
+                <User size={16} />
+                <span className="hidden sm:inline">用戶登入</span>
+              </button>
             </nav>
           </div>
         </header>
