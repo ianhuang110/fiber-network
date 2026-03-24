@@ -255,37 +255,7 @@ export default function ApplicationFlow() {
                       </div>
                     </div>
                     
-                    {/* 新增的選擇方案 UI */}
-                    <div className="md:col-span-2 mt-8">
-                      <div className="flex items-center gap-2 mb-6 text-white border-b border-gray-800 pb-3">
-                        <h3 className="text-xl font-bold">選擇方案</h3>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 gap-6 max-w-sm">
-                        {/* 方案 1 */}
-                        <div 
-                          onClick={() => setFormData({...formData, plan: '300M光纖上網 (綁約3年送設備)'})}
-                          className={`relative flex flex-col bg-[#131B2F] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-sm hover:shadow-md ${formData.plan === '300M光纖上網 (綁約3年送設備)' ? 'border-teal-500 ring-4 ring-teal-500/20' : 'border-gray-800 hover:border-gray-700'}`}
-                        >
-                          <div className="h-44 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" alt="Family using tablet" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
-                            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#131B2F] via-[#131B2F]/80 to-transparent"></div>
-                            <h4 className="absolute bottom-3 left-0 right-0 text-center text-teal-400 font-bold text-xl drop-shadow-sm tracking-wide">300M網路 (綁約3年)</h4>
-                          </div>
-                          <div className="p-6 flex flex-col flex-1">
-                            <div className="flex items-center gap-3 mb-6">
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${formData.plan === '300M光纖上網 (綁約3年送設備)' ? 'border-teal-500 bg-[#131B2F]' : 'border-gray-700'}`}>
-                                {formData.plan === '300M光纖上網 (綁約3年送設備)' && <div className="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>}
-                              </div>
-                              <span className="text-gray-300 font-medium">300M光纖上網<br/><span className="text-sm text-teal-500">綁約3年送設備</span></span>
-                            </div>
-                            <div className="mt-auto pt-4 border-t border-gray-800">
-                              <p className="text-gray-500 font-medium">月租 <span className="text-2xl font-bold text-white ml-1">$300</span></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                 </motion.div>
               )}
