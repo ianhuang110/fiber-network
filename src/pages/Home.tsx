@@ -285,8 +285,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contact Us Section */}
+      <section className="relative py-16 bg-[#05080f] z-10 border-b border-[#30363D]/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#00B900]/10 to-[#131B2F] border border-[#00B900]/30 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl"
+          >
+            {/* Background Glow */}
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#00B900]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            
+            <div className="relative z-10 text-center md:text-left flex-1">
+              <h2 className="text-3xl font-bold text-white mb-4">有任何問題嗎？讓專屬客服幫助您！</h2>
+              <p className="text-gray-400 text-lg">
+                無論是申裝諮詢、網路疑難排解、或是報修問題，歡迎隨時透過官方 LINE 聯繫我們。真人客服將盡速為您服務。
+              </p>
+            </div>
+            
+            <div className="relative z-10 shrink-0">
+              <a 
+                href="https://line.me/R/ti/p/@your_line_id" 
+                target="_blank" 
+                rel="noreferrer"
+                className="group relative inline-flex items-center gap-3 px-8 py-5 bg-[#00B900] text-white font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,185,0,0.3)] hover:shadow-[0_0_30px_rgba(0,185,0,0.5)] transition-all hover:-translate-y-1"
+              >
+                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 group-hover:scale-110 transition-transform">
+                  <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992z"/>
+                </svg>
+                加入官方 LINE
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Contract Trigger Section at the bottom */}
-      <section className="relative py-16 bg-[#05080f] z-10 border-t border-[#30363D]/50 border-b">
+      <section className="relative py-16 bg-[#05080f] z-10 border-b border-[#30363D]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold text-white mb-6">申請前請先詳閱合約書</h2>
           <button 
