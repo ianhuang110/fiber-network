@@ -199,7 +199,7 @@ export default function Home() {
                   {[
                     { label: '月租費', us: '300 元 / 月', them: '約 899 - 1,299 元', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
                     { label: '頻寬速率', us: '雙向 300M (上傳保證)', them: '300M / 150M (非對稱)', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
-                    { label: '硬體設備', us: '免費借用 WiFi 6 路由', them: '需額外每月加價租用', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
+                    { label: '硬體設備', us: '免費提供一台光纖設備', them: '需額外每月加價租用', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
                     { label: '維修服務', us: '24Hr 監控, 專屬快速報修', them: '層層轉接客服總機', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> }
                   ].map((row, i) => (
                     <tr key={i} className="group transition-colors hover:bg-white/[0.02]">
