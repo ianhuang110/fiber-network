@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, FileText, Download, ChevronDown, HelpCircle, PhoneCall } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, ChevronDown, HelpCircle, PhoneCall } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -29,7 +29,6 @@ const FAQs = [
 
 export default function Home() {
   const navigate = useNavigate();
-  const [showContractModal, setShowContractModal] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const toggleFaq = (index: number) => {
@@ -180,8 +179,8 @@ export default function Home() {
             <p className="text-gray-400">不再被傳統合約綁架，用最合理的價格享受最優質的網路</p>
           </motion.div>
 
-          <div className="overflow-hidden rounded-2xl border border-[#30363D] bg-[#05080f] py-2 md:py-0 shadow-2xl">
-            <div className="overflow-x-auto">
+          <div className="overflow-hidden rounded-2xl border border-[#30363D] bg-[#05080f] pb-2 md:pb-0 shadow-2xl">
+            <div className="overflow-x-auto pt-5">
               <table className="w-full text-left border-collapse min-w-[600px]">
                 <thead>
                   <tr>
@@ -319,76 +318,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contract Trigger Section at the bottom */}
-      <section className="relative py-16 bg-[#05080f] z-10 border-b border-[#30363D]/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-6">申請前請先詳閱合約書</h2>
-          <button 
-            onClick={() => setShowContractModal(true)}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] font-semibold text-lg rounded-xl transition-all shadow-md group border-2"
-          >
-            <FileText className="text-[#58A6FF] group-hover:scale-110 transition-transform" size={24} />
-            點此檢視中華電信合約書
-          </button>
-        </div>
-      </section>
 
-      {/* Contract Modal */}
-      <AnimatePresence>
-        {showContractModal && (
-          <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm"
-            onClick={() => setShowContractModal(false)}
-          >
-            <motion.div 
-              initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#131B2F] rounded-3xl w-full max-w-5xl h-[85vh] sm:h-[90vh] shadow-2xl flex flex-col border border-gray-800 overflow-hidden relative"
-            >
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-[#0B0F19]">
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <FileText className="text-[#58A6FF]" size={20} />
-                  中華電信合約書
-                </h3>
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <a 
-                    href={`${import.meta.env.BASE_URL}contract.pdf`}
-                    target="_blank"
-                    rel="noreferrer"
-                    download="中華電信社區網路合約書.pdf"
-                    className="px-4 py-1.5 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-300 hover:text-[#58A6FF] rounded-lg transition-colors text-sm font-semibold flex items-center gap-2 shadow-sm whitespace-nowrap"
-                  >
-                    <Download size={16} />
-                    <span>下載 / 開啟 PDF</span>
-                  </a>
-                  <button 
-                    onClick={() => setShowContractModal(false)}
-                    className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors"
-                  >
-                    <X size={24} />
-                  </button>
-                </div>
-              </div>
-              <div className="flex-1 bg-gray-900 overflow-hidden relative">
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center pointer-events-none z-0">
-                  <FileText className="text-gray-700 w-24 h-24 mb-4" />
-                  <p className="text-gray-500 font-medium text-lg">載入合約文件...</p>
-                  <p className="text-gray-400 mt-4 text-sm max-w-xs leading-relaxed border border-gray-800 bg-[#0B0F19] rounded-xl p-4">
-                    若您的手機無法直接在這裡預覽 PDF，<br/>請點擊上方的「下載 / 開啟 PDF」按鈕直接檢視。
-                  </p>
-                </div>
-                
-                <iframe 
-                  src={`${import.meta.env.BASE_URL}contract.pdf`} 
-                  className="w-full h-full relative z-10 border-0 bg-transparent"
-                  title="中華電信合約書"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </div>
   );
