@@ -4,7 +4,7 @@ import ApplicationFlow from './pages/ApplicationFlow';
 import UserPortal from './pages/UserPortal';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, User } from 'lucide-react';
+import { X, User, PhoneCall } from 'lucide-react';
 
 function App() {
   const [showPlanModal, setShowPlanModal] = useState(false);
@@ -128,19 +128,15 @@ function App() {
 
         {/* Global Floating Contact Button */}
         <a
-          href="https://line.me/R/ti/p/@your_line_id"
-          target="_blank"
-          rel="noreferrer"
-          className="fixed bottom-6 right-6 z-50 p-4 bg-[#00B900] hover:bg-[#009900] text-white rounded-full shadow-[0_0_20px_rgba(0,185,0,0.3)] hover:shadow-[0_0_30px_rgba(0,185,0,0.5)] transition-all hover:scale-110 flex items-center justify-center group"
-          aria-label="聯絡客服"
+          href="tel:0971789985"
+          className="fixed bottom-6 right-6 z-50 p-4 bg-[#58A6FF] hover:bg-[#408BE0] rounded-full shadow-[0_0_20px_rgba(88,166,255,0.3)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:scale-110 flex items-center justify-center group"
+          aria-label="撥打客服"
         >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-            <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992z"/>
-          </svg>
+          <PhoneCall size={28} className="text-[#0B0F19]" />
           
           {/* Hover tooltip */}
           <span className="absolute right-full mr-4 bg-[#131B2F] text-white px-3 py-1.5 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#30363D] shadow-xl">
-            真人客服 / 聯絡我們
+            撥打客服專線
           </span>
         </a>
 
