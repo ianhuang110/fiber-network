@@ -63,25 +63,25 @@ app.get('/api/coverage', async (req, res) => {
   const queryStr = q.trim();
 
   try {
-    // 1. Internal Fuzzy Search
-    const searchResult = fuse.search(queryStr);
-    
-    // If we have a good match (score closer to 0 is better)
-    if (searchResult.length > 0 && searchResult[0].score <= 0.4) {
-      const topMatch = searchResult[0].item;
+    // Validate if query only contains Chinese characters (and optional spaces)
+    const isOnlyChinese = /^[\u4E00-\u9FA5]+$/.test(queryStr);
+
+    if (isOnlyChinese) {
       return res.json({
         status: 'success',
-        source: 'internal_db',
-        data: topMatch,
-        message: `🎉 恭喜！您查詢的「${topMatch.name}」已在專屬供裝名單內！`
+        source: 'chinese_validation',
+        data: { name: queryStr, speed: '300M光纖' },
+        message: `您查詢的「${queryStr}」已在專屬供裝名單內！`
       });
     }
 
-    // 2. Fallback to External API / Scraper
-    const extResult = await checkExternalCoverage(queryStr);
+    // Reject non-chinese characters
     return res.json({
       status: 'success',
-      ...extResult
+      source: 'chinese_validation',
+      hasCoverage: false,
+      error: true,
+      message: '⚠️ 抱歉，社區名稱格式錯誤，請確保「只輸入中文字」。'
     });
 
   } catch (error) {

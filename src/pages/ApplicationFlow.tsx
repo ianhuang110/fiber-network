@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight, ArrowLeft, Home, MapPin, ChevronDown } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 const steps = [
-  { id: 1, title: '選擇社區與方案' },
+  { id: 1, title: '選擇社區' },
   { id: 2, title: '填寫資訊' },
   { id: 3, title: '完成申請' }
 ];
@@ -45,8 +45,9 @@ const planPrices: Record<string, string> = {
 
 export default function ApplicationFlow() {
   const [currentStep, setCurrentStep] = useState(1);
+  const location = useLocation();
   const [formData, setFormData] = useState({ 
-    city: '', district: '', street: '', community: '', plan: '',
+    city: '', district: '', street: '', community: location.state?.prefillCommunity || '', plan: '300M光纖上網 (綁約3年送設備)',
     contactName: '', idNumber: '', birthday: '', mobile: '', email: '', installAddress: '',
     remark: '', referrer: '', agreePrivacy: false, agreeTerms: false
   });
@@ -58,14 +59,11 @@ export default function ApplicationFlow() {
 
   const handleNext = () => {
     if (currentStep === 1) {
-      if (!formData.city || !formData.district || !formData.street || !formData.community) {
-        setErrorMsg('所有社區資訊請務必選擇，才能進行下一步');
+      if (!formData.city || !formData.district || !formData.community) {
+        setErrorMsg('所有社區資訊請務必填寫，才能進行下一步');
         return;
       }
-      if (!formData.plan) {
-        setErrorMsg('請選擇欲申請的網路方案，才能進行下一步');
-        return;
-      }
+
       setErrorMsg('');
     }
     if (currentStep === 2) {
@@ -87,10 +85,6 @@ export default function ApplicationFlow() {
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         setErrorMsg('Email 格式錯誤，請重新輸入');
-        return;
-      }
-      if (!formData.agreePrivacy || !formData.agreeTerms) {
-        setErrorMsg('請詳細閱讀並勾選同意相關條款與說明，才能進行下一步唷！');
         return;
       }
       setErrorMsg('');
@@ -164,7 +158,7 @@ export default function ApplicationFlow() {
                   exit={{ opacity: 0, x: -20 }}
                   className="space-y-6"
                 >
-                  <h2 className="text-2xl font-bold text-white mb-6">選擇社區與方案</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">選擇社區</h2>
                   
                   <div className="grid grid-cols-1 gap-6">
                     {/* 新增的裝機地址 / 選擇社區 UI */}
@@ -188,7 +182,7 @@ export default function ApplicationFlow() {
                             <div className="relative">
                               <select 
                                 value={formData.city} 
-                                onChange={(e) => setFormData({...formData, city: e.target.value, district: '', street: '', community: ''})} 
+                                onChange={(e) => setFormData({...formData, city: e.target.value, district: ''})} 
                                 className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none appearance-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
                               >
                                 <option value="" disabled hidden></option>
@@ -208,7 +202,7 @@ export default function ApplicationFlow() {
                             <div className="relative">
                               <select 
                                 value={formData.district} 
-                                onChange={(e) => setFormData({...formData, district: e.target.value, street: '', community: ''})} 
+                                onChange={(e) => setFormData({...formData, district: e.target.value})} 
                                 className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none appearance-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
                               >
                                 <option value="" disabled hidden></option>
@@ -220,21 +214,7 @@ export default function ApplicationFlow() {
                             </div>
                           </div>
 
-                          {/* 道路或街名 */}
-                          <div className="relative">
-                            <label className="absolute -top-3 left-3 bg-[#131B2F] px-2 text-sm text-gray-300 font-bold tracking-wide z-10">
-                              <span className="text-red-500 mr-1">*</span>道路或街名
-                            </label>
-                            <div className="relative">
-                              <input 
-                                type="text"
-                                value={formData.street} 
-                                onChange={(e) => setFormData({...formData, street: e.target.value})} 
-                                placeholder="例如：中正路"
-                                className="w-full px-4 py-3.5 rounded-lg border border-gray-700 text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none bg-[#0B0F19] hover:border-gray-500 transition-colors"
-                              />
-                            </div>
-                          </div>
+
 
                           {/* 社區名稱 */}
                           <div className="relative">
@@ -278,7 +258,7 @@ export default function ApplicationFlow() {
                         type="text" 
                         value={formData.contactName}
                         onChange={(e) => setFormData({...formData, contactName: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：王小明" 
                       />
                     </div>
@@ -289,7 +269,7 @@ export default function ApplicationFlow() {
                         value={formData.idNumber}
                         onChange={(e) => setFormData({...formData, idNumber: e.target.value.toUpperCase()})}
                         maxLength={10}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：A123456789" 
                       />
                     </div>
@@ -299,7 +279,7 @@ export default function ApplicationFlow() {
                         type="text" 
                         value={formData.birthday}
                         onChange={(e) => setFormData({...formData, birthday: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：1990/01/01" 
                       />
                     </div>
@@ -310,7 +290,7 @@ export default function ApplicationFlow() {
                         value={formData.mobile}
                         onChange={(e) => setFormData({...formData, mobile: e.target.value})}
                         maxLength={10}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：0912345678" 
                       />
                     </div>
@@ -320,7 +300,7 @@ export default function ApplicationFlow() {
                         type="email" 
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：example@gmail.com" 
                       />
                     </div>
@@ -330,7 +310,7 @@ export default function ApplicationFlow() {
                         type="text" 
                         value={formData.installAddress}
                         onChange={(e) => setFormData({...formData, installAddress: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
                         placeholder="例如：桃園市中壢區中正路100號5樓之1" 
                       />
                     </div>
@@ -353,35 +333,6 @@ export default function ApplicationFlow() {
                           {formData.remark.length} / 200
                         </span>
                       </div>
-                    </div>
-
-
-                    <div className="flex flex-col gap-4 mt-4">
-                      <label className="flex items-center gap-3 cursor-pointer group">
-                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreePrivacy ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-700 group-hover:border-[#14b8a6]'}`}>
-                          {formData.agreePrivacy && <Check size={16} className="text-white" />}
-                        </div>
-                        <input 
-                          type="checkbox" 
-                          className="hidden" 
-                          checked={formData.agreePrivacy}
-                          onChange={(e) => setFormData({...formData, agreePrivacy: e.target.checked})}
-                        />
-                        <span className="text-gray-300 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《個人資料使用授權同意書》</span></span>
-                      </label>
-
-                      <label className="flex items-center gap-3 cursor-pointer group">
-                        <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${formData.agreeTerms ? 'bg-[#14b8a6] border-[#14b8a6]' : 'border-gray-700 group-hover:border-[#14b8a6]'}`}>
-                          {formData.agreeTerms && <Check size={16} className="text-white" />}
-                        </div>
-                        <input 
-                          type="checkbox" 
-                          className="hidden" 
-                          checked={formData.agreeTerms}
-                          onChange={(e) => setFormData({...formData, agreeTerms: e.target.checked})}
-                        />
-                        <span className="text-gray-300 font-medium">我已閱讀並同意 <span onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#14b8a6] hover:underline cursor-pointer">《網路申裝與服務權益說明》</span></span>
-                      </label>
                     </div>
                   </div>
                 </motion.div>
@@ -416,7 +367,7 @@ export default function ApplicationFlow() {
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
                         <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">社區地址</span>
                         <span className="font-medium text-gray-100 leading-relaxed">
-                          {formData.city}{formData.district}{formData.street}{formData.community}
+                          {formData.city}{formData.district}{formData.community}
                         </span>
                       </div>
                     </div>

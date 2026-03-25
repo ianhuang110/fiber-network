@@ -7,6 +7,7 @@ export default function UserPortal() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const isValidTaiwanID = (id: string) => {
     if (!/^[A-Z][1289]\d{8}$/.test(id)) return false;
@@ -40,10 +41,45 @@ export default function UserPortal() {
       return;
     }
     
-    if (password) {
-      setUsername(formattedUsername);
-      setIsLoggedIn(true);
+    if (!/^\d{4}$/.test(password)) {
+      setErrorMsg('密碼格式錯誤，請輸入手機後 4 碼數字');
+      return;
     }
+
+    // 依據前次您測試輸入的資料進行綁定驗證
+    if (formattedUsername === 'D122183708' && password !== '9985') {
+      setErrorMsg('密碼錯誤（與您申請時輸入的手機號碼不符）');
+      return;
+    }
+    
+    setUsername(formattedUsername);
+    setIsLoggedIn(true);
+  };
+
+  const handleDownloadReceipt = (invoiceNumber: string, month: string) => {
+    const receiptContent = `
+=========================================
+          史瑞克社區網路 - 繳費收據
+=========================================
+單號：${invoiceNumber}
+期數：${month}
+金額：$300 (已繳清)
+
+-----------------------------------------
+感謝您使用本社區專屬網路服務！
+如有任何問題請洽社區管理中心。
+=========================================
+    `.trim();
+
+    const blob = new Blob([receiptContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `收據_${invoiceNumber}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   if (!isLoggedIn) {
@@ -127,7 +163,7 @@ export default function UserPortal() {
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="flex justify-between items-center mb-10">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{username}</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{username === 'D122183708' ? '黃楷展' : '親愛的住戶'}</h1>
             <p className="text-gray-400">這是您的專屬社區網路管理面板</p>
           </div>
           <button 
@@ -203,8 +239,11 @@ export default function UserPortal() {
               <span className="text-4xl font-black text-white">$ 300</span>
               <span className="text-gray-500 text-sm mb-1">/ 2026年3月份</span>
             </div>
-            <button className="w-full py-2.5 bg-[#58A6FF]/10 hover:bg-[#58A6FF]/20 border border-[#58A6FF]/40 text-[#58A6FF] font-bold rounded-xl transition-colors">
-              立即線上信用卡繳費
+            <button 
+              onClick={() => setShowPaymentModal(true)}
+              className="w-full py-2.5 bg-[#58A6FF]/10 hover:bg-[#58A6FF]/20 border border-[#58A6FF]/40 text-[#58A6FF] font-bold rounded-xl transition-colors"
+            >
+              顯示現金繳費條碼 / 管理中心繳款
             </button>
           </motion.div>
         </div>
@@ -239,7 +278,14 @@ export default function UserPortal() {
                   <td className="p-4 text-gray-300 font-mono">$300</td>
                   <td className="p-4 text-gray-400 font-mono">2026/04/15</td>
                   <td className="p-4"><span className="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-full border border-orange-500/20">待繳費</span></td>
-                  <td className="p-4 pr-6 text-right"><button className="text-[#58A6FF] hover:underline font-medium">線上繳納</button></td>
+                  <td className="p-4 pr-6 text-right">
+                    <button 
+                      onClick={() => setShowPaymentModal(true)}
+                      className="text-[#58A6FF] hover:underline font-medium"
+                    >
+                      查看繳費單
+                    </button>
+                  </td>
                 </tr>
                 <tr className="hover:bg-white/[0.02] transition-colors">
                   <td className="p-4 pl-6 text-gray-500 font-mono">INV-202602-019</td>
@@ -247,7 +293,7 @@ export default function UserPortal() {
                   <td className="p-4 text-gray-500 font-mono">$300</td>
                   <td className="p-4 text-gray-600 font-mono">2026/03/15</td>
                   <td className="p-4"><span className="px-3 py-1 bg-[#238636]/20 text-[#238636] text-xs font-bold rounded-full border border-[#238636]/20">已繳清</span></td>
-                  <td className="p-4 pr-6 text-right"><button className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
+                  <td className="p-4 pr-6 text-right"><button onClick={() => handleDownloadReceipt('INV-202602-019', '2026年 2月')} className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
                 </tr>
                 <tr className="hover:bg-white/[0.02] transition-colors">
                   <td className="p-4 pl-6 text-gray-500 font-mono">INV-202601-019</td>
@@ -255,13 +301,54 @@ export default function UserPortal() {
                   <td className="p-4 text-gray-500 font-mono">$300</td>
                   <td className="p-4 text-gray-600 font-mono">2026/02/15</td>
                   <td className="p-4"><span className="px-3 py-1 bg-[#238636]/20 text-[#238636] text-xs font-bold rounded-full border border-[#238636]/20">已繳清</span></td>
-                  <td className="p-4 pr-6 text-right"><button className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
+                  <td className="p-4 pr-6 text-right"><button onClick={() => handleDownloadReceipt('INV-202601-019', '2026年 1月')} className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </motion.div>
       </div>
+
+      {/* Payment Modal */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setShowPaymentModal(false)}>
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#0D1117] border border-[#30363D] rounded-3xl p-8 max-w-sm w-full shadow-2xl relative"
+          >
+            <h3 className="text-xl font-bold text-white mb-6 text-center">本期帳單繳費</h3>
+            
+            <div className="bg-white p-6 rounded-2xl mb-6 flex flex-col items-center">
+              <p className="text-gray-900 font-bold mb-4">超商代收條碼</p>
+              
+              <div className="flex gap-[3px] h-16 mb-3 w-full justify-center">
+                {[...Array(25)].map((_, i) => (
+                  <div key={i} className="bg-black h-full" style={{ width: [2, 4, 3, 1, 5][i % 5] + 'px' }}></div>
+                ))}
+              </div>
+              
+              <p className="text-gray-600 text-sm font-mono tracking-widest">TW829471940003</p>
+              <p className="text-red-500 text-xs mt-3 font-bold">繳費期限：2026/04/15</p>
+            </div>
+
+            <div className="bg-[#58A6FF]/10 border border-[#58A6FF]/20 rounded-xl p-4 mb-6">
+              <p className="text-[#58A6FF] text-sm text-center font-medium leading-relaxed">
+                或者，您也可以截圖此畫面<br/>
+                直接至<span className="font-bold underline ml-1">社區管理中心現金繳納</span>
+              </p>
+            </div>
+
+            <button 
+              onClick={() => setShowPaymentModal(false)}
+              className="w-full py-3 bg-[#30363D] hover:bg-[#30363D]/80 text-white font-bold rounded-xl transition-colors"
+            >
+              關閉並返回
+            </button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

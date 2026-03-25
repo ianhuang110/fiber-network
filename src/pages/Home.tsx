@@ -136,7 +136,7 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button 
-                    onClick={() => navigate('/apply')}
+                    onClick={() => navigate('/apply', { state: { prefillCommunity: searchResult?.data?.name || searchQuery } })}
                     className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
