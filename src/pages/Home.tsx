@@ -224,7 +224,7 @@ export default function Home() {
                 </h3>
                 <div className="flex items-center gap-2 sm:gap-3">
                   <a 
-                    href="/contract.pdf"
+                    href={`${import.meta.env.BASE_URL}contract.pdf`}
                     target="_blank"
                     rel="noreferrer"
                     download="中華電信社區網路合約書.pdf"
@@ -251,7 +251,7 @@ export default function Home() {
                 </div>
                 
                 <iframe 
-                  src="/contract.pdf" 
+                  src={`${import.meta.env.BASE_URL}contract.pdf`} 
                   className="w-full h-full relative z-10 border-0 bg-transparent"
                   title="中華電信合約書"
                 />
