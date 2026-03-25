@@ -160,7 +160,7 @@ export default function Home() {
               <div className="relative bg-[#0D1117]/60 backdrop-blur-xl border border-[#30363D] rounded-[2rem] p-4 shadow-2xl">
                 <div className="w-full aspect-[4/3] rounded-2xl bg-[#0D1117] overflow-hidden relative group border border-[#30363D]/50">
                   <div className="absolute inset-0 bg-[#58A6FF]/10 mix-blend-overlay z-10 pointer-events-none"></div>
-                  <img src="/cute_white_robot.png" alt="Cute White AI Robot" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={`${import.meta.env.BASE_URL}cute_white_robot.png`} alt="Cute White AI Robot" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   
                   {/* HUD Elements */}
                   <div className="absolute top-4 left-4 flex gap-2 z-20">
