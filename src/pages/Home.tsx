@@ -23,7 +23,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-2xl"
+              className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#238636]/10 text-[#238636] text-sm font-semibold mb-6 shadow-sm border border-[#238636]/30">
                 <span className="relative flex h-2 w-2">
@@ -32,23 +32,23 @@ export default function Home() {
                 </span>
                 狀態：全網監控中．穩定運行
               </div>
-              <h1 className="text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 mt-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 mt-2">
                 住社區就要裝<br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.3)]">
                   專屬社區網路
                 </span>
               </h1>
               
-              <p className="text-xl text-gray-400 mb-10 leading-relaxed font-light">
+              <p className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed font-light mx-auto lg:mx-0 max-w-xl">
                 雙向 300M 極速光纖，遊戲不卡頓，追劇不轉圈。每月只需 300 元，綁約 3 年即送光纖設備，為您打造最穩定的居家網路體驗。
               </p>
 
               <button 
                 onClick={() => navigate('/apply')}
-                className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold text-lg rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1 inline-flex w-auto"
+                className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold text-lg rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1 inline-flex w-full sm:w-auto"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff]">
+                <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff] w-full">
                   立即預約申請
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -60,7 +60,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative hidden lg:block"
+              className="relative block mt-12 lg:mt-0 w-full max-w-md mx-auto lg:max-w-none"
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-[#58A6FF]/30 to-[#238636]/30 rounded-[3rem] blur-3xl opacity-50 -z-10"></div>
               <div className="relative bg-[#0D1117]/60 backdrop-blur-xl border border-[#30363D] rounded-[2rem] p-4 shadow-2xl">
@@ -222,14 +222,16 @@ export default function Home() {
                   <FileText className="text-[#58A6FF]" size={20} />
                   中華電信合約書
                 </h3>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <a 
                     href="/contract.pdf"
+                    target="_blank"
+                    rel="noreferrer"
                     download="中華電信社區網路合約書.pdf"
-                    className="px-4 py-1.5 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-300 hover:text-[#58A6FF] rounded-lg transition-colors text-sm font-semibold flex items-center gap-2 shadow-sm"
+                    className="px-4 py-1.5 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-300 hover:text-[#58A6FF] rounded-lg transition-colors text-sm font-semibold flex items-center gap-2 shadow-sm whitespace-nowrap"
                   >
                     <Download size={16} />
-                    <span className="hidden sm:inline">下載 PDF</span>
+                    <span>下載 / 開啟 PDF</span>
                   </a>
                   <button 
                     onClick={() => setShowContractModal(false)}
@@ -243,6 +245,9 @@ export default function Home() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center pointer-events-none z-0">
                   <FileText className="text-gray-700 w-24 h-24 mb-4" />
                   <p className="text-gray-500 font-medium text-lg">載入合約文件...</p>
+                  <p className="text-gray-400 mt-4 text-sm max-w-xs leading-relaxed border border-gray-800 bg-[#0B0F19] rounded-xl p-4">
+                    若您的手機無法直接在這裡預覽 PDF，<br/>請點擊上方的「下載 / 開啟 PDF」按鈕直接檢視。
+                  </p>
                 </div>
                 
                 <iframe 
