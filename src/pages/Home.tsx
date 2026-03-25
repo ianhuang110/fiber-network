@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, ChevronDown, HelpCircle, PhoneCall } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, ChevronDown, HelpCircle, PhoneCall, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -29,6 +29,7 @@ const FAQs = [
 
 export default function Home() {
   const navigate = useNavigate();
+  const [showContractModal, setShowContractModal] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const toggleFaq = (index: number) => {
@@ -318,7 +319,102 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contract Trigger Section at the bottom */}
+      <section className="relative py-16 bg-[#05080f] z-10 border-b border-[#30363D]/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-6">申請前請先詳閱合約書</h2>
+          <button 
+            onClick={() => setShowContractModal(true)}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] font-semibold text-lg rounded-xl transition-all shadow-md group border-2"
+          >
+            <FileText className="text-[#58A6FF] group-hover:scale-110 transition-transform" size={24} />
+            點此檢視社區網路合約書
+          </button>
+        </div>
+      </section>
 
+      {/* Contract Modal */}
+      <AnimatePresence>
+        {showContractModal && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowContractModal(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#131B2F] rounded-2xl p-6 md:p-8 max-w-3xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-gray-800"
+            >
+              <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#131B2F] z-10 pt-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                  <FileText className="text-[#58A6FF]" size={24} />
+                  《社區網路服務條款暨合約書》
+                </h3>
+                <button 
+                  onClick={() => setShowContractModal(false)}
+                  className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors shrink-0"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              
+              <div className="text-gray-400 space-y-6 text-[15px] leading-relaxed pr-2">
+                <p>歡迎您申請社區網路服務！為保障您的權益，請仔細閱讀以下合約條款內容：</p>
+                
+                <div>
+                  <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">一、 服務申辦與裝機</h4>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>申請人透過線上系統完成預約後，本服務中心將於 3 個工作天內聯繫排程。</li>
+                    <li>首次到府安裝含線路佈建及設備測試，並於確認網路暢通後開始起算合約期與費用。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">二、 收費標準與服務期間</h4>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>本合約包含 300M 雙向極速光纖上網服務，月租費為新台幣 300 元整。</li>
+                    <li>基本合約期限為三年（36個月），申裝時免費提供標準光纖路由器乙台供合約期間內使用。</li>
+                    <li>若需額外升級 Wi-Fi 6 等進階設備，相關費用另依報價單為準。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">三、 網路速率與連線品質</h4>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>本方案標示之「雙向 300M」係指最高可達速率。實際傳輸速率可能因用戶終端設備性能、介面、室內環境阻隔等實體因素而有所影響。</li>
+                    <li>我們提供 24 小時網路設備監控與專屬報修處理，若遇硬體異常將優先排程處理。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">四、 設備提供與保管責任</h4>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>合約期間內提供之光纖設備產權歸屬本公司，用戶應善盡保管責任。若因人為損壞（如：進水、摔壞等）需照價賠償。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">五、 終止合約與違約處理</h4>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>若於合約期間內（三年內）因搬家或其他個人因素提前終止服務，本公司將依剩餘合約天數比例，酌收裝機補貼款與相關手續費用。</li>
+                    <li>合約期滿後，未提出終止申請將自動展延，並可繼續享有原優惠月租。</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex justify-end pt-6 mt-6 border-t border-gray-800">
+                <button 
+                  onClick={() => setShowContractModal(false)}
+                  className="px-8 py-3 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] rounded-xl transition-all shadow-md font-bold"
+                >
+                  確認並關閉
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
