@@ -1,11 +1,40 @@
-import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, FileText, Download } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, FileText, Download, ChevronDown, HelpCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
+// FAQ Content Data
+const FAQs = [
+  {
+    question: "申裝流程需要多長時間？",
+    answer: "完成線上預約後，我們的專屬客服專員會於3天內與您聯繫確認需求與方案。一般來說，最快3-7個工作天內即可安排專業技師到府安裝。實際到府施工時間約1天時間，安裝完畢即可立即上網！"
+  },
+  {
+    question: "光纖路由器設備需要另外付費租用嗎？",
+    answer: "需要！只要您申辦我們的【專屬社區網路】雙向 300M 方案並綁約三年，我們就會免費提供並安裝一台光纖設備，若您有需要Wi-Fi 6 路由器我們將額外報價收費。"
+  },
+  {
+    question: "網路速度真的能穩跑「雙向 300M」嗎？",
+    answer: "是的！不同於傳統寬頻非對稱且需與全區住戶塞車的線路，我們採用專線直達本社區機房，並透過智慧型網路頻寬分配技術，保證您在下班尖峰時段無論是「下載追劇」或「上傳大型檔案」，都能享有極低延遲與暢快網速。"
+  },
+  {
+    question: "合約到期後費用會突然調漲嗎？",
+    answer: "請您放心，合約到期後不會無緣無故調漲原合約費用。到期時我們會提醒您續約，您不但可以用原價繼續享受服務，屆時還可能會有更優惠的網速升級方案供老客戶選擇！"
+  },
+  {
+    question: "要是網路臨時斷線，維修報修快嗎？",
+    answer: "我們擁有 24 小時的社區主幹網路監控系統，若有設備層級異常我們常比住戶更早發現。住戶若遇連線問題，可直接透過官方 LINE 或用戶專區報修，我們會優先派遣技師前往您的社區為您處理，免去傳統電信層層轉接客服總機的漫長等待。"
+  }
+];
+
 export default function Home() {
   const navigate = useNavigate();
   const [showContractModal, setShowContractModal] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
 
   return (
     <div className="flex flex-col flex-1">
@@ -186,6 +215,72 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="relative py-24 bg-[#05080f] z-10 border-b border-[#30363D]/50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="w-16 h-16 bg-[#0D1117] border border-[#30363D] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#58A6FF]/5">
+              <HelpCircle size={32} className="text-[#58A6FF]" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">常見問題解答 (FAQ)</h2>
+            <p className="text-gray-400">為您整理住戶最關心的幾個問題，讓您申辦更安心</p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {FAQs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
+                    isOpen 
+                      ? 'border-[#58A6FF]/40 bg-[#0D1117] shadow-lg shadow-[#58A6FF]/5' 
+                      : 'border-[#30363D] bg-[#0D1117]/50 hover:border-[#58A6FF]/30 hover:bg-[#0D1117]'
+                  }`}
+                >
+                  <button 
+                    className="flex items-center justify-between w-full p-6 text-left focus:outline-none"
+                    onClick={() => toggleFaq(index)}
+                  >
+                    <span className={`text-lg font-semibold transition-colors duration-300 pr-8 ${isOpen ? 'text-[#79b8ff]' : 'text-gray-200'}`}>
+                      Q: {faq.question}
+                    </span>
+                    <div className={`text-[#58A6FF] shrink-0 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}>
+                      <ChevronDown size={24} />
+                    </div>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-6 pt-0 text-gray-400 leading-relaxed border-t border-[#30363D]/40 mt-2 mx-6">
+                          <span className="text-[#238636] font-bold mr-2">A:</span>
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
