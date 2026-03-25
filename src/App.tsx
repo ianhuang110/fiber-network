@@ -4,11 +4,10 @@ import ApplicationFlow from './pages/ApplicationFlow';
 import UserPortal from './pages/UserPortal';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, FileText, Download, User } from 'lucide-react';
+import { X, User } from 'lucide-react';
 
 function App() {
   const [showPlanModal, setShowPlanModal] = useState(false);
-  const [showContractModal, setShowContractModal] = useState(false);
   return (
     <Router>
       <div className="min-h-screen flex flex-col font-sans bg-[#0B0F19] text-gray-200">
@@ -33,13 +32,6 @@ function App() {
                 className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/60 hover:text-[#58A6FF] hover:bg-[#58A6FF]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide"
               >
                 方案選擇
-              </button>
-              <button 
-                onClick={() => setShowContractModal(true)}
-                className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#14B8A6]/60 hover:text-[#14B8A6] hover:bg-[#14B8A6]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2 hidden sm:flex"
-              >
-                <FileText size={16} />
-                合約書
               </button>
               <a 
                 href="https://speed.cloudflare.com/" 
@@ -134,60 +126,6 @@ function App() {
           )}
         </AnimatePresence>
 
-        {/* Global Contract PDF Modal */}
-        <AnimatePresence>
-          {showContractModal && (
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm"
-              onClick={() => setShowContractModal(false)}
-            >
-              <motion.div 
-                initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                onClick={(e) => e.stopPropagation()}
-                className="bg-[#131B2F] rounded-3xl w-full max-w-5xl h-[85vh] sm:h-[90vh] shadow-2xl flex flex-col border border-gray-800 overflow-hidden relative"
-              >
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-[#0B0F19]">
-                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                    <FileText className="text-[#58A6FF]" size={20} />
-                    中華電信合約書
-                  </h3>
-                  <div className="flex items-center gap-3">
-                    <a 
-                      href="/contract.pdf"
-                      download="中華電信社區網路合約書.pdf"
-                      className="px-4 py-1.5 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-300 hover:text-[#58A6FF] rounded-lg transition-colors text-sm font-semibold flex items-center gap-2 shadow-sm"
-                    >
-                      <Download size={16} />
-                      <span className="hidden sm:inline">下載 PDF</span>
-                    </a>
-                    <button 
-                      onClick={() => setShowContractModal(false)}
-                      className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors"
-                    >
-                      <X size={24} />
-                    </button>
-                  </div>
-                </div>
-                <div className="flex-1 bg-gray-900 overflow-hidden relative">
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center pointer-events-none z-0">
-                    <FileText className="text-gray-700 w-24 h-24 mb-4" />
-                    <p className="text-gray-500 font-medium text-lg">載入合約文件...</p>
-                    <p className="text-gray-600 mt-2 text-sm max-w-sm">
-                      (預設將讀取 public 資料夾下的 contract.pdf，若無法顯示請確認檔案路徑是否正確)
-                    </p>
-                  </div>
-                  
-                  <iframe 
-                    src="/contract.pdf" 
-                    className="w-full h-full relative z-10 border-0 bg-transparent"
-                    title="中華電信合約書"
-                  />
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </Router>
   );

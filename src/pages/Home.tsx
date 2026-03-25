@@ -1,56 +1,23 @@
-import { ArrowRight, ArrowDownUp, Zap, Users, Search, CheckCircle2, X } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, FileText, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 export default function Home() {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResult, setSearchResult] = useState<any>(null);
-  const [isSearching, setIsSearching] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) {
-      alert('請先輸入社區名稱');
-      setSearchResult(null);
-      setShowDropdown(false);
-      return;
-    }
-
-    setIsSearching(true);
-    setShowDropdown(true);
-
-    try {
-      const response = await fetch(`http://localhost:3001/api/coverage?q=${encodeURIComponent(searchQuery)}`);
-      const data = await response.json();
-      setSearchResult(data);
-    } catch (error) {
-      console.error('Search API error:', error);
-      setSearchResult({ error: true, message: '系統連線異常，請稍後再試。' });
-    } finally {
-      setIsSearching(false);
-    }
-  };
+  const [showContractModal, setShowContractModal] = useState(false);
 
   return (
     <div className="flex flex-col flex-1">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-40 overflow-hidden">
-        {/* Deep background color (#0D1117) */}
-        <div className="absolute inset-0 bg-[#0D1117] -z-30"></div>
-        
-        {/* Technological Pulse Grid (#30363D) */}
+      {/* Top Welcome Section */}
+      <section className="relative pt-32 pb-40 overflow-hidden bg-[#0D1117]">
         <div className="absolute inset-0 -z-20 bg-[linear-gradient(to_right,#30363D_1px,transparent_1px),linear-gradient(to_bottom,#30363D_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,#000_80%,transparent_100%)] opacity-80"></div>
         
-        {/* Pulsing Light Nodes (Data Blue #58A6FF & Running Green #238636) */}
-        <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] bg-[#58A6FF]/15 rounded-full blur-[100px] mix-blend-screen animate-pulse -z-10"></div>
+        {/* Pulsing Light Nodes */}
+        <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] bg-[#58A6FF]/10 rounded-full blur-[100px] mix-blend-screen animate-pulse -z-10"></div>
         <div className="absolute bottom-[0%] right-[15%] w-[500px] h-[500px] bg-[#238636]/10 rounded-full blur-[120px] mix-blend-screen animate-pulse -z-10" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
-        
-        {/* Scanline Overlay */}
-        <div className="absolute inset-0 -z-10 pointer-events-none mix-blend-overlay opacity-30" style={{ backgroundImage: 'linear-gradient(transparent 50%, rgba(0,0,0,0.2) 50%)', backgroundSize: '100% 4px' }}></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -65,88 +32,27 @@ export default function Home() {
                 </span>
                 狀態：全網監控中．穩定運行
               </div>
-              <h1 className="text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+              <h1 className="text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 mt-2">
                 住社區就要裝<br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.3)]">
                   專屬社區網路
                 </span>
               </h1>
+              
               <p className="text-xl text-gray-400 mb-10 leading-relaxed font-light">
                 雙向 300M 極速光纖，遊戲不卡頓，追劇不轉圈。每月只需 300 元，綁約 3 年即送光纖設備，為您打造最穩定的居家網路體驗。
               </p>
-              
-              <div className="space-y-6">
-                {/* 1. 供裝/社區查詢框 */}
-                <div className="w-full max-w-md z-50">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/20 to-[#238636]/20 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 -z-10"></div>
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Search className="h-5 w-5 text-gray-500 group-focus-within:text-[#58A6FF] transition-colors" />
-                    </div>
-                    <input 
-                      type="text" 
-                      value={searchQuery}
-                      onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        if (e.target.value === '') {
-                          setShowDropdown(false);
-                          setSearchResult(null);
-                        }
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleSearch();
-                      }}
-                      placeholder="輸入社區名稱查詢是否在供裝範圍..." 
-                      className="w-full pl-11 pr-24 py-4 bg-[#0D1117] border border-[#30363D] focus:border-[#58A6FF]/50 text-white rounded-2xl outline-none placeholder-gray-500 shadow-inner transition-colors"
-                    />
-                    <button 
-                      onClick={handleSearch}
-                      className="absolute right-2 top-2 bottom-2 px-6 bg-[#238636]/10 hover:bg-[#238636] text-[#238636] hover:text-white font-medium rounded-xl transition-all border border-[#238636]/30"
-                    >
-                      查詢
-                    </button>
-                  </div>
 
-                  {/* Dropdown Result */}
-                  {(showDropdown && (isSearching || searchResult)) && (
-                    <div className="mt-4 w-full bg-[#0D1117]/95 backdrop-blur-xl border border-[#30363D] rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
-                      <div className="p-4">
-                        {isSearching ? (
-                          <div className="flex items-center gap-3 text-gray-400 font-medium">
-                            <div className="w-4 h-4 rounded-full border-2 border-[#58A6FF] border-t-transparent animate-spin"></div>
-                            連線內部資料庫與外部線路系統中...
-                          </div>
-                        ) : searchResult ? (
-                          <div className={`p-4 rounded-xl border ${searchResult.error || (!searchResult.hasCoverage && searchResult.source === 'external_scraper') ? 'bg-red-900/10 border-red-500/30 text-red-400' : 'bg-[#238636]/10 border-[#238636]/30 text-[#238636] shadow-[0_0_15px_rgba(35,134,54,0.1)]'}`}>
-                            <p className="font-semibold text-lg leading-tight mb-1">{searchResult.message}</p>
-                            {searchResult.data && (
-                              <p className="text-sm opacity-90 mt-2 flex items-center gap-1">📍 匹配社區：{searchResult.data.name} <span className="px-2 py-0.5 ml-2 bg-[#238636]/20 rounded-md text-xs">{searchResult.data.speed}</span></p>
-                            )}
-                            {searchResult.source === 'external_scraper' && !searchResult.hasCoverage && (
-                              <p className="text-sm opacity-80 mt-2 font-light">👉 建議直接點擊下方按鈕預約申請，由專人為您人工勘查確認！</p>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="text-gray-500 text-sm font-light">請輸入社區大樓名稱、建案或地址進行查詢</div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button 
-                    onClick={() => navigate('/apply', { state: { prefillCommunity: searchResult?.data?.name || searchQuery } })}
-                    className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff]">
-                      立即預約申請
-                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </button>
-                </div>
-              </div>
+              <button 
+                onClick={() => navigate('/apply')}
+                className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold text-lg rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1 inline-flex w-auto"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff]">
+                  立即預約申請
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </button>
             </motion.div>
 
             {/* Right Side Visuals */}
@@ -176,7 +82,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
 
       {/* Why Fiber Section */}
       <section className="relative py-24 bg-[#05080f] border-y border-[#30363D]/50 z-10">
@@ -233,7 +138,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Comparison Section */}
+      {/* Comparison Section */}
       <section className="relative py-24 bg-[#0D1117] z-10 border-b border-[#30363D]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -284,6 +189,72 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Contract Trigger Section at the bottom */}
+      <section className="relative py-16 bg-[#05080f] z-10 border-t border-[#30363D]/50 border-b">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-6">申請前請先詳閱合約書</h2>
+          <button 
+            onClick={() => setShowContractModal(true)}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] font-semibold text-lg rounded-xl transition-all shadow-md group border-2"
+          >
+            <FileText className="text-[#58A6FF] group-hover:scale-110 transition-transform" size={24} />
+            點此檢視中華電信合約書
+          </button>
+        </div>
+      </section>
+
+      {/* Contract Modal */}
+      <AnimatePresence>
+        {showContractModal && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowContractModal(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#131B2F] rounded-3xl w-full max-w-5xl h-[85vh] sm:h-[90vh] shadow-2xl flex flex-col border border-gray-800 overflow-hidden relative"
+            >
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-[#0B0F19]">
+                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  <FileText className="text-[#58A6FF]" size={20} />
+                  中華電信合約書
+                </h3>
+                <div className="flex items-center gap-3">
+                  <a 
+                    href="/contract.pdf"
+                    download="中華電信社區網路合約書.pdf"
+                    className="px-4 py-1.5 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-300 hover:text-[#58A6FF] rounded-lg transition-colors text-sm font-semibold flex items-center gap-2 shadow-sm"
+                  >
+                    <Download size={16} />
+                    <span className="hidden sm:inline">下載 PDF</span>
+                  </a>
+                  <button 
+                    onClick={() => setShowContractModal(false)}
+                    className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 bg-gray-900 overflow-hidden relative">
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center pointer-events-none z-0">
+                  <FileText className="text-gray-700 w-24 h-24 mb-4" />
+                  <p className="text-gray-500 font-medium text-lg">載入合約文件...</p>
+                </div>
+                
+                <iframe 
+                  src="/contract.pdf" 
+                  className="w-full h-full relative z-10 border-0 bg-transparent"
+                  title="中華電信合約書"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
