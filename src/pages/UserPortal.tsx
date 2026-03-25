@@ -46,10 +46,36 @@ export default function UserPortal() {
       return;
     }
 
-    // 依據前次您測試輸入的資料進行綁定驗證
-    if (formattedUsername === 'D122183708' && password !== '9985') {
-      setErrorMsg('密碼錯誤（與您申請時輸入的手機號碼不符）');
-      return;
+    if (formattedUsername === 'D122183708') {
+      if (password !== '9985') {
+        setErrorMsg('密碼錯誤（與您申請時輸入的手機號碼不符）');
+        return;
+      }
+    } else {
+      let isAppMatched = false;
+      let expectedPassword = '';
+
+      try {
+        const existingStr = localStorage.getItem('shrek_applications');
+        const existingApps = existingStr ? JSON.parse(existingStr) : [];
+        const appRecord = existingApps.find((app: any) => app.id === formattedUsername);
+        if (appRecord) {
+          isAppMatched = true;
+          expectedPassword = appRecord.phone.slice(-4);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      if (!isAppMatched) {
+        setErrorMsg('請先完成預約申請，才能用戶登入');
+        return;
+      }
+
+      if (password !== expectedPassword) {
+        setErrorMsg('密碼錯誤（與您申請時輸入的手機號碼不符）');
+        return;
+      }
     }
     
     setUsername(formattedUsername);

@@ -566,6 +566,18 @@ export default function ApplicationFlow() {
               </p>
               <button 
                 onClick={() => {
+                  try {
+                    const existingStr = localStorage.getItem('shrek_applications');
+                    const existingApps = existingStr ? JSON.parse(existingStr) : [];
+                    existingApps.push({ 
+                      id: formData.idNumber.toUpperCase(), 
+                      phone: formData.mobile,
+                      name: formData.contactName
+                    });
+                    localStorage.setItem('shrek_applications', JSON.stringify(existingApps));
+                  } catch (e) {
+                    console.error(e);
+                  }
                   setShowSuccessModal(false);
                   navigate('/');
                 }}
