@@ -95,8 +95,32 @@ export default function Home() {
               <div className="relative bg-[#0D1117]/60 backdrop-blur-xl border border-[#30363D] rounded-[2rem] p-4 shadow-2xl">
                 <div className="w-full aspect-[4/3] rounded-2xl bg-[#0D1117] overflow-hidden relative group border border-[#30363D]/50">
                   <div className="absolute inset-0 bg-[#58A6FF]/10 mix-blend-overlay z-10 pointer-events-none"></div>
-                  <img src={`${import.meta.env.BASE_URL}cute_white_robot.png`} alt="Cute White AI Robot" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={`${import.meta.env.BASE_URL}fiber_optic_network.png`} alt="Fiber Optic Network" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   
+                  {/* Moving Light Pulses Overlay */}
+                  <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden mix-blend-screen">
+                    <motion.div 
+                      className="absolute top-[30%] left-0 w-2/3 h-[4px] bg-gradient-to-r from-transparent via-[#58A6FF] to-transparent opacity-100 blur-[1px] drop-shadow-[0_0_15px_rgba(88,166,255,1)]"
+                      animate={{ x: ['-100%', '200%'] }}
+                      transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                    />
+                    <motion.div 
+                      className="absolute top-[60%] left-0 w-1/2 h-[6px] bg-gradient-to-r from-transparent via-[#238636] to-transparent opacity-100 blur-[2px] drop-shadow-[0_0_15px_rgba(35,134,54,1)]"
+                      animate={{ x: ['-100%', '250%'] }}
+                      transition={{ duration: 1.2, repeat: Infinity, ease: 'linear', delay: 0.2 }}
+                    />
+                    <motion.div 
+                      className="absolute left-[40%] top-0 w-[4px] h-1/2 bg-gradient-to-b from-transparent via-[#58A6FF] to-transparent opacity-100 blur-[1px] drop-shadow-[0_0_15px_rgba(88,166,255,1)]"
+                      animate={{ y: ['-100%', '200%'] }}
+                      transition={{ duration: 0.6, repeat: Infinity, ease: 'linear', delay: 0.1 }}
+                    />
+                    <motion.div 
+                      className="absolute -left-[50%] top-[40%] w-[150%] h-[4px] bg-gradient-to-r from-transparent via-[#79b8ff] to-transparent opacity-100 rotate-12 blur-[1px] drop-shadow-[0_0_15px_rgba(121,184,255,1)]"
+                      animate={{ x: ['-50%', '150%'] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.3 }}
+                    />
+                  </div>
+
                   {/* HUD Elements */}
                   <div className="absolute top-4 left-4 flex gap-2 z-20">
                     <div className="w-2 h-2 rounded-full bg-[#58A6FF] animate-pulse"></div>
