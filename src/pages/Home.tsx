@@ -42,6 +42,35 @@ export default function Home() {
       <section className="relative pt-32 pb-40 overflow-hidden bg-[#0D1117]">
         <div className="absolute inset-0 -z-20 bg-[linear-gradient(to_right,#30363D_1px,transparent_1px),linear-gradient(to_bottom,#30363D_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,#000_80%,transparent_100%)] opacity-80"></div>
         
+        {/* Background Fast Light Streams */}
+        <div className="absolute inset-0 -z-15 overflow-hidden pointer-events-none opacity-40 mix-blend-screen">
+          <motion.div 
+            className="absolute top-[20%] left-0 w-full h-[5px] bg-gradient-to-r from-transparent via-[#58A6FF] to-transparent blur-[2px] drop-shadow-[0_0_20px_rgba(88,166,255,1)]"
+            animate={{ x: ['-100%', '100%'] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+          />
+          <motion.div 
+            className="absolute top-[45%] left-0 w-3/4 h-[3px] bg-gradient-to-r from-transparent via-[#238636] to-transparent blur-[1px]"
+            animate={{ x: ['100%', '-100%'] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', delay: 1 }}
+          />
+          <motion.div 
+            className="absolute top-[85%] left-0 w-2/3 h-[6px] bg-gradient-to-r from-transparent via-[#79b8ff] to-transparent blur-[3px]"
+            animate={{ x: ['-100%', '150%'] }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: 'linear', delay: 0.5 }}
+          />
+          <motion.div 
+            className="absolute left-[30%] top-0 w-[4px] h-full bg-gradient-to-b from-transparent via-[#58A6FF] to-transparent blur-[2px]"
+            animate={{ y: ['-100%', '100%'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay: 0.3 }}
+          />
+          <motion.div 
+            className="absolute left-[70%] top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-[#238636] to-transparent blur-[1px]"
+            animate={{ y: ['100%', '-100%'] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'linear', delay: 0.8 }}
+          />
+        </div>
+
         {/* Pulsing Light Nodes */}
         <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] bg-[#58A6FF]/10 rounded-full blur-[100px] mix-blend-screen animate-pulse -z-10"></div>
         <div className="absolute bottom-[0%] right-[15%] w-[500px] h-[500px] bg-[#238636]/10 rounded-full blur-[120px] mix-blend-screen animate-pulse -z-10" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
@@ -74,7 +103,7 @@ export default function Home() {
 
               <button 
                 onClick={() => navigate('/apply')}
-                className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold text-lg rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1 inline-flex w-full sm:w-auto"
+                className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold text-lg rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1 inline-flex w-full sm:w-auto mt-4"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                 <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff] w-full">
