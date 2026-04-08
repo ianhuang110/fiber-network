@@ -58,7 +58,7 @@ export default function UserPortal() {
       try {
         const existingStr = localStorage.getItem('fiber_applications');
         const existingApps = existingStr ? JSON.parse(existingStr) : [];
-        const appRecord = existingApps.find((app: any) => app.id === formattedUsername);
+        const appRecord = existingApps.find((app: { id: string; phone: string }) => app.id === formattedUsername);
         if (appRecord) {
           isAppMatched = true;
           expectedPassword = appRecord.phone.slice(-4);

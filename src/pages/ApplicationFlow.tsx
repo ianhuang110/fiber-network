@@ -131,7 +131,7 @@ export default function ApplicationFlow() {
                   visualStep > step.id 
                     ? 'bg-teal-500 text-white' 
                     : visualStep === step.id 
-                      ? 'bg-teal-600 text-white ring-4 ring-teal-500\/30' 
+                      ? 'bg-teal-600 text-white ring-4 ring-teal-500/30' 
                       : 'bg-[#131B2F] text-gray-500 border border-gray-800'
                 }`}>
                   {visualStep > step.id ? <Check size={18} /> : step.id}
