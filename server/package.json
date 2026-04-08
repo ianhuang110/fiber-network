@@ -1,5 +1,5 @@
 {
-  "name": "shrek-network-server",
+  "name": "fiber-network-server",
   "version": "1.0.0",
   "description": "Coverage API Server",
   "main": "index.js",

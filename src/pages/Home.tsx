@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowDownUp, Zap, Users, CheckCircle2, X, ChevronDown, HelpCircle, PhoneCall, FileText } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Wifi, CheckCircle2, X, ChevronDown, HelpCircle, PhoneCall, FileText, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -11,10 +11,10 @@ const FAQs = [
   },
   {
     question: "光纖路由器設備需要另外付費租用嗎？",
-    answer: "需要！只要您申辦我們的【專屬社區網路】雙向 300M 方案並綁約三年，我們就會免費提供並安裝一台光纖設備，若您有需要Wi-Fi 6 路由器我們將額外報價收費。"
+    answer: "價格 4,200元 / 年約，綁約2年享減免裝機費 1,500元，若中途解約將扣除裝機費用1,500元，並且扣除每月350元月租費，另外統一收取光纖設備押金1000元，退租時無償退還。"
   },
   {
-    question: "網路速度真的能穩跑「雙向 300M」嗎？",
+    question: "網路速度真的能穩跑「雙向 400M」嗎？",
     answer: "是的！不同於傳統寬頻非對稱且需與全區住戶塞車的線路，我們採用專線直達本社區機房，並透過智慧型網路頻寬分配技術，保證您在下班尖峰時段無論是「下載追劇」或「上傳大型檔案」，都能享有極低延遲與暢快網速。"
   },
   {
@@ -91,14 +91,15 @@ export default function Home() {
                 狀態：全網監控中．穩定運行
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 mt-2">
-                住社區就要裝<br/>
+                住家上網就要<br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.3)]">
-                  專屬社區網路
+                  光纖社區網路
                 </span>
               </h1>
               
               <p className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed font-light mx-auto lg:mx-0 max-w-xl">
-                雙向 300M 極速光纖，遊戲不卡頓，追劇不轉圈。每月只需 300 元，綁約 3 年即送光纖設備，為您打造最穩定的居家網路體驗。
+                急速光纖社區網路，遊戲不卡頓，追劇不轉圈。<br/>
+                為您打造最穩定的居家網路體驗。
               </p>
 
               <button 
@@ -175,7 +176,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">為什麼選擇 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">極速光纖</span>？</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">為什麼選擇 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">光纖社區網路</span>？</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">超越傳統寬頻體驗，專為現代高畫質影音與即時互動打造的新世代網路。</p>
           </motion.div>
           
@@ -194,9 +195,9 @@ export default function Home() {
                 delay: 0.2
               },
               {
-                icon: <Users size={32} className="text-[#58A6FF]" />,
-                title: "多人共享",
-                desc: "智慧頻寬分流技術，同時連接多個裝置依然順暢不卡頓。",
+                icon: <Wifi size={32} className="text-[#58A6FF]" />,
+                title: "穩定連線",
+                desc: "專屬社區光纖網路，確保居家連線穩定。",
                 delay: 0.3
               }
             ].map((feature, i) => (
@@ -243,17 +244,16 @@ export default function Home() {
                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#238636] text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(35,134,54,0.5)] whitespace-nowrap">
                         專屬首選
                       </div>
-                      社區網路
+                      光纖社區網路
                     </th>
                     <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-500 font-medium w-[35%]">一般傳統電信</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#30363D]/50">
                   {[
-                    { label: '月租費', us: '300 元 / 月', them: '約 899 - 1,299 元', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
-                    { label: '頻寬速率', us: '雙向 300M (上傳保證)', them: '300M / 150M (非對稱)', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
-                    { label: '硬體設備', us: '免費提供一台光纖設備', them: '需額外每月加價租用', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
-                    { label: '維修服務', us: '24Hr 監控, 專屬快速報修', them: '層層轉接客服總機', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> }
+                    { label: '月租費', us: '350元/月', them: '約 899 - 1,299 元', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
+                    { label: '頻寬速率', us: '雙向400M', them: '300M / 150M (非對稱)', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
+                    { label: '維修服務', us: '社區網路顧問', them: '層層轉接客服總機', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> }
                   ].map((row, i) => (
                     <tr key={i} className="group transition-colors hover:bg-white/[0.02]">
                       <td className="p-5 md:p-6 text-gray-300 font-medium">{row.label}</td>
@@ -353,20 +353,22 @@ export default function Home() {
             <div className="relative z-10 text-center md:text-left flex-1">
               <h2 className="text-3xl font-bold text-white mb-4">有任何問題嗎？讓專屬客服幫助您！</h2>
               <p className="text-gray-400 text-lg">
-                無論是申裝諮詢、網路疑難排解、或是報修問題，歡迎隨時撥打我們的客服專線。真人客服將盡速為您服務。
+                無論是申裝諮詢、網路疑難排解、或是報修問題，歡迎隨時加入我們的 LINE 官方帳號。真人客服將盡速為您服務。
               </p>
             </div>
             
             <div className="relative z-10 shrink-0 flex flex-col items-center sm:items-end gap-2">
               <a 
-                href="tel:0971789985" 
-                className="group relative inline-flex items-center gap-3 px-8 py-5 bg-[#58A6FF] text-[#0B0F19] font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(88,166,255,0.3)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:-translate-y-1"
+                href="https://lin.ee/OHbF6zt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-3 px-8 py-5 bg-[#06C755] text-white font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(6,199,85,0.3)] hover:shadow-[0_0_30px_rgba(6,199,85,0.5)] transition-all hover:-translate-y-1"
               >
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                <PhoneCall size={28} className="group-hover:scale-110 transition-transform" />
-                撥打客服專線
+                <MessageCircle size={28} className="group-hover:scale-110 transition-transform" />
+                加入 LINE 官方帳號
               </a>
-              <span className="text-gray-500 font-mono mt-2 tracking-widest text-lg font-semibold">0971-789-985</span>
+              <span className="text-gray-500 font-mono mt-2 tracking-widest text-lg font-semibold">LINE ID: @828edtuv</span>
             </div>
           </motion.div>
         </div>
@@ -381,7 +383,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] font-semibold text-lg rounded-xl transition-all shadow-md group border-2"
           >
             <FileText className="text-[#58A6FF] group-hover:scale-110 transition-transform" size={24} />
-            點此檢視社區網路合約書
+            點此檢視光纖社區網路合約書
           </button>
         </div>
       </section>
@@ -402,7 +404,7 @@ export default function Home() {
               <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#131B2F] z-10 pt-2">
                 <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
                   <FileText className="text-[#58A6FF]" size={24} />
-                  《社區網路服務條款暨合約書》
+                  《光纖社區網路服務條款暨合約書》
                 </h3>
                 <button 
                   onClick={() => setShowContractModal(false)}
@@ -413,7 +415,7 @@ export default function Home() {
               </div>
               
               <div className="text-gray-400 space-y-6 text-[15px] leading-relaxed pr-2">
-                <p>歡迎您申請社區網路服務！為保障您的權益，請仔細閱讀以下合約條款內容：</p>
+                <p>歡迎您申請光纖社區網路服務！為保障您的權益，請仔細閱讀以下合約條款內容：</p>
                 
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">一、 服務申辦與裝機</h4>
@@ -426,8 +428,8 @@ export default function Home() {
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">二、 收費標準與服務期間</h4>
                   <ul className="list-disc pl-5 space-y-2">
-                    <li>本合約包含 300M 雙向極速光纖上網服務，月租費為新台幣 300 元整。</li>
-                    <li>基本合約期限為三年（36個月），申裝時免費提供標準光纖路由器乙台供合約期間內使用。</li>
+                    <li>本合約包含 400M 雙向極速光纖上網服務，採年繳方案價格為 4,200 元 / 年約（折合月租費為 350 元）。</li>
+                    <li>基本合約期限為二年（24個月），綁約 2 年享減免裝機費 1,500 元。另外統一收取光纖設備押金 1,000 元，退租時無償退還。</li>
                     <li>若需額外升級 Wi-Fi 6 等進階設備，相關費用另依報價單為準。</li>
                   </ul>
                 </div>
@@ -435,7 +437,7 @@ export default function Home() {
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">三、 網路速率與連線品質</h4>
                   <ul className="list-disc pl-5 space-y-2">
-                    <li>本方案標示之「雙向 300M」係指最高可達速率。實際傳輸速率可能因用戶終端設備性能、介面、室內環境阻隔等實體因素而有所影響。</li>
+                    <li>本方案標示之「雙向 400M」係指最高可達速率。實際傳輸速率可能因用戶終端設備性能、介面、室內環境阻隔等實體因素而有所影響。</li>
                     <li>我們提供 24 小時網路設備監控與專屬報修處理，若遇硬體異常將優先排程處理。</li>
                   </ul>
                 </div>
@@ -450,7 +452,7 @@ export default function Home() {
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">五、 終止合約與違約處理</h4>
                   <ul className="list-disc pl-5 space-y-2">
-                    <li>若於合約期間內（三年內）因搬家或其他個人因素提前終止服務，本公司將依剩餘合約天數比例，酌收裝機補貼款與相關手續費用。</li>
+                    <li>若於合約期間內（二年內）中途解約，將扣除裝機費用 1,500 元，並且扣除每月 350 元月租費結算已使用期間之費用。光纖設備確認完好無損後，將無償退還設備押金 1,000 元。</li>
                     <li>合約期滿後，未提出終止申請將自動展延，並可繼續享有原優惠月租。</li>
                   </ul>
                 </div>

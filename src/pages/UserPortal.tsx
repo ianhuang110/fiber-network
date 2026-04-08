@@ -56,7 +56,7 @@ export default function UserPortal() {
       let expectedPassword = '';
 
       try {
-        const existingStr = localStorage.getItem('shrek_applications');
+        const existingStr = localStorage.getItem('fiber_applications');
         const existingApps = existingStr ? JSON.parse(existingStr) : [];
         const appRecord = existingApps.find((app: any) => app.id === formattedUsername);
         if (appRecord) {
@@ -85,7 +85,7 @@ export default function UserPortal() {
   const handleDownloadReceipt = (invoiceNumber: string, month: string) => {
     const receiptContent = `
 =========================================
-          史瑞克社區網路 - 繳費收據
+          光纖社區網路 - 繳費收據
 =========================================
 單號：${invoiceNumber}
 期數：${month}
@@ -190,7 +190,7 @@ export default function UserPortal() {
         <div className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{username === 'D122183708' ? '黃楷展' : '親愛的住戶'}</h1>
-            <p className="text-gray-400">這是您的專屬社區網路管理面板</p>
+            <p className="text-gray-400">這是您的光纖社區網路管理面板</p>
           </div>
           <button 
             onClick={() => setIsLoggedIn(false)}

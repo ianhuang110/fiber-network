@@ -18,7 +18,7 @@ function App() {
               <span className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-600 rounded-lg flex items-center justify-center text-white">
                 S
               </span>
-              社區網路
+              光纖社區網路
             </Link>
             <nav className="flex items-center gap-3 text-sm font-bold">
               <Link 
@@ -64,7 +64,7 @@ function App() {
         {/* Global Footer */}
         <footer className="bg-[#05080f] text-gray-500 py-8 text-sm border-t border-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            &copy; 2026 社區網路股份有限公司. All rights reserved.
+            &copy; 2026 光纖社區網路股份有限公司. All rights reserved.
           </div>
         </footer>
         {/* Global Plan Selection Modal */}
@@ -126,19 +126,7 @@ function App() {
           )}
         </AnimatePresence>
 
-        {/* Global Floating Contact Button */}
-        <a
-          href="tel:0971789985"
-          className="fixed bottom-6 right-6 z-50 p-4 bg-[#58A6FF] hover:bg-[#408BE0] rounded-full shadow-[0_0_20px_rgba(88,166,255,0.3)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:scale-110 flex items-center justify-center group"
-          aria-label="撥打客服"
-        >
-          <PhoneCall size={28} className="text-[#0B0F19]" />
-          
-          {/* Hover tooltip */}
-          <span className="absolute right-full mr-4 bg-[#131B2F] text-white px-3 py-1.5 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#30363D] shadow-xl">
-            撥打客服專線
-          </span>
-        </a>
+
 
       </div>
     </Router>
