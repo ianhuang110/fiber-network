@@ -8,6 +8,7 @@ import { X, User } from 'lucide-react';
 
 function App() {
   const [showPlanModal, setShowPlanModal] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
   return (
     <Router>
       <div className="min-h-screen flex flex-col font-sans bg-[#0B0F19] text-gray-200">
@@ -95,25 +96,64 @@ function App() {
                 </div>
                 
                 <div className="flex flex-col bg-[#131B2F] p-5 pb-6">
+                  {/* Toggle Switch */}
+                  <div className="flex justify-center mb-5">
+                    <div className="bg-[#0B0F19] p-1 rounded-xl flex inline-flex text-sm font-bold border border-gray-800 relative shadow-inner w-full max-w-[280px]">
+                      {/* Animated Background Pill */}
+                      <div 
+                        className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-gradient-to-r from-[#238636] to-[#1C6A2A] border-[#238636]/50 rounded-lg transition-all duration-300 ease-out shadow-sm border ${billingCycle === 'monthly' ? 'left-1' : 'left-[calc(50%+3px)]'}`}
+                      ></div>
+                      
+                      <button 
+                        onClick={() => setBillingCycle('monthly')} 
+                        className={`relative z-10 py-2 w-1/2 text-center rounded-lg transition-colors duration-300 ${billingCycle === 'monthly' ? 'text-white shadow-[0_0_10px_rgba(35,134,54,0.3)]' : 'text-gray-500 hover:text-gray-300'}`}
+                      >
+                        月繳方案
+                      </button>
+                      <button 
+                        onClick={() => setBillingCycle('yearly')} 
+                        className={`relative z-10 py-2 w-1/2 text-center rounded-lg transition-colors duration-300 flex items-center justify-center gap-1 ${billingCycle === 'yearly' ? 'text-white shadow-[0_0_10px_rgba(35,134,54,0.3)]' : 'text-gray-500 hover:text-gray-300'}`}
+                      >
+                        年繳<span className="text-xs text-yellow-500 ml-0.5 whitespace-nowrap">(優惠)</span>
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="relative flex flex-col bg-[#131B2F] rounded-2xl overflow-hidden border-2 border-[#58A6FF]/50 ring-2 ring-[#58A6FF]/10 shadow-md">
                     <div className="h-44 overflow-hidden relative">
                       <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" alt="Family using tablet" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#131B2F] via-[#131B2F]/80 to-transparent"></div>
-                      <h4 className="absolute bottom-3 left-0 right-0 text-center text-teal-400 font-bold text-xl drop-shadow-sm tracking-wide">300M網路 (綁約3年)</h4>
+                      <h4 className="absolute bottom-3 left-0 right-0 text-center text-teal-400 font-bold text-xl drop-shadow-sm tracking-wide">
+                        {billingCycle === 'yearly' ? '400M網路 (綁約2年)' : '400M網路 (無綁約)'}
+                      </h4>
                     </div>
                     <div className="py-5 px-6 flex flex-col flex-1">
-                      <div className="flex items-center gap-3 mb-5">
-                        <div className="w-5 h-5 rounded-full border-2 border-teal-500 bg-[#131B2F] flex items-center justify-center shrink-0">
+                      <div className="flex items-start gap-3 mb-5">
+                        <div className="w-5 h-5 rounded-full border-2 border-teal-500 bg-[#131B2F] flex items-center justify-center shrink-0 mt-0.5">
                           <div className="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>
                         </div>
-                        <span className="text-gray-300 font-medium">300M光纖上網<br/><span className="text-sm text-teal-500">綁約3年送設備</span></span>
+                        <div className="flex flex-col gap-1 mt-[-2px]">
+                          <span className="text-gray-300 font-medium leading-tight">400M雙向極速光纖</span>
+                          <span className="text-sm text-teal-500 leading-tight">
+                            {billingCycle === 'yearly' ? '綁約2年免裝機費$1500' : '需收取單次裝機費$1500'}
+                          </span>
+                          {billingCycle === 'yearly' && (
+                            <span className="text-xs text-[#58A6FF] bg-[#58A6FF]/10 px-2 py-0.5 rounded w-fit mt-1 border border-[#58A6FF]/20">
+                              年繳 $4,200 (平均$350/月)
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <div className="mt-2 pt-4 border-t border-gray-800 flex items-center justify-between">
-                        <p className="text-gray-500 font-medium text-sm">月租<br/><span className="text-3xl font-bold text-white leading-none mt-1 inline-block">$300</span></p>
+                        <p className="text-gray-500 font-medium text-sm">
+                          {billingCycle === 'yearly' ? '換算月租' : '月租費'}
+                          <br/>
+                          <span className="text-3xl font-bold text-white leading-none mt-1 inline-block">$350</span>
+                        </p>
                         <Link 
                           to="/apply"
                           onClick={() => setShowPlanModal(false)}
-                          className="px-4 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-lg font-bold shadow-lg transition-all"
+                          className="px-4 py-2 bg-gradient-to-r from-[#238636] to-[#1C6A2A] hover:opacity-90 text-white rounded-lg font-bold shadow-lg transition-all"
                         >
                           申辦填表
                         </Link>
