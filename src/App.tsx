@@ -4,7 +4,7 @@ import ApplicationFlow from './pages/ApplicationFlow';
 import UserPortal from './pages/UserPortal';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, User, PhoneCall } from 'lucide-react';
+import { X, User } from 'lucide-react';
 
 function App() {
   const [showPlanModal, setShowPlanModal] = useState(false);

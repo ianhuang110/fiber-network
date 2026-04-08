@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowDownUp, Zap, Wifi, CheckCircle2, X, ChevronDown, HelpCircle, PhoneCall, FileText, MessageCircle } from 'lucide-react';
+import { ArrowRight, ArrowDownUp, Zap, Wifi, CheckCircle2, X, ChevronDown, HelpCircle, FileText, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
