@@ -65,7 +65,7 @@ function App() {
         {/* Global Footer */}
         <footer className="bg-[#05080f] text-gray-500 py-8 text-sm border-t border-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            &copy; 2026 光纖社區網路股份有限公司. All rights reserved.
+            &copy; 2026 史瑞克數位工作室. All rights reserved.
           </div>
         </footer>
         {/* Global Plan Selection Modal */}
