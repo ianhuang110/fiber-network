@@ -152,6 +152,7 @@ function App() {
                         </p>
                         <Link 
                           to="/apply"
+                          state={{ plan: billingCycle === 'yearly' ? '400M網路 (綁約2年)' : '400M網路 (無綁約)' }}
                           onClick={() => setShowPlanModal(false)}
                           className="px-4 py-2 bg-gradient-to-r from-[#238636] to-[#1C6A2A] hover:opacity-90 text-white rounded-lg font-bold shadow-lg transition-all"
                         >

@@ -40,14 +40,16 @@ const taiwanDistricts: Record<string, string[]> = {
 };
 
 const planPrices: Record<string, string> = {
-  '300M光纖上網 (綁約3年送設備)': '300'
+  '300M光纖上網 (綁約3年送設備)': '300',
+  '400M網路 (綁約2年)': '350',
+  '400M網路 (無綁約)': '350'
 };
 
 export default function ApplicationFlow() {
   const [currentStep, setCurrentStep] = useState(1);
   const location = useLocation();
   const [formData, setFormData] = useState({ 
-    city: '', district: '', street: '', community: location.state?.prefillCommunity || '', plan: '300M光纖上網 (綁約3年送設備)',
+    city: '', district: '', street: '', community: location.state?.prefillCommunity || '', plan: location.state?.plan || '400M網路 (綁約2年)',
     contactName: '', idNumber: '', birthday: '', mobile: '', email: '', installAddress: '',
     remark: '', referrer: '', agreePrivacy: false, agreeTerms: false
   });
