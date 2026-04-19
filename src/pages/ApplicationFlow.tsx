@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight, ArrowLeft, Home, MapPin, ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 const steps = [
-  { id: 1, title: '選擇社區' },
-  { id: 2, title: '填寫資訊' },
-  { id: 3, title: '完成申請' }
+  { id: 1, title: '選擇方案' },
+  { id: 2, title: '選擇社區' },
+  { id: 3, title: '填寫資訊' },
+  { id: 4, title: '完成申請' }
 ];
 
 const taiwanCities = [
@@ -49,7 +50,7 @@ export default function ApplicationFlow() {
   const [currentStep, setCurrentStep] = useState(1);
   const location = useLocation();
   const [formData, setFormData] = useState({ 
-    city: '', district: '', street: '', community: location.state?.prefillCommunity || '', plan: location.state?.plan || '400M網路 (綁約2年)',
+    city: '', district: '', street: '', community: location.state?.prefillCommunity || '', plan: location.state?.plan || '',
     contactName: '', idNumber: '', birthday: '', mobile: '', email: '', installAddress: '',
     remark: '', referrer: '', agreePrivacy: false, agreeTerms: false
   });
@@ -61,6 +62,13 @@ export default function ApplicationFlow() {
 
   const handleNext = () => {
     if (currentStep === 1) {
+      if (!formData.plan) {
+        setErrorMsg('請先選擇一個方案');
+        return;
+      }
+      setErrorMsg('');
+    }
+    if (currentStep === 2) {
       if (!formData.city || !formData.district || !formData.community) {
         setErrorMsg('所有社區資訊請務必填寫，才能進行下一步');
         return;
@@ -68,7 +76,7 @@ export default function ApplicationFlow() {
 
       setErrorMsg('');
     }
-    if (currentStep === 2) {
+    if (currentStep === 3) {
       if (!formData.contactName.trim() || !formData.idNumber.trim() || !formData.birthday.trim() || !formData.mobile.trim() || !formData.email.trim() || !formData.installAddress.trim()) {
         setErrorMsg('聯絡資訊請務必填寫完整，才能進行下一步');
         return;
@@ -91,7 +99,7 @@ export default function ApplicationFlow() {
       }
       setErrorMsg('');
     }
-    if (currentStep < 3) setCurrentStep(currentStep + 1);
+    if (currentStep < 4) setCurrentStep(currentStep + 1);
   };
 
   const handlePrev = () => {
@@ -100,10 +108,7 @@ export default function ApplicationFlow() {
     else navigate('/');
   };
 
-  let visualStep = 1;
-  if (currentStep === 1) visualStep = 1;
-  if (currentStep === 2) visualStep = 2;
-  if (currentStep === 3) visualStep = 3;
+  let visualStep = currentStep;
 
   return (
     <div className="flex-1 bg-[#0B0F19] flex flex-col pt-10 pb-20">
@@ -155,6 +160,54 @@ export default function ApplicationFlow() {
               {currentStep === 1 && (
                 <motion.div
                   key="step1"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
+                >
+                  <h2 className="text-2xl font-bold text-white mb-2 text-center">選擇適合您的方案</h2>
+                  <p className="text-gray-500 text-sm mb-8 text-center max-w-md mx-auto">提供多種超值光纖網路方案，滿足您不同家庭的上網需求。</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {Object.entries(planPrices).map(([planName, price]) => (
+                      <div 
+                        key={planName}
+                        onClick={() => setFormData({...formData, plan: planName})}
+                        className={`cursor-pointer rounded-2xl p-6 border-2 transition-all duration-300 relative overflow-hidden flex flex-col ${
+                          formData.plan === planName 
+                            ? 'border-teal-500 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.2)]' 
+                            : 'border-gray-800 bg-[#0B0F19] hover:border-teal-500/50 hover:bg-[#131B2F]'
+                        }`}
+                      >
+                        {formData.plan === planName && (
+                          <div className="absolute top-0 right-0 bg-teal-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">
+                            已選擇
+                          </div>
+                        )}
+                        <h3 className="text-lg font-bold text-white mb-2 pr-8">{planName}</h3>
+                        <div className="flex items-end gap-1 mb-4 flex-1">
+                          <span className="text-3xl font-black text-teal-400">${price}</span>
+                          <span className="text-gray-500 text-sm mb-1">/月</span>
+                        </div>
+                        <ul className="space-y-2 mt-auto">
+                          <li className="flex items-start gap-2 text-sm text-gray-400">
+                            <Check size={16} className="text-teal-500 shrink-0 mt-0.5" />
+                            <span>專屬社區網路頻寬</span>
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-gray-400">
+                            <Check size={16} className="text-teal-500 shrink-0 mt-0.5" />
+                            <span>雙向極速不斷線</span>
+                          </li>
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {currentStep === 2 && (
+                <motion.div
+                  key="step2"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -242,9 +295,9 @@ export default function ApplicationFlow() {
                 </motion.div>
               )}
               
-              {currentStep === 2 && (
+              {currentStep === 3 && (
                 <motion.div
-                  key="step2"
+                  key="step3"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -340,9 +393,9 @@ export default function ApplicationFlow() {
                 </motion.div>
               )}
 
-              {currentStep === 3 && (
+              {currentStep === 4 && (
                 <motion.div
-                  key="step3"
+                  key="step4"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -441,7 +494,7 @@ export default function ApplicationFlow() {
               )}
 
               <div className="flex items-center gap-4 justify-end md:w-auto w-full">
-                {currentStep === 1 && (
+                {currentStep < 3 && (
                   <button 
                     onClick={handleNext}
                     className="flex items-center justify-center gap-2 px-10 py-3.5 bg-[#14b8a6] hover:bg-teal-600 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto text-lg"
@@ -449,7 +502,7 @@ export default function ApplicationFlow() {
                     下一步
                   </button>
                 )}
-                {currentStep === 2 && (
+                {currentStep === 3 && (
                   <button 
                     onClick={handleNext}
                     className="flex items-center justify-center gap-2 px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
@@ -458,7 +511,7 @@ export default function ApplicationFlow() {
                     <ChevronRight size={18} />
                   </button>
                 )}
-                {currentStep === 3 && (
+                {currentStep === 4 && (
                   <button 
                     onClick={() => setShowSuccessModal(true)}
                     className="flex items-center justify-center gap-2 px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto ml-auto"
