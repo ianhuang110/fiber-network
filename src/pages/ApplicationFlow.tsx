@@ -168,38 +168,64 @@ export default function ApplicationFlow() {
                   <p className="text-gray-500 text-sm mb-8 text-center max-w-md mx-auto">提供多種超值光纖網路方案，滿足您不同家庭的上網需求。</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                    {Object.entries(planPrices).map(([planName, price]) => (
+                    {Object.entries(planPrices).map(([planName, price]) => {
+                      const isSelected = formData.plan === planName;
+                      const isYearly = planName.includes('綁約2年');
+                      return (
                       <div 
                         key={planName}
                         onClick={() => setFormData({...formData, plan: planName})}
-                        className={`cursor-pointer rounded-2xl p-6 border-2 transition-all duration-300 relative overflow-hidden flex flex-col ${
-                          formData.plan === planName 
-                            ? 'border-teal-500 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.2)]' 
-                            : 'border-gray-800 bg-[#0B0F19] hover:border-teal-500/50 hover:bg-[#131B2F]'
+                        className={`cursor-pointer relative flex flex-col rounded-2xl overflow-hidden border-2 transition-all duration-300 transform ${
+                          isSelected 
+                            ? 'border-[#14b8a6] ring-2 ring-[#14b8a6]/20 bg-[#131B2F] shadow-xl scale-[1.02]' 
+                            : 'border-gray-800 bg-[#0B0F19] hover:border-[#14b8a6]/50 hover:bg-[#131B2F] shadow-sm'
                         }`}
                       >
-                        {formData.plan === planName && (
-                          <div className="absolute top-0 right-0 bg-teal-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">
-                            已選擇
+                        {isSelected && (
+                          <div className="absolute top-0 right-0 z-20 bg-[#14b8a6] text-white px-4 py-1.5 text-sm font-bold rounded-bl-xl shadow-md flex items-center gap-1">
+                            <Check size={16} /> 已選擇
                           </div>
                         )}
-                        <h3 className="text-lg font-bold text-white mb-2 pr-8">{planName}</h3>
-                        <div className="flex items-end gap-1 mb-4 flex-1">
-                          <span className="text-3xl font-black text-teal-400">${price}</span>
-                          <span className="text-gray-500 text-sm mb-1">/月</span>
+                        
+                        <div className="h-44 overflow-hidden relative">
+                          <img 
+                            src={isYearly ? "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" : "https://images.unsplash.com/photo-1517077304055-6e89abf098fa?auto=format&fit=crop&q=80&w=800"} 
+                            alt="Network Plan" 
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                          />
+                          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#131B2F] via-[#131B2F]/80 to-transparent"></div>
+                          <h4 className={`absolute bottom-3 left-0 right-0 text-center text-xl drop-shadow-md tracking-wide font-bold ${isSelected ? 'text-[#2dd4bf]' : 'text-gray-200'}`}>
+                            {planName}
+                          </h4>
                         </div>
-                        <ul className="space-y-2 mt-auto">
-                          <li className="flex items-start gap-2 text-sm text-gray-400">
-                            <Check size={16} className="text-teal-500 shrink-0 mt-0.5" />
-                            <span>專屬社區網路頻寬</span>
-                          </li>
-                          <li className="flex items-start gap-2 text-sm text-gray-400">
-                            <Check size={16} className="text-teal-500 shrink-0 mt-0.5" />
-                            <span>雙向極速不斷線</span>
-                          </li>
-                        </ul>
+                        
+                        <div className="py-5 px-6 flex flex-col flex-1 bg-[#131B2F]">
+                          <div className="flex items-start gap-3 mb-5">
+                            <div className={`w-5 h-5 rounded-full border-2 bg-[#131B2F] flex items-center justify-center shrink-0 mt-0.5 transition-colors ${isSelected ? 'border-[#14b8a6]' : 'border-gray-600'}`}>
+                              {isSelected && <div className="w-2.5 h-2.5 bg-[#14b8a6] rounded-full"></div>}
+                            </div>
+                            <div className="flex flex-col gap-1 mt-[-2px]">
+                              <span className={`font-medium leading-tight ${isSelected ? 'text-gray-100' : 'text-gray-400'}`}>400M雙向極速光纖</span>
+                              <span className={`text-sm leading-tight ${isSelected ? 'text-[#14b8a6]' : 'text-gray-500'}`}>
+                                {isYearly ? '綁約2年免裝機費$1500' : '需收取單次裝機費$1500'}
+                              </span>
+                              {isYearly && (
+                                <span className={`text-xs px-2 py-0.5 rounded w-fit mt-1 border ${isSelected ? 'text-[#58A6FF] bg-[#58A6FF]/10 border-[#58A6FF]/20' : 'text-gray-500 bg-gray-800/50 border-gray-700'}`}>
+                                  年繳 $4,200 (平均$350/月)
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className={`mt-auto pt-5 border-t flex items-center justify-between ${isSelected ? 'border-gray-800' : 'border-gray-800/50'}`}>
+                            <p className="text-gray-500 font-medium text-sm">
+                              {isYearly ? '換算月租' : '月租費'}
+                              <br/>
+                              <span className={`text-3xl font-bold leading-none mt-1 inline-block ${isSelected ? 'text-white' : 'text-gray-300'}`}>${price}</span>
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    ))}
+                    )})}
                   </div>
                 </motion.div>
               )}
