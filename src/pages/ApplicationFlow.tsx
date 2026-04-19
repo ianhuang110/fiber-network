@@ -189,7 +189,7 @@ export default function ApplicationFlow() {
                         
                         <div className="h-44 overflow-hidden relative">
                           <img 
-                            src={isYearly ? "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" : "https://images.unsplash.com/photo-1517077304055-6e89abf098fa?auto=format&fit=crop&q=80&w=800"} 
+                            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" 
                             alt="Network Plan" 
                             className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
                           />
