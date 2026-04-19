@@ -41,7 +41,6 @@ const taiwanDistricts: Record<string, string[]> = {
 };
 
 const planPrices: Record<string, string> = {
-  '300M光纖上網 (綁約3年送設備)': '300',
   '400M網路 (綁約2年)': '350',
   '400M網路 (無綁約)': '350'
 };
@@ -168,7 +167,7 @@ export default function ApplicationFlow() {
                   <h2 className="text-2xl font-bold text-white mb-2 text-center">選擇適合您的方案</h2>
                   <p className="text-gray-500 text-sm mb-8 text-center max-w-md mx-auto">提供多種超值光纖網路方案，滿足您不同家庭的上網需求。</p>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                     {Object.entries(planPrices).map(([planName, price]) => (
                       <div 
                         key={planName}
