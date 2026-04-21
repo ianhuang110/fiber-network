@@ -2,11 +2,20 @@ import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import ApplicationFlow from './pages/ApplicationFlow';
 import UserPortal from './pages/UserPortal';
-import { User } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { User, LogOut, ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 function App() {
-  const [memberName, setMemberName] = useState<string | null>(null);
+  const [memberName, setMemberName] = useState<string | null>(() => {
+    try {
+      const stored = sessionStorage.getItem('fiber_auth_user');
+      return stored ? JSON.parse(stored).displayName : null;
+    } catch {
+      return null;
+    }
+  });
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleAuth = (e: Event) => {
@@ -16,6 +25,23 @@ function App() {
     window.addEventListener('auth-change', handleAuth);
     return () => window.removeEventListener('auth-change', handleAuth);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    setMemberName(null);
+    setShowDropdown(false);
+    sessionStorage.removeItem('fiber_auth_user');
+    window.dispatchEvent(new CustomEvent('auth-change', { detail: { name: null } }));
+  };
 
   return (
     <Router>
@@ -50,13 +76,46 @@ function App() {
               >
                 網路測速
               </a>
-              <Link 
-                to="/portal"
-                className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
-              >
-                <User size={16} />
-                <span className="hidden sm:inline">{memberName || '用戶登入'}</span>
-              </Link>
+              {memberName ? (
+                <div className="relative" ref={dropdownRef}>
+                  <button 
+                    onClick={() => setShowDropdown(!showDropdown)}
+                    className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+                  >
+                    <User size={16} />
+                    <span className="hidden sm:inline">{memberName}</span>
+                    <ChevronDown size={14} className={`transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {showDropdown && (
+                    <div className="absolute right-0 mt-2 w-36 bg-[#0D1117] border border-[#30363D] rounded-xl shadow-xl py-1 z-50">
+                      <Link 
+                        to="/portal" 
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        <User size={14} />
+                        用戶中心
+                      </Link>
+                      <button 
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-500 hover:text-red-400 hover:bg-red-500/10 transition-colors border-t border-[#30363D]/50"
+                      >
+                        <LogOut size={14} />
+                        安全登出
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link 
+                  to="/portal"
+                  className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+                >
+                  <User size={16} />
+                  <span className="hidden sm:inline">用戶登入</span>
+                </Link>
+              )}
             </nav>
           </div>
         </header>

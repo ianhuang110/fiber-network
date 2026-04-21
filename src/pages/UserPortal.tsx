@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Lock, ArrowRight, FileText, Zap, LogOut, AlertCircle } from 'lucide-react';
 
@@ -85,6 +85,7 @@ export default function UserPortal() {
     setUsername(formattedUsername);
     setUserDisplayName(dName);
     setIsLoggedIn(true);
+    sessionStorage.setItem('fiber_auth_user', JSON.stringify({ username: formattedUsername, displayName: dName }));
     window.dispatchEvent(new CustomEvent('auth-change', { detail: { name: dName } }));
   };
 
@@ -113,6 +114,33 @@ export default function UserPortal() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
+
+  useEffect(() => {
+    const storedAuth = sessionStorage.getItem('fiber_auth_user');
+    if (storedAuth) {
+      try {
+        const { username, displayName } = JSON.parse(storedAuth);
+        setUsername(username);
+        setUserDisplayName(displayName);
+        setIsLoggedIn(true);
+      } catch (e) {}
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleAuthChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (!customEvent.detail?.name) {
+        setIsLoggedIn(false);
+        setUserDisplayName('');
+        setUsername('');
+        setPassword('');
+        sessionStorage.removeItem('fiber_auth_user');
+      }
+    };
+    window.addEventListener('auth-change', handleAuthChange);
+    return () => window.removeEventListener('auth-change', handleAuthChange);
+  }, []);
 
   if (!isLoggedIn) {
     return (
@@ -202,16 +230,6 @@ export default function UserPortal() {
             <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{userDisplayName}</h1>
             <p className="text-gray-400">這是您的光纖社區網路管理面板</p>
           </div>
-          <button 
-            onClick={() => {
-              setIsLoggedIn(false);
-              window.dispatchEvent(new CustomEvent('auth-change', { detail: { name: null } }));
-            }}
-            className="px-4 py-2 border border-[#30363D] bg-[#0D1117] text-gray-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/50 rounded-xl transition-colors flex items-center gap-2"
-          >
-            <LogOut size={16} />
-            <span className="hidden sm:inline">安全登出</span>
-          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
