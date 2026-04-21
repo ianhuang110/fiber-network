@@ -498,6 +498,10 @@ export default function ApplicationFlow() {
                         <span className="font-medium text-gray-100">{formData.idNumber || '-'}</span>
                       </div>
                       <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                        <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">出生年月日</span>
+                        <span className="font-medium text-gray-100">{formData.birthYear && formData.birthMonth && formData.birthDay ? `${formData.birthYear}/${formData.birthMonth}/${formData.birthDay}` : '-'}</span>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
                         <span className="text-gray-500 font-medium text-sm md:w-24 shrink-0">手機號碼</span>
                         <span className="font-medium text-gray-100">{formData.mobile || '-'}</span>
                       </div>
