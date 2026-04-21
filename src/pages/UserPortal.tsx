@@ -37,12 +37,12 @@ export default function UserPortal() {
     const formattedUsername = username.trim().toUpperCase();
     
     if (!isValidTaiwanID(formattedUsername) && !isValidTaxID(formattedUsername)) {
-      setErrorMsg('請輸入正確的身分證字號或統一編號');
+      setErrorMsg('身分證字號輸入錯誤');
       return;
     }
     
     if (!/^\d{4}$/.test(password)) {
-      setErrorMsg('密碼格式錯誤，請輸入手機後 4 碼數字');
+      setErrorMsg('密碼輸入錯誤');
       return;
     }
 
@@ -136,7 +136,7 @@ export default function UserPortal() {
               </div>
             )}
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">用戶帳號 (身分證/統編)</label>
+              <label className="block text-sm font-medium text-gray-400 mb-2">用戶帳號 (身分證字號)</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <User className="h-5 w-5 text-gray-500 group-focus-within:text-[#58A6FF] transition-colors" />
@@ -145,6 +145,8 @@ export default function UserPortal() {
                   type="text" 
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('請輸入身分證字號')}
+                  onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
                   className="w-full pl-11 pr-4 py-3 bg-[#05080f] border border-[#30363D] focus:border-[#58A6FF]/50 text-white rounded-xl outline-none shadow-inner transition-colors"
                   placeholder="A123456789"
                   required
@@ -161,6 +163,8 @@ export default function UserPortal() {
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('請輸入密碼')}
+                  onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
                   className="w-full pl-11 pr-4 py-3 bg-[#05080f] border border-[#30363D] focus:border-[#58A6FF]/50 text-white rounded-xl outline-none shadow-inner transition-colors"
                   placeholder="••••"
                   required
