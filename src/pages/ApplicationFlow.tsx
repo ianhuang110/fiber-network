@@ -45,12 +45,17 @@ const planPrices: Record<string, string> = {
   '400M網路 (無綁約)': '350'
 };
 
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
+const months = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
+const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
+
 export default function ApplicationFlow() {
   const [currentStep, setCurrentStep] = useState(1);
   const location = useLocation();
   const [formData, setFormData] = useState({ 
     city: '', district: '', street: '', community: location.state?.prefillCommunity || '', plan: location.state?.plan || '',
-    contactName: '', idNumber: '', birthday: '', mobile: '', email: '', installAddress: '',
+    contactName: '', idNumber: '', birthYear: '', birthMonth: '', birthDay: '', mobile: '', email: '', installAddress: '',
     remark: '', referrer: '', agreePrivacy: false, agreeTerms: false
   });
   const [errorMsg, setErrorMsg] = useState('');
@@ -76,16 +81,12 @@ export default function ApplicationFlow() {
       setErrorMsg('');
     }
     if (currentStep === 3) {
-      if (!formData.contactName.trim() || !formData.idNumber.trim() || !formData.birthday.trim() || !formData.mobile.trim() || !formData.email.trim() || !formData.installAddress.trim()) {
+      if (!formData.contactName.trim() || !formData.idNumber.trim() || !formData.birthYear || !formData.birthMonth || !formData.birthDay || !formData.mobile.trim() || !formData.email.trim() || !formData.installAddress.trim()) {
         setErrorMsg('聯絡資訊請務必填寫完整，才能進行下一步');
         return;
       }
       if (!/^[A-Z][1-2]\d{8}$/.test(formData.idNumber)) {
         setErrorMsg('身分證字號格式錯誤，請重新輸入');
-        return;
-      }
-      if (!/^\d{4}\/\d{2}\/\d{2}$/.test(formData.birthday)) {
-        setErrorMsg('出生年月日格式錯誤（請輸入 YYYY/MM/DD），請重新輸入');
         return;
       }
       if (!/^09\d{8}$/.test(formData.mobile)) {
@@ -355,13 +356,41 @@ export default function ApplicationFlow() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">出生年月日</label>
-                      <input 
-                        type="text" 
-                        value={formData.birthday}
-                        onChange={(e) => setFormData({...formData, birthday: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all" 
-                        placeholder="例如：1990/01/01" 
-                      />
+                      <div className="flex gap-2">
+                        <div className="flex-1 relative">
+                          <select 
+                            value={formData.birthYear}
+                            onChange={(e) => setFormData({...formData, birthYear: e.target.value})}
+                            className="w-full pl-4 pr-8 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all appearance-none" 
+                          >
+                            <option value="" disabled hidden>年</option>
+                            {years.map(y => <option key={y} value={y}>{y}</option>)}
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={16} />
+                        </div>
+                        <div className="flex-1 relative">
+                          <select 
+                            value={formData.birthMonth}
+                            onChange={(e) => setFormData({...formData, birthMonth: e.target.value})}
+                            className="w-full pl-4 pr-8 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all appearance-none" 
+                          >
+                            <option value="" disabled hidden>月</option>
+                            {months.map(m => <option key={m} value={m}>{m}</option>)}
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={16} />
+                        </div>
+                        <div className="flex-1 relative">
+                          <select 
+                            value={formData.birthDay}
+                            onChange={(e) => setFormData({...formData, birthDay: e.target.value})}
+                            className="w-full pl-4 pr-8 py-3 rounded-xl border border-gray-700 bg-[#0B0F19] text-gray-100 focus:ring-2 focus:ring-[#14b8a6] focus:border-[#14b8a6] outline-none transition-all appearance-none" 
+                          >
+                            <option value="" disabled hidden>日</option>
+                            {days.map(d => <option key={d} value={d}>{d}</option>)}
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={16} />
+                        </div>
+                      </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">手機號碼</label>
