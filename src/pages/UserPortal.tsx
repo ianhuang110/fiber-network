@@ -214,28 +214,7 @@ export default function UserPortal() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Status Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-[#0D1117] border border-[#30363D] rounded-3xl p-6 shadow-xl relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 p-6 opacity-5">
-              <Activity size={80} className="text-[#238636]" />
-            </div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#238636]/10 flex items-center justify-center">
-                <Activity className="text-[#238636]" size={20} />
-              </div>
-              <h3 className="text-lg font-bold text-white">網路狀態</h3>
-            </div>
-            <div className="flex items-end gap-3 mb-2">
-              <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#238636] to-[#2ea043]">穩定連線中</span>
-            </div>
-            <p className="text-gray-400 text-sm">已連續運行 45 天 12 小時</p>
-          </motion.div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Plan Card */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
