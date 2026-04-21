@@ -8,6 +8,7 @@ export default function UserPortal() {
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [userDisplayName, setUserDisplayName] = useState('');
 
   const isValidTaiwanID = (id: string) => {
     if (!/^[A-Z][1289]\d{8}$/.test(id)) return false;
@@ -46,11 +47,13 @@ export default function UserPortal() {
       return;
     }
 
+    let dName = '';
     if (formattedUsername === 'D122183708') {
       if (password !== '9985') {
-        setErrorMsg('密碼錯誤（與您申請時輸入的手機號碼不符）');
+        setErrorMsg('密碼輸入錯誤');
         return;
       }
+      dName = '黃楷展';
     } else {
       let isAppMatched = false;
       let expectedPassword = '';
@@ -58,10 +61,11 @@ export default function UserPortal() {
       try {
         const existingStr = localStorage.getItem('fiber_applications');
         const existingApps = existingStr ? JSON.parse(existingStr) : [];
-        const appRecord = existingApps.find((app: { id: string; phone: string }) => app.id === formattedUsername);
+        const appRecord = existingApps.find((app: { id: string; phone: string; name?: string }) => app.id === formattedUsername);
         if (appRecord) {
           isAppMatched = true;
           expectedPassword = appRecord.phone.slice(-4);
+          dName = appRecord.name || '親愛的住戶';
         }
       } catch (e) {
         console.error(e);
@@ -73,13 +77,15 @@ export default function UserPortal() {
       }
 
       if (password !== expectedPassword) {
-        setErrorMsg('密碼錯誤（與您申請時輸入的手機號碼不符）');
+        setErrorMsg('密碼輸入錯誤');
         return;
       }
     }
     
     setUsername(formattedUsername);
+    setUserDisplayName(dName);
     setIsLoggedIn(true);
+    window.dispatchEvent(new CustomEvent('auth-change', { detail: { name: dName } }));
   };
 
   const handleDownloadReceipt = (invoiceNumber: string, month: string) => {
@@ -89,7 +95,7 @@ export default function UserPortal() {
 =========================================
 單號：${invoiceNumber}
 期數：${month}
-金額：$300 (已繳清)
+金額：$350 (已繳清)
 
 -----------------------------------------
 感謝您使用本社區專屬網路服務！
@@ -193,11 +199,14 @@ export default function UserPortal() {
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="flex justify-between items-center mb-10">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{username === 'D122183708' ? '黃楷展' : '親愛的住戶'}</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{userDisplayName}</h1>
             <p className="text-gray-400">這是您的光纖社區網路管理面板</p>
           </div>
           <button 
-            onClick={() => setIsLoggedIn(false)}
+            onClick={() => {
+              setIsLoggedIn(false);
+              window.dispatchEvent(new CustomEvent('auth-change', { detail: { name: null } }));
+            }}
             className="px-4 py-2 border border-[#30363D] bg-[#0D1117] text-gray-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/50 rounded-xl transition-colors flex items-center gap-2"
           >
             <LogOut size={16} />
@@ -244,9 +253,9 @@ export default function UserPortal() {
               <h3 className="text-lg font-bold text-white">目前方案</h3>
             </div>
             <div className="flex items-end gap-3 mb-2">
-              <span className="text-4xl font-black text-white">300<span className="text-xl text-gray-500">M</span></span>
+              <span className="text-4xl font-black text-white">400<span className="text-xl text-gray-500">M</span></span>
             </div>
-            <p className="text-[#58A6FF] text-sm font-medium">極速雙向光纖 (綁約3年)</p>
+            <p className="text-[#58A6FF] text-sm font-medium">極速雙向光纖 (綁約2年)</p>
           </motion.div>
 
           {/* Billing Card */}
@@ -266,7 +275,7 @@ export default function UserPortal() {
               <span className="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-full border border-orange-500/30">待繳費</span>
             </div>
             <div className="flex items-end gap-2 mb-4">
-              <span className="text-4xl font-black text-white">$ 300</span>
+              <span className="text-4xl font-black text-white">$ 350</span>
               <span className="text-gray-500 text-sm mb-1">/ 2026年3月份</span>
             </div>
             <button 
@@ -305,7 +314,7 @@ export default function UserPortal() {
                 <tr className="hover:bg-white/[0.02] transition-colors group">
                   <td className="p-4 pl-6 text-gray-500 font-mono">INV-202603-019</td>
                   <td className="p-4 text-white font-medium">2026年 3月</td>
-                  <td className="p-4 text-gray-300 font-mono">$300</td>
+                  <td className="p-4 text-gray-300 font-mono">$350</td>
                   <td className="p-4 text-gray-400 font-mono">2026/04/15</td>
                   <td className="p-4"><span className="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-full border border-orange-500/20">待繳費</span></td>
                   <td className="p-4 pr-6 text-right">
@@ -320,7 +329,7 @@ export default function UserPortal() {
                 <tr className="hover:bg-white/[0.02] transition-colors">
                   <td className="p-4 pl-6 text-gray-500 font-mono">INV-202602-019</td>
                   <td className="p-4 text-gray-400">2026年 2月</td>
-                  <td className="p-4 text-gray-500 font-mono">$300</td>
+                  <td className="p-4 text-gray-500 font-mono">$350</td>
                   <td className="p-4 text-gray-600 font-mono">2026/03/15</td>
                   <td className="p-4"><span className="px-3 py-1 bg-[#238636]/20 text-[#238636] text-xs font-bold rounded-full border border-[#238636]/20">已繳清</span></td>
                   <td className="p-4 pr-6 text-right"><button onClick={() => handleDownloadReceipt('INV-202602-019', '2026年 2月')} className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
@@ -328,7 +337,7 @@ export default function UserPortal() {
                 <tr className="hover:bg-white/[0.02] transition-colors">
                   <td className="p-4 pl-6 text-gray-500 font-mono">INV-202601-019</td>
                   <td className="p-4 text-gray-400">2026年 1月</td>
-                  <td className="p-4 text-gray-500 font-mono">$300</td>
+                  <td className="p-4 text-gray-500 font-mono">$350</td>
                   <td className="p-4 text-gray-600 font-mono">2026/02/15</td>
                   <td className="p-4"><span className="px-3 py-1 bg-[#238636]/20 text-[#238636] text-xs font-bold rounded-full border border-[#238636]/20">已繳清</span></td>
                   <td className="p-4 pr-6 text-right"><button onClick={() => handleDownloadReceipt('INV-202601-019', '2026年 1月')} className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>

@@ -3,8 +3,20 @@ import Home from './pages/Home';
 import ApplicationFlow from './pages/ApplicationFlow';
 import UserPortal from './pages/UserPortal';
 import { User } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [memberName, setMemberName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleAuth = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setMemberName(customEvent.detail?.name || null);
+    };
+    window.addEventListener('auth-change', handleAuth);
+    return () => window.removeEventListener('auth-change', handleAuth);
+  }, []);
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col font-sans bg-[#0B0F19] text-gray-200">
@@ -43,7 +55,7 @@ function App() {
                 className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
               >
                 <User size={16} />
-                <span className="hidden sm:inline">用戶登入</span>
+                <span className="hidden sm:inline">{memberName || '用戶登入'}</span>
               </Link>
             </nav>
           </div>
