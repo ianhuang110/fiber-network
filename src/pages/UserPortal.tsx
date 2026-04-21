@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { User, Lock, ArrowRight, FileText, Zap, Activity, LogOut, AlertCircle } from 'lucide-react';
+import { User, Lock, ArrowRight, FileText, Zap, LogOut, AlertCircle } from 'lucide-react';
 
 export default function UserPortal() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
