@@ -336,52 +336,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Comparison Section */}
-      <section className="relative py-24 bg-[#05080f] z-10 border-b border-[#30363D]/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">強效服務保障，<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">無可挑剔</span></h2>
-            <p className="text-gray-400">用最合理的價格享受最優質的網路，這就是光纖社區網路的魅力</p>
-          </motion.div>
 
-          <div className="overflow-hidden rounded-2xl border border-[#30363D] bg-[#05080f] pb-2 md:pb-0 shadow-2xl">
-            <div className="overflow-x-auto pt-5">
-              <table className="w-full text-left border-collapse min-w-[400px]">
-                <thead>
-                  <tr>
-                    <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-400 font-medium w-1/3">服務項目</th>
-                    <th className="p-5 md:p-6 border-b border-t-4 border-[#238636] border-b-[#30363D] text-white font-bold text-lg bg-[#238636]/10 w-2/3 border-l border-r border-x-[#238636]/20 relative">
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#238636] text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(35,134,54,0.5)] whitespace-nowrap">
-                        專屬首選
-                      </div>
-                      光纖社區網路
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#30363D]/50">
-                  {[
-                    { label: '月租費', us: '350元/月', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/> },
-                    { label: '頻寬速率', us: '雙向400M', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/> },
-                    { label: '維修服務', us: '社區網路顧問', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/> }
-                  ].map((row, i) => (
-                    <tr key={i} className="group transition-colors hover:bg-white/[0.02]">
-                      <td className="p-5 md:p-6 text-gray-300 font-medium">{row.label}</td>
-                      <td className="p-5 md:p-6 text-[#79b8ff] font-semibold bg-[#238636]/5 border-x border-[#238636]/20 transition-colors group-hover:bg-[#238636]/10">
-                        {row.usIcon} {row.us}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section className="relative py-24 bg-[#05080f] z-10 border-b border-[#30363D]/50">
