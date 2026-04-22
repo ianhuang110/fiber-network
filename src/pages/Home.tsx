@@ -221,8 +221,91 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="relative py-24 bg-[#0D1117] z-10 border-b border-[#30363D]/50 overflow-hidden">
+        {/* Background glow for pricing */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#58A6FF]/5 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-[#58A6FF]/10 text-[#58A6FF] mb-4 border border-[#58A6FF]/20 shadow-[0_0_15px_rgba(88,166,255,0.15)]">
+               <Zap size={28} className="drop-shadow-[0_0_8px_rgba(88,166,255,0.8)] fill-current" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">專屬超殺 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#79b8ff]">主打方案</span></h2>
+            <p className="text-gray-400">只給社區住戶的最強優惠，極速上網就是這麼無負擔</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, type: "spring", stiffness: 100 }}
+            className="relative max-w-2xl mx-auto"
+          >
+            {/* Glowing border effect */}
+            <div className="absolute -inset-[3px] bg-gradient-to-r from-[#58A6FF] to-[#238636] rounded-[2.5rem] blur-md opacity-50 animate-pulse" style={{ animationDuration: '4s' }}></div>
+            
+            <div className="relative bg-[#05080f] border border-[#30363D] rounded-[2.5rem] p-8 sm:p-12 shadow-2xl flex flex-col items-center text-center overflow-hidden">
+              {/* Internal abstract shapes */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#58A6FF]/10 rounded-bl-full -z-10 blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#238636]/10 rounded-tr-full -z-10 blur-2xl"></div>
+              
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#238636]/10 text-[#238636] text-sm font-bold mb-8 border border-[#238636]/30 tracking-widest shadow-[0_0_10px_rgba(35,134,54,0.2)]">
+                社區住戶限定
+              </div>
+              
+              <div className="mb-2 flex flex-col md:flex-row items-center justify-center gap-4">
+                <h3 className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300 drop-shadow-md">400<span className="text-5xl ml-1">M</span></h3>
+                <div className="flex flex-col text-left">
+                  <span className="text-xl sm:text-2xl font-bold text-gray-300 tracking-widest leading-tight">雙向極速</span>
+                  <span className="text-xl sm:text-2xl font-bold text-[#58A6FF] tracking-widest leading-tight">光纖網路</span>
+                </div>
+              </div>
+              
+              <div className="flex items-baseline justify-center gap-1 mb-8 mt-6 bg-[#0D1117] py-4 px-8 rounded-2xl border border-[#30363D] shadow-inner">
+                <span className="text-gray-400 font-medium text-lg">激省月租</span>
+                <span className="text-5xl font-extrabold text-[#238636] mx-2 drop-shadow-[0_0_15px_rgba(35,134,54,0.4)]">$350</span>
+                <span className="text-gray-500 text-sm">/ 月 (年繳)</span>
+              </div>
+
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-[#30363D] to-transparent mb-8"></div>
+              
+              <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 w-full text-left mb-10 pl-2">
+                {[
+                  "合約期內絕不漲價",
+                  "專屬頻寬不塞車",
+                  "綁約享裝機費折扣"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-gray-300 group cursor-default">
+                    <CheckCircle2 size={20} className="text-[#238636] shrink-0 group-hover:scale-110 transition-transform drop-shadow-[0_0_5px_rgba(35,134,54,0.5)]" />
+                    <span className="font-medium">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                onClick={() => navigate('/apply')}
+                className="group relative w-full px-8 py-5 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(88,166,255,0.2)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:-translate-y-1"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg] transition-transform duration-1000 ease-out z-10 pointer-events-none"></div>
+                <span className="relative z-20 flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff] transition-colors">
+                  選擇此方案並預約
+                  <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Comparison Section */}
-      <section className="relative py-24 bg-[#0D1117] z-10 border-b border-[#30363D]/50">
+      <section className="relative py-24 bg-[#05080f] z-10 border-b border-[#30363D]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -230,38 +313,34 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">真實對比，<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">高下立判</span></h2>
-            <p className="text-gray-400">不再被傳統合約綁架，用最合理的價格享受最優質的網路</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">強效服務保障，<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">無可挑剔</span></h2>
+            <p className="text-gray-400">用最合理的價格享受最優質的網路，這就是光纖社區網路的魅力</p>
           </motion.div>
 
           <div className="overflow-hidden rounded-2xl border border-[#30363D] bg-[#05080f] pb-2 md:pb-0 shadow-2xl">
             <div className="overflow-x-auto pt-5">
-              <table className="w-full text-left border-collapse min-w-[600px]">
+              <table className="w-full text-left border-collapse min-w-[400px]">
                 <thead>
                   <tr>
-                    <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-400 font-medium w-1/4">比較項目</th>
-                    <th className="p-5 md:p-6 border-b border-t-4 border-[#238636] border-b-[#30363D] text-white font-bold text-lg bg-[#238636]/10 w-2/5 border-l border-r border-x-[#238636]/20 relative">
+                    <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-400 font-medium w-1/3">服務項目</th>
+                    <th className="p-5 md:p-6 border-b border-t-4 border-[#238636] border-b-[#30363D] text-white font-bold text-lg bg-[#238636]/10 w-2/3 border-l border-r border-x-[#238636]/20 relative">
                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#238636] text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(35,134,54,0.5)] whitespace-nowrap">
                         專屬首選
                       </div>
                       光纖社區網路
                     </th>
-                    <th className="p-5 md:p-6 border-b border-[#30363D] text-gray-500 font-medium w-[35%]">一般傳統電信</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#30363D]/50">
                   {[
-                    { label: '月租費', us: '350元/月', them: '約 899 - 1,299 元', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
-                    { label: '頻寬速率', us: '雙向400M', them: '300M / 150M (非對稱)', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> },
-                    { label: '維修服務', us: '社區網路顧問', them: '層層轉接客服總機', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/>, themIcon: <X className="inline mr-2 text-red-900" size={18}/> }
+                    { label: '月租費', us: '350元/月', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/> },
+                    { label: '頻寬速率', us: '雙向400M', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/> },
+                    { label: '維修服務', us: '社區網路顧問', usIcon: <CheckCircle2 className="inline mr-2 text-[#238636]" size={18}/> }
                   ].map((row, i) => (
                     <tr key={i} className="group transition-colors hover:bg-white/[0.02]">
                       <td className="p-5 md:p-6 text-gray-300 font-medium">{row.label}</td>
                       <td className="p-5 md:p-6 text-[#79b8ff] font-semibold bg-[#238636]/5 border-x border-[#238636]/20 transition-colors group-hover:bg-[#238636]/10">
                         {row.usIcon} {row.us}
-                      </td>
-                      <td className="p-5 md:p-6 text-gray-500">
-                        {row.themIcon} {row.them}
                       </td>
                     </tr>
                   ))}
