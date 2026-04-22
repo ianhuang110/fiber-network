@@ -371,20 +371,17 @@ export default function Home() {
               <span className="text-gray-500 font-mono mt-2 tracking-widest text-lg font-semibold">LINE ID: @828edtuv</span>
             </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Contract Trigger Section at the bottom */}
-      <section className="relative py-16 bg-[#05080f] z-10 border-b border-[#30363D]/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-6">申請前請先詳閱合約書</h2>
-          <button 
-            onClick={() => setShowContractModal(true)}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] font-semibold text-lg rounded-xl transition-all shadow-md group border-2"
-          >
-            <FileText className="text-[#58A6FF] group-hover:scale-110 transition-transform" size={24} />
-            點此檢視光纖社區網路合約書
-          </button>
+          {/* Minimal Contract Link */}
+          <div className="mt-8 text-center">
+            <button 
+              onClick={() => setShowContractModal(true)}
+              className="inline-flex items-center gap-1.5 text-sm md:text-base text-gray-500 hover:text-[#58A6FF] transition-colors"
+            >
+              <FileText size={16} />
+              申辦前請先詳閱《光纖社區網路服務條款暨合約書》
+            </button>
+          </div>
         </div>
       </section>
 
