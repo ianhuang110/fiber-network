@@ -299,10 +299,10 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="flex items-baseline justify-center gap-1 mb-8 mt-6 bg-[#0D1117] py-4 px-8 rounded-2xl border border-[#30363D] shadow-inner">
-                <span className="text-gray-400 font-medium text-lg">激省月租</span>
+              <div className="flex flex-wrap items-baseline justify-center gap-1 mb-8 mt-6 bg-[#0D1117] py-4 px-8 rounded-2xl border border-[#30363D] shadow-inner">
+                <span className="text-gray-400 font-medium text-lg whitespace-nowrap">激省月租</span>
                 <span className="text-5xl font-extrabold text-[#238636] mx-2 drop-shadow-[0_0_15px_rgba(35,134,54,0.4)]">$350</span>
-                <span className="text-gray-500 text-sm">/ 月 (年繳)</span>
+                <span className="text-gray-500 text-sm whitespace-nowrap">/ 月 (年繳)</span>
               </div>
 
               <div className="w-full h-px bg-gradient-to-r from-transparent via-[#30363D] to-transparent mb-8"></div>
