@@ -90,28 +90,55 @@ export default function Home() {
                 </span>
                 狀態：全網監控中．穩定運行
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 mt-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-normal mb-6 mt-2 relative h-auto">
                 住家上網就要<br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.3)]">
+                <motion.span 
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.2)] pb-2"
+                >
                   光纖社區網路
-                </span>
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ repeat: Infinity, duration: 0.9, delay: 1 }}
+                  className="inline-block w-[4px] h-[0.9em] bg-[#58A6FF] ml-3 align-bottom mb-2 relative top-[-4px]"
+                ></motion.span>
               </h1>
               
-              <p className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed font-light mx-auto lg:mx-0 max-w-xl">
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1.1 }}
+                className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed font-light mx-auto lg:mx-0 max-w-xl"
+              >
                 急速光纖社區網路，遊戲不卡頓，追劇不轉圈。<br/>
                 為您打造最穩定的居家網路體驗。
-              </p>
+              </motion.p>
 
-              <button 
-                onClick={() => navigate('/apply')}
-                className="group relative px-8 py-4 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-semibold text-lg rounded-2xl overflow-hidden shadow-[0_0_15px_rgba(88,166,255,0.2)] hover:shadow-[0_0_25px_rgba(88,166,255,0.4)] transition-all hover:-translate-y-1 inline-flex w-full sm:w-auto mt-4"
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.3 }}
+                className="relative inline-flex w-full sm:w-auto mt-4 group"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                <span className="relative flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff] w-full">
-                  立即預約申請
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
+                {/* Hardware-accelerated solid glow instead of expensive blurred pulse/ping */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#58A6FF]/20 to-[#238636]/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"></div>
+                
+                <button 
+                  onClick={() => navigate('/apply', { state: { plan: '400M網路 (綁約2年)' } })}
+                  className="relative px-10 py-5 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_30px_rgba(88,166,255,0.4)] hover:border-[#58A6FF]/80 transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto z-10"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/50 to-[#238636]/50 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] transition-transform duration-700 ease-out pointer-events-none"></div>
+                  <span className="relative z-20 flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-white w-full transition-colors tracking-wider">
+                    立即預約申請
+                    <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </button>
+              </motion.div>
             </motion.div>
 
             {/* Right Side Visuals */}
@@ -183,21 +210,21 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {[
               {
-                icon: <ArrowDownUp size={32} className="text-[#58A6FF]" />,
+                icon: <ArrowDownUp size={28} className="text-[#58A6FF] group-hover:text-white transition-colors duration-300" />,
                 title: "對稱網路",
-                desc: "上傳與下載一樣快，完美適合視訊會議與大型檔案傳送。",
+                desc: "上傳與下載一樣快，完美適合視訊會議、直播串流與大型檔案高速傳送。",
                 delay: 0.1
               },
               {
-                icon: <Zap size={32} className="text-[#238636]" />,
+                icon: <Zap size={28} className="text-[#238636] group-hover:text-white transition-colors duration-300" />,
                 title: "極低延遲",
-                desc: "毫秒級反應時間，競技類遊戲不掉速，搶奪先機毫不卡頓。",
+                desc: "毫秒級反應時間，競技類連線遊戲不掉速，讓你搶奪先機毫不卡頓。",
                 delay: 0.2
               },
               {
-                icon: <Wifi size={32} className="text-[#58A6FF]" />,
+                icon: <Wifi size={28} className="text-[#58A6FF] group-hover:text-white transition-colors duration-300" />,
                 title: "穩定連線",
-                desc: "專屬社區光纖網路，確保居家連線穩定。",
+                desc: "採用頂級光纖建置，專屬社區的獨立頻寬，確保每一分每一秒的連線品質。",
                 delay: 0.3
               }
             ].map((feature, i) => (
@@ -207,14 +234,19 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: feature.delay }}
-                className="group p-8 rounded-3xl bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/50 transition-colors relative overflow-hidden"
+                className="group relative p-8 rounded-[2rem] bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(88,166,255,0.15)]"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#58A6FF]/5 to-[#238636]/5 rounded-bl-[100px] -z-10 group-hover:scale-110 transition-transform duration-500"></div>
-                <div className="w-16 h-16 rounded-2xl bg-[#0B0F19] border border-[#30363D] flex items-center justify-center mb-6 group-hover:shadow-[0_0_20px_rgba(88,166,255,0.2)] transition-shadow">
+                {/* Hover Illuminating Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#58A6FF]/0 via-[#58A6FF]/0 to-[#238636]/0 group-hover:from-[#58A6FF]/5 group-hover:via-transparent group-hover:to-[#238636]/10 transition-all duration-700 pointer-events-none"></div>
+                
+                {/* Glowing Top Edge */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-[#58A6FF]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-b from-[#161B22] to-[#0D1117] border border-[#30363D] flex items-center justify-center mb-8 shadow-inner group-hover:border-[#58A6FF]/30 group-hover:shadow-[0_0_25px_rgba(88,166,255,0.25)] transition-all duration-500 group-hover:-translate-y-1">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+                <h3 className="relative z-10 text-xl font-bold text-gray-100 mb-4 group-hover:text-white transition-colors">{feature.title}</h3>
+                <p className="relative z-10 text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -289,7 +321,7 @@ export default function Home() {
               </div>
 
               <button 
-                onClick={() => navigate('/apply')}
+                onClick={() => navigate('/apply', { state: { plan: '400M網路 (綁約2年)' } })}
                 className="group relative w-full px-8 py-5 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(88,166,255,0.2)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:-translate-y-1"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
