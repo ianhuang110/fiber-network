@@ -683,9 +683,12 @@ export default function ApplicationFlow() {
                     const existingStr = localStorage.getItem('fiber_applications');
                     const existingApps = existingStr ? JSON.parse(existingStr) : [];
                     existingApps.push({ 
+                      ...formData,
                       id: formData.idNumber.toUpperCase(), 
                       phone: formData.mobile,
-                      name: formData.contactName
+                      name: formData.contactName,
+                      appId: Date.now().toString(),
+                      createdAt: new Date().toISOString()
                     });
                     localStorage.setItem('fiber_applications', JSON.stringify(existingApps));
                   } catch (e) {

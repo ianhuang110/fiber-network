@@ -2,7 +2,8 @@ import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import ApplicationFlow from './pages/ApplicationFlow';
 import UserPortal from './pages/UserPortal';
-import { User, LogOut, ChevronDown } from 'lucide-react';
+import AdminDashboard from './pages/AdminDashboard';
+import { User, LogOut, ChevronDown, Database } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 function App() {
@@ -116,6 +117,16 @@ function App() {
                   <span className="hidden sm:inline">用戶登入</span>
                 </Link>
               )}
+              {memberName === '黃楷展' && (
+                <Link 
+                  to="/admin"
+                  className="px-4 py-2 bg-[#8B5CF6]/20 border border-[#8B5CF6]/40 hover:bg-[#8B5CF6]/40 hover:border-[#8B5CF6]/70 text-[#D8B4FE] rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2 hidden sm:flex"
+                  title="後台管理"
+                >
+                  <Database size={16} />
+                  後台管理
+                </Link>
+              )}
             </nav>
           </div>
         </header>
@@ -126,6 +137,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/apply" element={<ApplicationFlow />} />
             <Route path="/portal" element={<UserPortal />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
         
