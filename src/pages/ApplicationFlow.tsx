@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight, ArrowLeft, Home, MapPin, ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 const steps = [
   { id: 1, title: '選擇方案' },
   { id: 2, title: '選擇社區' },
@@ -678,21 +680,27 @@ export default function ApplicationFlow() {
                 感謝您選擇光纖社區網路服務，我們的專員將於三個工作天內與您電話聯繫，安排後續施工事宜。
               </p>
               <button 
-                onClick={() => {
+                onClick={async () => {
                   try {
-                    const existingStr = localStorage.getItem('fiber_applications');
-                    const existingApps = existingStr ? JSON.parse(existingStr) : [];
-                    existingApps.push({ 
+                    const newAppRecord = { 
                       ...formData,
                       id: formData.idNumber.toUpperCase(), 
                       phone: formData.mobile,
                       name: formData.contactName,
                       appId: Date.now().toString(),
                       createdAt: new Date().toISOString()
-                    });
-                    localStorage.setItem('fiber_applications', JSON.stringify(existingApps));
+                    };
+
+                    if (db && !db.mock) {
+                      await addDoc(collection(db, 'fiber_applications'), newAppRecord);
+                    } else {
+                      const existingStr = localStorage.getItem('fiber_applications');
+                      const existingApps = existingStr ? JSON.parse(existingStr) : [];
+                      existingApps.push(newAppRecord);
+                      localStorage.setItem('fiber_applications', JSON.stringify(existingApps));
+                    }
                   } catch (e) {
-                    console.error(e);
+                    console.error('Save failed:', e);
                   }
                   setShowSuccessModal(false);
                   navigate('/');

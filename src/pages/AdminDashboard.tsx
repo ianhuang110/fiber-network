@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Database, Edit2, Trash2, Plus, X, Search, CheckCircle } from 'lucide-react';
+import { collection, getDocs, setDoc, deleteDoc, doc, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function AdminDashboard() {
   const [applications, setApplications] = useState<any[]>([]);
@@ -26,58 +28,85 @@ export default function AdminDashboard() {
     loadData();
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
     try {
-      const data = localStorage.getItem('fiber_applications');
-      if (data) {
-        let parsed = JSON.parse(data);
-        let needsUpdate = false;
-        parsed = parsed.map((app: any) => {
-          if (!app.appId) {
-            needsUpdate = true;
-            return { ...app, appId: 'legacy_' + Math.random().toString(36).substring(2, 9) };
-          }
-          return app;
+      if (db && !db.mock) {
+        const querySnapshot = await getDocs(collection(db, 'fiber_applications'));
+        const fbData = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          // Ensure fb data has an appId matching its firestore docId for easier editing
+          return { ...data, appId: doc.id };
         });
-        if (needsUpdate) {
-          localStorage.setItem('fiber_applications', JSON.stringify(parsed));
+        setApplications(fbData);
+      } else {
+        const data = localStorage.getItem('fiber_applications');
+        if (data) {
+          let parsed = JSON.parse(data);
+          let needsUpdate = false;
+          parsed = parsed.map((app: any) => {
+            if (!app.appId) {
+              needsUpdate = true;
+              return { ...app, appId: 'legacy_' + Math.random().toString(36).substring(2, 9) };
+            }
+            return app;
+          });
+          if (needsUpdate) {
+            localStorage.setItem('fiber_applications', JSON.stringify(parsed));
+          }
+          setApplications(parsed);
         }
-        setApplications(parsed);
       }
     } catch (e) {
       console.error('Failed to load data', e);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let updatedApps = [...applications];
     
-    if (editingApp) {
-      // Update
-      updatedApps = updatedApps.map(app => 
-        app.appId === formData.appId ? { ...app, ...formData } : app
-      );
-    } else {
-      // Create
-      const newApp = {
-        ...formData,
-        appId: Date.now().toString(),
-        createdAt: new Date().toISOString()
-      };
-      updatedApps.push(newApp);
+    try {
+      if (db && !db.mock) {
+        if (editingApp && formData.appId) {
+          // Update
+          await setDoc(doc(db, 'fiber_applications', formData.appId), formData, { merge: true });
+          updatedApps = updatedApps.map(app => app.appId === formData.appId ? { ...app, ...formData } : app);
+        } else {
+          // Create
+          const newApp = { ...formData, createdAt: new Date().toISOString() };
+          const docRef = await addDoc(collection(db, 'fiber_applications'), newApp);
+          updatedApps.push({ ...newApp, appId: docRef.id });
+        }
+      } else {
+        if (editingApp) {
+          updatedApps = updatedApps.map(app => app.appId === formData.appId ? { ...app, ...formData } : app);
+        } else {
+          updatedApps.push({ ...formData, appId: Date.now().toString(), createdAt: new Date().toISOString() });
+        }
+        localStorage.setItem('fiber_applications', JSON.stringify(updatedApps));
+      }
+      setApplications(updatedApps);
+      setIsModalOpen(false);
+      setEditingApp(null);
+    } catch (e) {
+      console.error('Save failed', e);
+      alert('儲存失敗，請檢查連線');
     }
-    
-    setApplications(updatedApps);
-    localStorage.setItem('fiber_applications', JSON.stringify(updatedApps));
-    setIsModalOpen(false);
-    setEditingApp(null);
   };
 
-  const handleDelete = (appId: string) => {
+  const handleDelete = async (appId: string) => {
     if (window.confirm('確定要刪除這筆申請資料嗎？')) {
-      const updatedApps = applications.filter(app => app.appId !== appId);
-      setApplications(updatedApps);
-      localStorage.setItem('fiber_applications', JSON.stringify(updatedApps));
+      try {
+        if (db && !db.mock) {
+          await deleteDoc(doc(db, 'fiber_applications', appId));
+        } else {
+          const updatedApps = applications.filter(app => app.appId !== appId);
+          localStorage.setItem('fiber_applications', JSON.stringify(updatedApps));
+        }
+        setApplications(prev => prev.filter(app => app.appId !== appId));
+      } catch (e) {
+        console.error('Delete failed', e);
+        alert('刪除失敗');
+      }
     }
   };
 

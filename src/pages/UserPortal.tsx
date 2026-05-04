@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Lock, ArrowRight, FileText, Zap, AlertCircle } from 'lucide-react';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function UserPortal() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,7 +34,7 @@ export default function UserPortal() {
     return sum % 5 === 0 || (gui[6] === '7' && (sum + 1) % 5 === 0);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
     const formattedUsername = username.trim().toUpperCase();
@@ -59,16 +61,27 @@ export default function UserPortal() {
       let expectedPassword = '';
 
       try {
-        const existingStr = localStorage.getItem('fiber_applications');
-        const existingApps = existingStr ? JSON.parse(existingStr) : [];
-        const appRecord = existingApps.find((app: { id: string; phone: string; name?: string }) => app.id === formattedUsername);
-        if (appRecord) {
-          isAppMatched = true;
-          expectedPassword = appRecord.phone.slice(-4);
-          dName = appRecord.name || '親愛的住戶';
+        if (db && !db.mock) {
+          const q = query(collection(db, 'fiber_applications'), where('id', '==', formattedUsername));
+          const snapshot = await getDocs(q);
+          if (!snapshot.empty) {
+            const appRecord = snapshot.docs[0].data();
+            isAppMatched = true;
+            expectedPassword = appRecord.phone.slice(-4);
+            dName = appRecord.name || '親愛的住戶';
+          }
+        } else {
+          const existingStr = localStorage.getItem('fiber_applications');
+          const existingApps = existingStr ? JSON.parse(existingStr) : [];
+          const appRecord = existingApps.find((app: { id: string; phone: string; name?: string }) => app.id === formattedUsername);
+          if (appRecord) {
+            isAppMatched = true;
+            expectedPassword = appRecord.phone.slice(-4);
+            dName = appRecord.name || '親愛的住戶';
+          }
         }
       } catch (e) {
-        console.error(e);
+        console.error('Login query failed:', e);
       }
 
       if (!isAppMatched) {
