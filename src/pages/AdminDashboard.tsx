@@ -30,7 +30,19 @@ export default function AdminDashboard() {
     try {
       const data = localStorage.getItem('fiber_applications');
       if (data) {
-        setApplications(JSON.parse(data));
+        let parsed = JSON.parse(data);
+        let needsUpdate = false;
+        parsed = parsed.map((app: any) => {
+          if (!app.appId) {
+            needsUpdate = true;
+            return { ...app, appId: 'legacy_' + Math.random().toString(36).substring(2, 9) };
+          }
+          return app;
+        });
+        if (needsUpdate) {
+          localStorage.setItem('fiber_applications', JSON.stringify(parsed));
+        }
+        setApplications(parsed);
       }
     } catch (e) {
       console.error('Failed to load data', e);
