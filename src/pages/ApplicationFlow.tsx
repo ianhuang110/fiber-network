@@ -122,7 +122,7 @@ export default function ApplicationFlow() {
           className="flex items-center gap-2 text-gray-500 hover:text-white mb-8 transition-colors"
         >
           <ArrowLeft size={20} />
-          返回
+          回上一步
         </button>
 
         {/* Custom Progress Bar */}
@@ -540,18 +540,14 @@ export default function ApplicationFlow() {
             )}
             
             <div className={`p-4 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 ${currentStep !== 1 ? 'bg-[#0B0F19] rounded-b-3xl' : ''}`}>
-              {currentStep === 1 ? (
-                <div className="flex-1"></div>
-              ) : (
-                <div className="flex-1">
-                  <button 
-                    onClick={handlePrev}
-                    className="px-6 py-3 font-medium text-gray-500 hover:text-white transition-colors flex items-center gap-2"
-                  >
-                    <ArrowLeft size={18} /> 上一步
-                  </button>
-                </div>
-              )}
+              <div className="flex-1">
+                <button 
+                  onClick={handlePrev}
+                  className="flex items-center justify-center gap-2 px-10 py-3.5 bg-[#14b8a6] hover:bg-teal-600 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 hover:shadow-lg w-full md:w-auto text-lg"
+                >
+                  <ArrowLeft size={18} /> 上一步
+                </button>
+              </div>
 
               <div className="flex items-center gap-4 justify-end md:w-auto w-full">
                 {currentStep < 3 && (
