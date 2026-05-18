@@ -14,7 +14,7 @@ const FAQs = [
     answer: "價格 4,200元 / 年約，綁約2年享減免裝機費 1,500元，若中途解約將扣除裝機費用1,500元，並且扣除每月350元月租費，另外統一收取光纖設備押金1000元，退租時無償退還。"
   },
   {
-    question: "網路速度真的能穩跑「雙向 400M」嗎？",
+    question: "網路速度真的能穩跑「雙向 300M」嗎？",
     answer: "是的！不同於傳統寬頻非對稱且需與全區住戶塞車的線路，我們採用專線直達本社區機房，並透過智慧型網路頻寬分配技術，保證您在下班尖峰時段無論是「下載追劇」或「上傳大型檔案」，都能享有極低延遲與暢快網速。"
   },
   {
@@ -45,35 +45,35 @@ export default function Home() {
         {/* Background Fast Light Streams */}
         <div className="absolute inset-0 -z-15 overflow-hidden pointer-events-none opacity-40 mix-blend-screen">
           <motion.div 
-            className="absolute top-[20%] left-0 w-full h-[5px] bg-gradient-to-r from-transparent via-[#F97316] to-transparent blur-[2px] drop-shadow-[0_0_20px_rgba(88,166,255,1)]"
+            className="absolute top-[20%] left-0 w-full h-[5px] bg-gradient-to-r from-transparent via-[#58A6FF] to-transparent blur-[2px] drop-shadow-[0_0_20px_rgba(88,166,255,1)]"
             animate={{ x: ['-100%', '100%'] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
           />
           <motion.div 
-            className="absolute top-[45%] left-0 w-3/4 h-[3px] bg-gradient-to-r from-transparent via-[#EF4444] to-transparent blur-[1px]"
+            className="absolute top-[45%] left-0 w-3/4 h-[3px] bg-gradient-to-r from-transparent via-[#238636] to-transparent blur-[1px]"
             animate={{ x: ['100%', '-100%'] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', delay: 1 }}
           />
           <motion.div 
-            className="absolute top-[85%] left-0 w-2/3 h-[6px] bg-gradient-to-r from-transparent via-[#FDBA74] to-transparent blur-[3px]"
+            className="absolute top-[85%] left-0 w-2/3 h-[6px] bg-gradient-to-r from-transparent via-[#79b8ff] to-transparent blur-[3px]"
             animate={{ x: ['-100%', '150%'] }}
             transition={{ duration: 1.2, repeat: Infinity, ease: 'linear', delay: 0.5 }}
           />
           <motion.div 
-            className="absolute left-[30%] top-0 w-[4px] h-full bg-gradient-to-b from-transparent via-[#F97316] to-transparent blur-[2px]"
+            className="absolute left-[30%] top-0 w-[4px] h-full bg-gradient-to-b from-transparent via-[#58A6FF] to-transparent blur-[2px]"
             animate={{ y: ['-100%', '100%'] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay: 0.3 }}
           />
           <motion.div 
-            className="absolute left-[70%] top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-[#EF4444] to-transparent blur-[1px]"
+            className="absolute left-[70%] top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-[#238636] to-transparent blur-[1px]"
             animate={{ y: ['100%', '-100%'] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'linear', delay: 0.8 }}
           />
         </div>
 
         {/* Pulsing Light Nodes */}
-        <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] bg-[#F97316]/10 rounded-full blur-[100px] mix-blend-screen animate-pulse -z-10"></div>
-        <div className="absolute bottom-[0%] right-[15%] w-[500px] h-[500px] bg-[#EF4444]/10 rounded-full blur-[120px] mix-blend-screen animate-pulse -z-10" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
+        <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] bg-[#58A6FF]/10 rounded-full blur-[100px] mix-blend-screen animate-pulse -z-10"></div>
+        <div className="absolute bottom-[0%] right-[15%] w-[500px] h-[500px] bg-[#238636]/10 rounded-full blur-[120px] mix-blend-screen animate-pulse -z-10" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -83,10 +83,10 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EF4444]/10 text-[#EF4444] text-sm font-semibold mb-6 shadow-sm border border-[#EF4444]/30">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#238636]/10 text-[#238636] text-sm font-semibold mb-6 shadow-sm border border-[#238636]/30">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EF4444] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EF4444]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#238636] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#238636]"></span>
                 </span>
                 狀態：全網監控中．穩定運行
               </div>
@@ -96,7 +96,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EF4444] drop-shadow-[0_0_15px_rgba(88,166,255,0.2)] pb-2"
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.2)] pb-2"
                 >
                   火星區網
                 </motion.span>
@@ -104,7 +104,7 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ repeat: Infinity, duration: 0.9, delay: 1 }}
-                  className="inline-block w-[4px] h-[0.9em] bg-[#F97316] ml-3 align-bottom mb-2 relative top-[-4px]"
+                  className="inline-block w-[4px] h-[0.9em] bg-[#58A6FF] ml-3 align-bottom mb-2 relative top-[-4px]"
                 ></motion.span>
               </h1>
               
@@ -125,15 +125,15 @@ export default function Home() {
                 className="relative inline-flex w-full sm:w-auto mt-4 group"
               >
                 {/* Hardware-accelerated solid glow instead of expensive blurred pulse/ping */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#F97316]/20 to-[#EF4444]/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#58A6FF]/20 to-[#238636]/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"></div>
                 
                 <button 
-                  onClick={() => navigate('/apply', { state: { plan: '400M網路 (綁約2年)' } })}
-                  className="relative px-10 py-5 bg-[#0D1117] border border-[#F97316]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_30px_rgba(88,166,255,0.4)] hover:border-[#F97316]/80 transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto z-10"
+                  onClick={() => navigate('/apply', { state: { plan: '300M網路 (綁約2年)' } })}
+                  className="relative px-10 py-5 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_30px_rgba(88,166,255,0.4)] hover:border-[#58A6FF]/80 transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto z-10"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#F97316]/50 to-[#EF4444]/50 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/50 to-[#238636]/50 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                   <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] transition-transform duration-700 ease-out pointer-events-none"></div>
-                  <span className="relative z-20 flex items-center justify-center gap-2 text-[#F97316] group-hover:text-white w-full transition-colors tracking-wider">
+                  <span className="relative z-20 flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-white w-full transition-colors tracking-wider">
                     立即預約申請
                     <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -148,31 +148,31 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="relative block mt-12 lg:mt-0 w-full max-w-md mx-auto lg:max-w-none"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#F97316]/30 to-[#EF4444]/30 rounded-[3rem] blur-3xl opacity-50 -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#58A6FF]/30 to-[#238636]/30 rounded-[3rem] blur-3xl opacity-50 -z-10"></div>
               <div className="relative bg-[#0D1117]/60 backdrop-blur-xl border border-[#30363D] rounded-[2rem] p-4 shadow-2xl">
                 <div className="w-full aspect-[4/3] rounded-2xl bg-[#0D1117] overflow-hidden relative group border border-[#30363D]/50">
-                  <div className="absolute inset-0 bg-[#F97316]/10 mix-blend-overlay z-10 pointer-events-none"></div>
-                  <img src={`${import.meta.env.BASE_URL}mars_network.png`} alt="Fiber Optic Network" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-[#58A6FF]/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                  <img src={`${import.meta.env.BASE_URL}fiber_optic_network.png`} alt="Fiber Optic Network" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   
                   {/* Moving Light Pulses Overlay */}
                   <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden mix-blend-screen">
                     <motion.div 
-                      className="absolute top-[30%] left-0 w-2/3 h-[4px] bg-gradient-to-r from-transparent via-[#F97316] to-transparent opacity-100 blur-[1px] drop-shadow-[0_0_15px_rgba(88,166,255,1)]"
+                      className="absolute top-[30%] left-0 w-2/3 h-[4px] bg-gradient-to-r from-transparent via-[#58A6FF] to-transparent opacity-100 blur-[1px] drop-shadow-[0_0_15px_rgba(88,166,255,1)]"
                       animate={{ x: ['-100%', '200%'] }}
                       transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
                     />
                     <motion.div 
-                      className="absolute top-[60%] left-0 w-1/2 h-[6px] bg-gradient-to-r from-transparent via-[#EF4444] to-transparent opacity-100 blur-[2px] drop-shadow-[0_0_15px_rgba(35,134,54,1)]"
+                      className="absolute top-[60%] left-0 w-1/2 h-[6px] bg-gradient-to-r from-transparent via-[#238636] to-transparent opacity-100 blur-[2px] drop-shadow-[0_0_15px_rgba(35,134,54,1)]"
                       animate={{ x: ['-100%', '250%'] }}
                       transition={{ duration: 1.2, repeat: Infinity, ease: 'linear', delay: 0.2 }}
                     />
                     <motion.div 
-                      className="absolute left-[40%] top-0 w-[4px] h-1/2 bg-gradient-to-b from-transparent via-[#F97316] to-transparent opacity-100 blur-[1px] drop-shadow-[0_0_15px_rgba(88,166,255,1)]"
+                      className="absolute left-[40%] top-0 w-[4px] h-1/2 bg-gradient-to-b from-transparent via-[#58A6FF] to-transparent opacity-100 blur-[1px] drop-shadow-[0_0_15px_rgba(88,166,255,1)]"
                       animate={{ y: ['-100%', '200%'] }}
                       transition={{ duration: 0.6, repeat: Infinity, ease: 'linear', delay: 0.1 }}
                     />
                     <motion.div 
-                      className="absolute -left-[50%] top-[40%] w-[150%] h-[4px] bg-gradient-to-r from-transparent via-[#FDBA74] to-transparent opacity-100 rotate-12 blur-[1px] drop-shadow-[0_0_15px_rgba(121,184,255,1)]"
+                      className="absolute -left-[50%] top-[40%] w-[150%] h-[4px] bg-gradient-to-r from-transparent via-[#79b8ff] to-transparent opacity-100 rotate-12 blur-[1px] drop-shadow-[0_0_15px_rgba(121,184,255,1)]"
                       animate={{ x: ['-50%', '150%'] }}
                       transition={{ duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.3 }}
                     />
@@ -180,10 +180,10 @@ export default function Home() {
 
                   {/* HUD Elements */}
                   <div className="absolute top-4 left-4 flex gap-2 z-20">
-                    <div className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse"></div>
-                    <div className="w-2 h-2 rounded-full bg-[#EF4444]" style={{ animation: 'pulse 3s infinite' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-[#58A6FF] animate-pulse"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#238636]" style={{ animation: 'pulse 3s infinite' }}></div>
                   </div>
-                  <div className="absolute bottom-4 right-4 z-20 font-mono text-xs text-[#F97316] opacity-80 tracking-widest bg-[#0D1117]/50 px-2 py-1 rounded backdrop-blur-sm">
+                  <div className="absolute bottom-4 right-4 z-20 font-mono text-xs text-[#58A6FF] opacity-80 tracking-widest bg-[#0D1117]/50 px-2 py-1 rounded backdrop-blur-sm">
                     SYS.MONITOR //
                   </div>
                 </div>
@@ -203,26 +203,26 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">為什麼選擇 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EF4444]">火星區網</span>？</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">為什麼選擇 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">火星區網</span>？</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">超越傳統寬頻體驗，專為現代高畫質影音與即時互動打造的新世代網路。</p>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {[
               {
-                icon: <ArrowDownUp size={28} className="text-[#F97316] group-hover:text-white transition-colors duration-300" />,
+                icon: <ArrowDownUp size={28} className="text-[#58A6FF] group-hover:text-white transition-colors duration-300" />,
                 title: "對稱網路",
                 desc: "上傳與下載一樣快，完美適合視訊會議、直播串流與大型檔案高速傳送。",
                 delay: 0.1
               },
               {
-                icon: <Zap size={28} className="text-[#EF4444] group-hover:text-white transition-colors duration-300" />,
+                icon: <Zap size={28} className="text-[#238636] group-hover:text-white transition-colors duration-300" />,
                 title: "極低延遲",
                 desc: "毫秒級反應時間，競技類連線遊戲不掉速，讓你搶奪先機毫不卡頓。",
                 delay: 0.2
               },
               {
-                icon: <Wifi size={28} className="text-[#F97316] group-hover:text-white transition-colors duration-300" />,
+                icon: <Wifi size={28} className="text-[#58A6FF] group-hover:text-white transition-colors duration-300" />,
                 title: "穩定連線",
                 desc: "採用頂級光纖建置，專屬社區的獨立頻寬，確保每一分每一秒的連線品質。",
                 delay: 0.3
@@ -234,15 +234,15 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: feature.delay }}
-                className="group relative p-8 rounded-[2rem] bg-[#0D1117] border border-[#30363D] hover:border-[#F97316]/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(88,166,255,0.15)]"
+                className="group relative p-8 rounded-[2rem] bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(88,166,255,0.15)]"
               >
                 {/* Hover Illuminating Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#F97316]/0 via-[#F97316]/0 to-[#EF4444]/0 group-hover:from-[#F97316]/5 group-hover:via-transparent group-hover:to-[#EF4444]/10 transition-all duration-700 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#58A6FF]/0 via-[#58A6FF]/0 to-[#238636]/0 group-hover:from-[#58A6FF]/5 group-hover:via-transparent group-hover:to-[#238636]/10 transition-all duration-700 pointer-events-none"></div>
                 
                 {/* Glowing Top Edge */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-[#F97316]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-[#58A6FF]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-b from-[#161B22] to-[#0D1117] border border-[#30363D] flex items-center justify-center mb-8 shadow-inner group-hover:border-[#F97316]/30 group-hover:shadow-[0_0_25px_rgba(88,166,255,0.25)] transition-all duration-500 group-hover:-translate-y-1">
+                <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-b from-[#161B22] to-[#0D1117] border border-[#30363D] flex items-center justify-center mb-8 shadow-inner group-hover:border-[#58A6FF]/30 group-hover:shadow-[0_0_25px_rgba(88,166,255,0.25)] transition-all duration-500 group-hover:-translate-y-1">
                   {feature.icon}
                 </div>
                 <h3 className="relative z-10 text-xl font-bold text-gray-100 mb-4 group-hover:text-white transition-colors">{feature.title}</h3>
@@ -256,7 +256,7 @@ export default function Home() {
       {/* Pricing Section */}
       <section className="relative py-24 bg-[#0D1117] z-10 border-b border-[#30363D]/50 overflow-hidden">
         {/* Background glow for pricing */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F97316]/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#58A6FF]/5 rounded-full blur-[120px] pointer-events-none"></div>
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div 
@@ -265,10 +265,10 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-[#F97316]/10 text-[#F97316] mb-4 border border-[#F97316]/20 shadow-[0_0_15px_rgba(88,166,255,0.15)]">
+            <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-[#58A6FF]/10 text-[#58A6FF] mb-4 border border-[#58A6FF]/20 shadow-[0_0_15px_rgba(88,166,255,0.15)]">
                <Zap size={28} className="drop-shadow-[0_0_8px_rgba(88,166,255,0.8)] fill-current" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">專屬超殺 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#FDBA74]">主打方案</span></h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">專屬超殺 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#79b8ff]">主打方案</span></h2>
             <p className="text-gray-400">只給社區住戶的最強優惠，極速上網就是這麼無負擔</p>
           </motion.div>
 
@@ -280,28 +280,28 @@ export default function Home() {
             className="relative max-w-2xl mx-auto"
           >
             {/* Glowing border effect */}
-            <div className="absolute -inset-[3px] bg-gradient-to-r from-[#F97316] to-[#EF4444] rounded-[2.5rem] blur-md opacity-50 animate-pulse" style={{ animationDuration: '4s' }}></div>
+            <div className="absolute -inset-[3px] bg-gradient-to-r from-[#58A6FF] to-[#238636] rounded-[2.5rem] blur-md opacity-50 animate-pulse" style={{ animationDuration: '4s' }}></div>
             
             <div className="relative bg-[#05080f] border border-[#30363D] rounded-[2.5rem] p-8 sm:p-12 shadow-2xl flex flex-col items-center text-center overflow-hidden">
               {/* Internal abstract shapes */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#F97316]/10 rounded-bl-full -z-10 blur-2xl"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#EF4444]/10 rounded-tr-full -z-10 blur-2xl"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#58A6FF]/10 rounded-bl-full -z-10 blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#238636]/10 rounded-tr-full -z-10 blur-2xl"></div>
               
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EF4444]/10 text-[#EF4444] text-sm font-bold mb-8 border border-[#EF4444]/30 tracking-widest shadow-[0_0_10px_rgba(35,134,54,0.2)]">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#238636]/10 text-[#238636] text-sm font-bold mb-8 border border-[#238636]/30 tracking-widest shadow-[0_0_10px_rgba(35,134,54,0.2)]">
                 社區住戶限定
               </div>
               
               <div className="mb-2 flex flex-col md:flex-row items-center justify-center gap-4">
-                <h3 className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300 drop-shadow-md">400<span className="text-5xl ml-1">M</span></h3>
+                <h3 className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300 drop-shadow-md">300<span className="text-5xl ml-1">M</span></h3>
                 <div className="flex flex-col text-left">
                   <span className="text-xl sm:text-2xl font-bold text-gray-300 tracking-widest leading-tight">雙向極速</span>
-                  <span className="text-xl sm:text-2xl font-bold text-[#F97316] tracking-widest leading-tight">光纖網路</span>
+                  <span className="text-xl sm:text-2xl font-bold text-[#58A6FF] tracking-widest leading-tight">光纖網路</span>
                 </div>
               </div>
               
               <div className="flex flex-wrap items-baseline justify-center gap-1 mb-8 mt-6 bg-[#0D1117] py-4 px-8 rounded-2xl border border-[#30363D] shadow-inner">
                 <span className="text-gray-400 font-medium text-lg whitespace-nowrap">激省月租</span>
-                <span className="text-5xl font-extrabold text-[#EF4444] mx-2 drop-shadow-[0_0_15px_rgba(35,134,54,0.4)]">$350</span>
+                <span className="text-5xl font-extrabold text-[#238636] mx-2 drop-shadow-[0_0_15px_rgba(35,134,54,0.4)]">$350</span>
                 <span className="text-gray-500 text-sm whitespace-nowrap">/ 月 (年繳)</span>
               </div>
 
@@ -314,19 +314,19 @@ export default function Home() {
                   "綁約享裝機費折扣"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-gray-300 group cursor-default">
-                    <CheckCircle2 size={20} className="text-[#EF4444] shrink-0 group-hover:scale-110 transition-transform drop-shadow-[0_0_5px_rgba(35,134,54,0.5)]" />
+                    <CheckCircle2 size={20} className="text-[#238636] shrink-0 group-hover:scale-110 transition-transform drop-shadow-[0_0_5px_rgba(35,134,54,0.5)]" />
                     <span className="font-medium">{item}</span>
                   </div>
                 ))}
               </div>
 
               <button 
-                onClick={() => navigate('/apply', { state: { plan: '400M網路 (綁約2年)' } })}
-                className="group relative w-full px-8 py-5 bg-[#0D1117] border border-[#F97316]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(88,166,255,0.2)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:-translate-y-1"
+                onClick={() => navigate('/apply', { state: { plan: '300M網路 (綁約2年)' } })}
+                className="group relative w-full px-8 py-5 bg-[#0D1117] border border-[#58A6FF]/40 text-white font-bold text-xl rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(88,166,255,0.2)] hover:shadow-[0_0_30px_rgba(88,166,255,0.5)] transition-all hover:-translate-y-1"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#F97316]/80 to-[#EF4444]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#58A6FF]/80 to-[#238636]/80 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
                 <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg] transition-transform duration-1000 ease-out z-10 pointer-events-none"></div>
-                <span className="relative z-20 flex items-center justify-center gap-2 text-[#F97316] group-hover:text-[#FDBA74] transition-colors">
+                <span className="relative z-20 flex items-center justify-center gap-2 text-[#58A6FF] group-hover:text-[#79b8ff] transition-colors">
                   選擇此方案並預約
                   <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -347,8 +347,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <div className="w-16 h-16 bg-[#0D1117] border border-[#30363D] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#F97316]/5">
-              <HelpCircle size={32} className="text-[#F97316]" />
+            <div className="w-16 h-16 bg-[#0D1117] border border-[#30363D] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#58A6FF]/5">
+              <HelpCircle size={32} className="text-[#58A6FF]" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">常見問題解答 (FAQ)</h2>
             <p className="text-gray-400">為您整理住戶最關心的幾個問題，讓您申辦更安心</p>
@@ -366,18 +366,18 @@ export default function Home() {
                   transition={{ delay: index * 0.1 }}
                   className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
                     isOpen 
-                      ? 'border-[#F97316]/40 bg-[#0D1117] shadow-lg shadow-[#F97316]/5' 
-                      : 'border-[#30363D] bg-[#0D1117]/50 hover:border-[#F97316]/30 hover:bg-[#0D1117]'
+                      ? 'border-[#58A6FF]/40 bg-[#0D1117] shadow-lg shadow-[#58A6FF]/5' 
+                      : 'border-[#30363D] bg-[#0D1117]/50 hover:border-[#58A6FF]/30 hover:bg-[#0D1117]'
                   }`}
                 >
                   <button 
                     className="flex items-center justify-between w-full p-6 text-left focus:outline-none"
                     onClick={() => toggleFaq(index)}
                   >
-                    <span className={`text-lg font-semibold transition-colors duration-300 pr-8 ${isOpen ? 'text-[#FDBA74]' : 'text-gray-200'}`}>
+                    <span className={`text-lg font-semibold transition-colors duration-300 pr-8 ${isOpen ? 'text-[#79b8ff]' : 'text-gray-200'}`}>
                       Q: {faq.question}
                     </span>
-                    <div className={`text-[#F97316] shrink-0 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}>
+                    <div className={`text-[#58A6FF] shrink-0 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}>
                       <ChevronDown size={24} />
                     </div>
                   </button>
@@ -391,7 +391,7 @@ export default function Home() {
                         className="overflow-hidden"
                       >
                         <div className="p-6 pt-0 text-gray-400 leading-relaxed border-t border-[#30363D]/40 mt-2 mx-6">
-                          <span className="text-[#EF4444] font-bold mr-2">A:</span>
+                          <span className="text-[#238636] font-bold mr-2">A:</span>
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -411,10 +411,10 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#F97316]/10 to-[#131B2F] border border-[#F97316]/30 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl"
+            className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#58A6FF]/10 to-[#131B2F] border border-[#58A6FF]/30 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl"
           >
             {/* Background Glow */}
-            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F97316]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#58A6FF]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             
             <div className="relative z-10 text-center md:text-left flex-1">
               <h2 className="text-3xl font-bold text-white mb-4">有任何問題嗎？讓專屬客服幫助您！</h2>
@@ -442,7 +442,7 @@ export default function Home() {
           <div className="mt-8 text-center">
             <button 
               onClick={() => setShowContractModal(true)}
-              className="inline-flex items-center gap-1.5 text-sm md:text-base text-gray-500 hover:text-[#F97316] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm md:text-base text-gray-500 hover:text-[#58A6FF] transition-colors"
             >
               <FileText size={16} />
               申辦前請先詳閱《火星區網服務條款暨合約書》
@@ -466,7 +466,7 @@ export default function Home() {
             >
               <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#131B2F] z-10 pt-2">
                 <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                  <FileText className="text-[#F97316]" size={24} />
+                  <FileText className="text-[#58A6FF]" size={24} />
                   《火星區網服務條款暨合約書》
                 </h3>
                 <button 
@@ -491,7 +491,7 @@ export default function Home() {
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">二、 收費標準與服務期間</h4>
                   <ul className="list-disc pl-5 space-y-2">
-                    <li>本合約包含 400M 雙向極速光纖上網服務，採年繳方案價格為 4,200 元 / 年約（折合月租費為 350 元）。</li>
+                    <li>本合約包含 300M 雙向極速光纖上網服務，採年繳方案價格為 4,200 元 / 年約（折合月租費為 350 元）。</li>
                     <li>基本合約期限為二年（24個月），綁約 2 年享減免裝機費 1,500 元。另外統一收取光纖設備押金 1,000 元，退租時無償退還。</li>
                     <li>若需額外升級 Wi-Fi 6 等進階設備，相關費用另依報價單為準。</li>
                   </ul>
@@ -500,7 +500,7 @@ export default function Home() {
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">三、 網路速率與連線品質</h4>
                   <ul className="list-disc pl-5 space-y-2">
-                    <li>本方案標示之「雙向 400M」係指最高可達速率。實際傳輸速率可能因用戶終端設備性能、介面、室內環境阻隔等實體因素而有所影響。</li>
+                    <li>本方案標示之「雙向 300M」係指最高可達速率。實際傳輸速率可能因用戶終端設備性能、介面、室內環境阻隔等實體因素而有所影響。</li>
                     <li>我們提供網路設備監控與專屬報修處理，若遇硬體異常將優先排程處理。</li>
                   </ul>
                 </div>
@@ -524,7 +524,7 @@ export default function Home() {
               <div className="flex justify-end pt-6 mt-6 border-t border-gray-800">
                 <button 
                   onClick={() => setShowContractModal(false)}
-                  className="px-8 py-3 bg-[#131B2F] border border-[#30363D] hover:border-[#F97316]/60 hover:bg-[#F97316]/10 text-gray-200 hover:text-[#F97316] rounded-xl transition-all shadow-md font-bold"
+                  className="px-8 py-3 bg-[#131B2F] border border-[#30363D] hover:border-[#58A6FF]/60 hover:bg-[#58A6FF]/10 text-gray-200 hover:text-[#58A6FF] rounded-xl transition-all shadow-md font-bold"
                 >
                   確認並關閉
                 </button>

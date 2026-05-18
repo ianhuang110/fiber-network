@@ -43,8 +43,8 @@ const taiwanDistricts: Record<string, string[]> = {
 };
 
 const planPrices: Record<string, string> = {
-  '400M網路 (綁約2年)': '350',
-  '400M網路 (無綁約)': '350'
+  '300M網路 (綁約2年)': '350',
+  '300M網路 (無綁約)': '350'
 };
 
 const currentYear = new Date().getFullYear();
@@ -208,12 +208,12 @@ export default function ApplicationFlow() {
                               {isSelected && <div className="w-2.5 h-2.5 bg-[#14b8a6] rounded-full"></div>}
                             </div>
                             <div className="flex flex-col gap-1 mt-[-2px]">
-                              <span className={`font-medium leading-tight ${isSelected ? 'text-gray-100' : 'text-gray-400'}`}>400M雙向極速光纖</span>
+                              <span className={`font-medium leading-tight ${isSelected ? 'text-gray-100' : 'text-gray-400'}`}>300M雙向極速光纖</span>
                               <span className={`text-sm leading-tight ${isSelected ? 'text-[#14b8a6]' : 'text-gray-500'}`}>
                                 {isYearly ? '綁約2年免裝機費$1500' : '需收取單次裝機費$1500'}
                               </span>
                               {isYearly && (
-                                <span className={`text-xs px-2 py-0.5 rounded w-fit mt-1 border ${isSelected ? 'text-[#F97316] bg-[#F97316]/10 border-[#F97316]/20' : 'text-gray-500 bg-gray-800/50 border-gray-700'}`}>
+                                <span className={`text-xs px-2 py-0.5 rounded w-fit mt-1 border ${isSelected ? 'text-[#58A6FF] bg-[#58A6FF]/10 border-[#58A6FF]/20' : 'text-gray-500 bg-gray-800/50 border-gray-700'}`}>
                                   年繳 $4,200 (平均$350/月)
                                 </span>
                               )}
