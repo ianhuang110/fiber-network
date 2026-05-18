@@ -152,7 +152,7 @@ export default function Home() {
               <div className="relative bg-[#0D1117]/60 backdrop-blur-xl border border-[#30363D] rounded-[2rem] p-4 shadow-2xl">
                 <div className="w-full aspect-[4/3] rounded-2xl bg-[#0D1117] overflow-hidden relative group border border-[#30363D]/50">
                   <div className="absolute inset-0 bg-[#F97316]/10 mix-blend-overlay z-10 pointer-events-none"></div>
-                  <img src={`${import.meta.env.BASE_URL}fiber_optic_network.png`} alt="Fiber Optic Network" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={`${import.meta.env.BASE_URL}mars_network.png`} alt="Fiber Optic Network" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   
                   {/* Moving Light Pulses Overlay */}
                   <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden mix-blend-screen">
