@@ -105,7 +105,7 @@ export default function UserPortal() {
   const handleDownloadReceipt = (invoiceNumber: string, month: string) => {
     const receiptContent = `
 =========================================
-          光纖社區網路 - 繳費收據
+          火星區網 - 繳費收據
 =========================================
 單號：${invoiceNumber}
 期數：${month}
@@ -241,7 +241,7 @@ export default function UserPortal() {
         <div className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">歡迎回來，{userDisplayName}</h1>
-            <p className="text-gray-400">這是您的光纖社區網路管理面板</p>
+            <p className="text-gray-400">這是您的火星區網管理面板</p>
           </div>
         </div>
 

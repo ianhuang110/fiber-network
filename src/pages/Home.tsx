@@ -98,7 +98,7 @@ export default function Home() {
                   transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                   className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636] drop-shadow-[0_0_15px_rgba(88,166,255,0.2)] pb-2"
                 >
-                  光纖社區網路
+                  火星區網
                 </motion.span>
                 <motion.span
                   initial={{ opacity: 0 }}
@@ -114,7 +114,7 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 1.1 }}
                 className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed font-light mx-auto lg:mx-0 max-w-xl"
               >
-                急速光纖社區網路，遊戲不卡頓，追劇不轉圈。<br/>
+                急速火星區網，遊戲不卡頓，追劇不轉圈。<br/>
                 為您打造最穩定的居家網路體驗。
               </motion.p>
 
@@ -203,7 +203,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">為什麼選擇 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">光纖社區網路</span>？</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">為什麼選擇 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58A6FF] to-[#238636]">火星區網</span>？</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">超越傳統寬頻體驗，專為現代高畫質影音與即時互動打造的新世代網路。</p>
           </motion.div>
           
@@ -445,7 +445,7 @@ export default function Home() {
               className="inline-flex items-center gap-1.5 text-sm md:text-base text-gray-500 hover:text-[#58A6FF] transition-colors"
             >
               <FileText size={16} />
-              申辦前請先詳閱《光纖社區網路服務條款暨合約書》
+              申辦前請先詳閱《火星區網服務條款暨合約書》
             </button>
           </div>
         </div>
@@ -467,7 +467,7 @@ export default function Home() {
               <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#131B2F] z-10 pt-2">
                 <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
                   <FileText className="text-[#58A6FF]" size={24} />
-                  《光纖社區網路服務條款暨合約書》
+                  《火星區網服務條款暨合約書》
                 </h3>
                 <button 
                   onClick={() => setShowContractModal(false)}
@@ -478,7 +478,7 @@ export default function Home() {
               </div>
               
               <div className="text-gray-400 space-y-6 text-[15px] leading-relaxed pr-2">
-                <p>歡迎您申請光纖社區網路服務！為保障您的權益，請仔細閱讀以下合約條款內容：</p>
+                <p>歡迎您申請火星區網服務！為保障您的權益，請仔細閱讀以下合約條款內容：</p>
                 
                 <div>
                   <h4 className="font-bold text-gray-100 text-lg mb-2 flex items-center gap-2">一、 服務申辦與裝機</h4>

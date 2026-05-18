@@ -602,7 +602,7 @@ export default function ApplicationFlow() {
             >
               <h3 className="text-2xl font-bold mb-6 text-white border-b pb-4">《個人資料使用授權同意書》</h3>
               <div className="text-gray-500 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
-                <p>為了提供您最佳的網路申辦與安裝服務，光纖社區網路需要收集您的基本個人資料。本同意書旨在說明我們如何收集、處理及利用您的個人資料，請仔細閱讀。</p>
+                <p>為了提供您最佳的網路申辦與安裝服務，火星區網需要收集您的基本個人資料。本同意書旨在說明我們如何收集、處理及利用您的個人資料，請仔細閱讀。</p>
                 <h4 className="font-bold text-gray-100 mt-6 mb-2">一、 蒐集目的</h4>
                 <p>僅供辦理申裝網路服務、客戶服務、帳務管理、以及必要之系統建置與本公司派工聯繫使用。</p>
                 <h4 className="font-bold text-gray-100 mt-6 mb-2">二、 蒐集類別</h4>
@@ -637,7 +637,7 @@ export default function ApplicationFlow() {
             >
               <h3 className="text-2xl font-bold mb-6 text-white border-b pb-4">《網路申裝與服務權益說明》</h3>
               <div className="text-gray-500 space-y-4 text-[15px] leading-relaxed mb-8 pr-2">
-                <p>感謝您選擇光纖社區網路服務！為保障雙方權益，請在完成申辦前詳閱以下申裝及網路服務使用說明：</p>
+                <p>感謝您選擇火星區網服務！為保障雙方權益，請在完成申辦前詳閱以下申裝及網路服務使用說明：</p>
                 <h4 className="font-bold text-gray-100 mt-6 mb-2">一、 服務申辦與裝機</h4>
                 <p>我們將於您線上完成申請並審核無誤後的 3 個工作天內，指派專責工程人員與您透過電話聯繫，以確認確切的到府裝機時間段。請確保您填寫的手機與聯絡方式準確無誤並保持暢通。</p>
                 <h4 className="font-bold text-gray-100 mt-6 mb-2">二、 收費標準與繳費原則</h4>
@@ -677,7 +677,7 @@ export default function ApplicationFlow() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">申請已送出！</h3>
               <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-                感謝您選擇光纖社區網路服務，我們的專員將於三個工作天內與您電話聯繫，安排後續施工事宜。
+                感謝您選擇火星區網服務，我們的專員將於三個工作天內與您電話聯繫，安排後續施工事宜。
               </p>
               <button 
                 onClick={async () => {

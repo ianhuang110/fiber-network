@@ -54,7 +54,7 @@ function App() {
               <span className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-600 rounded-lg flex items-center justify-center text-white">
                 S
               </span>
-              光纖社區網路
+              火星區網
             </Link>
             <nav className="flex items-center gap-3 text-sm font-bold">
               <Link 
