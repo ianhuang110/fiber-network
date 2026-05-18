@@ -159,8 +159,8 @@ export default function UserPortal() {
     return (
       <div className="flex-1 flex items-center justify-center p-4 relative overflow-hidden bg-[#05080f] min-h-[calc(100vh-64px)]">
         {/* Background effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#58A6FF]/10 rounded-full blur-[100px] -z-10"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#238636]/10 rounded-full blur-[100px] -z-10"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#F97316]/10 rounded-full blur-[100px] -z-10"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#EF4444]/10 rounded-full blur-[100px] -z-10"></div>
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -168,7 +168,7 @@ export default function UserPortal() {
           className="w-full max-w-md bg-[#0D1117] border border-[#30363D] rounded-3xl p-8 shadow-2xl relative z-10"
         >
           <div className="flex justify-center mb-8">
-            <span className="w-12 h-12 bg-gradient-to-br from-[#58A6FF] to-[#238636] rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-[0_0_20px_rgba(88,166,255,0.3)]">
+            <span className="w-12 h-12 bg-gradient-to-br from-[#F97316] to-[#EF4444] rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-[0_0_20px_rgba(88,166,255,0.3)]">
               S
             </span>
           </div>
@@ -186,7 +186,7 @@ export default function UserPortal() {
               <label className="block text-sm font-medium text-gray-400 mb-2">用戶帳號 (身分證字號)</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-500 group-focus-within:text-[#58A6FF] transition-colors" />
+                  <User className="h-5 w-5 text-gray-500 group-focus-within:text-[#F97316] transition-colors" />
                 </div>
                 <input 
                   type="text" 
@@ -194,7 +194,7 @@ export default function UserPortal() {
                   onChange={(e) => setUsername(e.target.value)}
                   onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('請輸入身分證字號')}
                   onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
-                  className="w-full pl-11 pr-4 py-3 bg-[#05080f] border border-[#30363D] focus:border-[#58A6FF]/50 text-white rounded-xl outline-none shadow-inner transition-colors"
+                  className="w-full pl-11 pr-4 py-3 bg-[#05080f] border border-[#30363D] focus:border-[#F97316]/50 text-white rounded-xl outline-none shadow-inner transition-colors"
                   placeholder="A123456789"
                   required
                 />
@@ -204,7 +204,7 @@ export default function UserPortal() {
               <label className="block text-sm font-medium text-gray-400 mb-2">密碼預設 (手機後4碼)</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-500 group-focus-within:text-[#58A6FF] transition-colors" />
+                  <Lock className="h-5 w-5 text-gray-500 group-focus-within:text-[#F97316] transition-colors" />
                 </div>
                 <input 
                   type="password" 
@@ -212,7 +212,7 @@ export default function UserPortal() {
                   onChange={(e) => setPassword(e.target.value)}
                   onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('請輸入密碼')}
                   onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
-                  className="w-full pl-11 pr-4 py-3 bg-[#05080f] border border-[#30363D] focus:border-[#58A6FF]/50 text-white rounded-xl outline-none shadow-inner transition-colors"
+                  className="w-full pl-11 pr-4 py-3 bg-[#05080f] border border-[#30363D] focus:border-[#F97316]/50 text-white rounded-xl outline-none shadow-inner transition-colors"
                   placeholder="••••"
                   required
                 />
@@ -220,7 +220,7 @@ export default function UserPortal() {
             </div>
             <button 
               type="submit"
-              className="w-full py-3.5 mt-4 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 group transition-all"
+              className="w-full py-3.5 mt-4 bg-gradient-to-r from-[#F97316] to-[#EF4444] hover:from-[#EA580C] hover:to-[#DC2626] text-white rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 group transition-all"
             >
               登入系統
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -254,18 +254,18 @@ export default function UserPortal() {
             className="bg-[#0D1117] border border-[#30363D] rounded-3xl p-6 shadow-xl relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-6 opacity-5">
-              <Zap size={80} className="text-[#58A6FF]" />
+              <Zap size={80} className="text-[#F97316]" />
             </div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#58A6FF]/10 flex items-center justify-center">
-                <Zap className="text-[#58A6FF]" size={20} />
+              <div className="w-10 h-10 rounded-full bg-[#F97316]/10 flex items-center justify-center">
+                <Zap className="text-[#F97316]" size={20} />
               </div>
               <h3 className="text-lg font-bold text-white">目前方案</h3>
             </div>
             <div className="flex items-end gap-3 mb-2">
               <span className="text-4xl font-black text-white">400<span className="text-xl text-gray-500">M</span></span>
             </div>
-            <p className="text-[#58A6FF] text-sm font-medium">極速雙向光纖 (綁約2年)</p>
+            <p className="text-[#F97316] text-sm font-medium">極速雙向光纖 (綁約2年)</p>
           </motion.div>
 
           {/* Billing Card */}
@@ -273,7 +273,7 @@ export default function UserPortal() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-[#0D1117] border border-[#58A6FF]/40 rounded-3xl p-6 shadow-[0_0_30px_rgba(88,166,255,0.08)] relative overflow-hidden"
+            className="bg-[#0D1117] border border-[#F97316]/40 rounded-3xl p-6 shadow-[0_0_30px_rgba(88,166,255,0.08)] relative overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -290,7 +290,7 @@ export default function UserPortal() {
             </div>
             <button 
               onClick={() => setShowPaymentModal(true)}
-              className="w-full py-2.5 bg-[#58A6FF]/10 hover:bg-[#58A6FF]/20 border border-[#58A6FF]/40 text-[#58A6FF] font-bold rounded-xl transition-colors"
+              className="w-full py-2.5 bg-[#F97316]/10 hover:bg-[#F97316]/20 border border-[#F97316]/40 text-[#F97316] font-bold rounded-xl transition-colors"
             >
               顯示現金繳費條碼 / 管理中心繳款
             </button>
@@ -330,7 +330,7 @@ export default function UserPortal() {
                   <td className="p-4 pr-6 text-right">
                     <button 
                       onClick={() => setShowPaymentModal(true)}
-                      className="text-[#58A6FF] hover:underline font-medium"
+                      className="text-[#F97316] hover:underline font-medium"
                     >
                       查看繳費單
                     </button>
@@ -341,7 +341,7 @@ export default function UserPortal() {
                   <td className="p-4 text-gray-400">2026年 2月</td>
                   <td className="p-4 text-gray-500 font-mono">$350</td>
                   <td className="p-4 text-gray-600 font-mono">2026/03/15</td>
-                  <td className="p-4"><span className="px-3 py-1 bg-[#238636]/20 text-[#238636] text-xs font-bold rounded-full border border-[#238636]/20">已繳清</span></td>
+                  <td className="p-4"><span className="px-3 py-1 bg-[#EF4444]/20 text-[#EF4444] text-xs font-bold rounded-full border border-[#EF4444]/20">已繳清</span></td>
                   <td className="p-4 pr-6 text-right"><button onClick={() => handleDownloadReceipt('INV-202602-019', '2026年 2月')} className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
                 </tr>
                 <tr className="hover:bg-white/[0.02] transition-colors">
@@ -349,7 +349,7 @@ export default function UserPortal() {
                   <td className="p-4 text-gray-400">2026年 1月</td>
                   <td className="p-4 text-gray-500 font-mono">$350</td>
                   <td className="p-4 text-gray-600 font-mono">2026/02/15</td>
-                  <td className="p-4"><span className="px-3 py-1 bg-[#238636]/20 text-[#238636] text-xs font-bold rounded-full border border-[#238636]/20">已繳清</span></td>
+                  <td className="p-4"><span className="px-3 py-1 bg-[#EF4444]/20 text-[#EF4444] text-xs font-bold rounded-full border border-[#EF4444]/20">已繳清</span></td>
                   <td className="p-4 pr-6 text-right"><button onClick={() => handleDownloadReceipt('INV-202601-019', '2026年 1月')} className="text-gray-500 hover:text-white transition-colors">下載收據</button></td>
                 </tr>
               </tbody>
@@ -382,8 +382,8 @@ export default function UserPortal() {
               <p className="text-red-500 text-xs mt-3 font-bold">繳費期限：2026/04/15</p>
             </div>
 
-            <div className="bg-[#58A6FF]/10 border border-[#58A6FF]/20 rounded-xl p-4 mb-6">
-              <p className="text-[#58A6FF] text-sm text-center font-medium leading-relaxed">
+            <div className="bg-[#F97316]/10 border border-[#F97316]/20 rounded-xl p-4 mb-6">
+              <p className="text-[#F97316] text-sm text-center font-medium leading-relaxed">
                 或者，您也可以截圖此畫面<br/>
                 直接至<span className="font-bold underline ml-1">社區管理中心現金繳納</span>
               </p>

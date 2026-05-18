@@ -213,7 +213,7 @@ export default function ApplicationFlow() {
                                 {isYearly ? '綁約2年免裝機費$1500' : '需收取單次裝機費$1500'}
                               </span>
                               {isYearly && (
-                                <span className={`text-xs px-2 py-0.5 rounded w-fit mt-1 border ${isSelected ? 'text-[#58A6FF] bg-[#58A6FF]/10 border-[#58A6FF]/20' : 'text-gray-500 bg-gray-800/50 border-gray-700'}`}>
+                                <span className={`text-xs px-2 py-0.5 rounded w-fit mt-1 border ${isSelected ? 'text-[#F97316] bg-[#F97316]/10 border-[#F97316]/20' : 'text-gray-500 bg-gray-800/50 border-gray-700'}`}>
                                   年繳 $4,200 (平均$350/月)
                                 </span>
                               )}

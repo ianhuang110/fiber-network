@@ -146,7 +146,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-              <Database className="text-[#58A6FF]" size={32} />
+              <Database className="text-[#F97316]" size={32} />
               後台資料庫
             </h1>
             <p className="text-gray-500 mt-1">管理所有申請者的詳細資料</p>
@@ -160,12 +160,12 @@ export default function AdminDashboard() {
                 placeholder="搜尋姓名、電話、社區..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-sm text-gray-800 transition-all shadow-sm"
+                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-sm text-gray-800 transition-all shadow-sm"
               />
             </div>
             <button 
               onClick={() => openModal()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#238636] hover:bg-[#2EA043] text-white rounded-xl font-bold shadow-md transition-colors whitespace-nowrap"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#EF4444] hover:bg-[#2EA043] text-white rounded-xl font-bold shadow-md transition-colors whitespace-nowrap"
             >
               <Plus size={18} />
               新增申請
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                       </td>
                       <td className="p-4 text-sm text-gray-700 font-mono">{app.phone}</td>
                       <td className="p-4">
-                        <span className="px-2.5 py-1 text-xs font-bold rounded-md bg-[#58A6FF]/10 text-[#0056b3] border border-[#58A6FF]/20">
+                        <span className="px-2.5 py-1 text-xs font-bold rounded-md bg-[#F97316]/10 text-[#0056b3] border border-[#F97316]/20">
                           {app.plan || '未指定'}
                         </span>
                       </td>
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                         <div className="flex items-center justify-end gap-2">
                           <button 
                             onClick={() => openModal(app)}
-                            className="p-2 text-gray-400 hover:text-[#58A6FF] hover:bg-[#58A6FF]/10 rounded-lg transition-colors"
+                            className="p-2 text-gray-400 hover:text-[#F97316] hover:bg-[#F97316]/10 rounded-lg transition-colors"
                             title="編輯"
                           >
                             <Edit2 size={16} />
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
             >
               <div className="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
                 <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                  {editingApp ? <Edit2 size={20} className="text-[#58A6FF]" /> : <Plus size={20} className="text-[#238636]" />}
+                  {editingApp ? <Edit2 size={20} className="text-[#F97316]" /> : <Plus size={20} className="text-[#EF4444]" />}
                   {editingApp ? '編輯申請資料' : '新增申請資料'}
                 </h3>
                 <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
@@ -267,42 +267,42 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">姓名</label>
-                    <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">身分證字號</label>
-                    <input type="text" value={formData.id} onChange={(e) => setFormData({...formData, id: e.target.value.toUpperCase()})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.id} onChange={(e) => setFormData({...formData, id: e.target.value.toUpperCase()})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">手機號碼</label>
-                    <input type="text" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">方案選擇</label>
-                    <select value={formData.plan} onChange={(e) => setFormData({...formData, plan: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm">
+                    <select value={formData.plan} onChange={(e) => setFormData({...formData, plan: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm">
                       <option value="400M網路 (綁約2年)">400M網路 (綁約2年)</option>
                       <option value="400M網路 (無綁約)">400M網路 (無綁約)</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">縣市</label>
-                    <input type="text" value={formData.city} onChange={(e) => setFormData({...formData, city: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.city} onChange={(e) => setFormData({...formData, city: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">鄉鎮市區</label>
-                    <input type="text" value={formData.district} onChange={(e) => setFormData({...formData, district: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.district} onChange={(e) => setFormData({...formData, district: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-bold text-gray-700 mb-2">社區名稱</label>
-                    <input type="text" value={formData.community} onChange={(e) => setFormData({...formData, community: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.community} onChange={(e) => setFormData({...formData, community: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-bold text-gray-700 mb-2">裝機地址</label>
-                    <input type="text" value={formData.installAddress} onChange={(e) => setFormData({...formData, installAddress: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
+                    <input type="text" value={formData.installAddress} onChange={(e) => setFormData({...formData, installAddress: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm" />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-bold text-gray-700 mb-2">備註</label>
-                    <textarea rows={3} value={formData.remark} onChange={(e) => setFormData({...formData, remark: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#58A6FF] focus:ring-2 focus:ring-[#58A6FF]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm resize-none"></textarea>
+                    <textarea rows={3} value={formData.remark} onChange={(e) => setFormData({...formData, remark: e.target.value})} className="w-full px-4 py-2.5 bg-white border border-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/20 rounded-xl outline-none text-gray-800 transition-all shadow-sm resize-none"></textarea>
                   </div>
                 </div>
               </div>
@@ -311,7 +311,7 @@ export default function AdminDashboard() {
                 <button onClick={() => setIsModalOpen(false)} className="px-6 py-2.5 text-gray-500 hover:text-gray-800 font-bold transition-colors">
                   取消
                 </button>
-                <button onClick={handleSave} className="flex items-center gap-2 px-6 py-2.5 bg-[#58A6FF] hover:bg-[#408BE0] text-white rounded-xl font-bold shadow-md transition-colors">
+                <button onClick={handleSave} className="flex items-center gap-2 px-6 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl font-bold shadow-md transition-colors">
                   <CheckCircle size={18} />
                   儲存資料
                 </button>

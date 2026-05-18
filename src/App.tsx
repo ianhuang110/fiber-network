@@ -50,22 +50,22 @@ function App() {
         {/* Global Header */}
         <header className="bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-white font-bold text-2xl tracking-tight hover:opacity-80 transition-opacity">
-              <span className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-600 rounded-lg flex items-center justify-center text-white">
+            <Link to="/" className="flex items-center gap-2 font-bold text-2xl tracking-tight hover:opacity-80 transition-opacity">
+              <span className="w-8 h-8 bg-gradient-to-br from-orange-400 to-red-600 rounded-lg flex items-center justify-center text-white">
                 S
               </span>
-              火星區網
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EF4444]">火星區網</span>
             </Link>
             <nav className="flex items-center gap-3 text-sm font-bold">
               <Link 
                 to="/" 
-                className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/60 hover:text-[#58A6FF] hover:bg-[#58A6FF]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide hidden sm:block"
+                className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#F97316]/60 hover:text-[#F97316] hover:bg-[#F97316]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide hidden sm:block"
               >
                 首頁
               </Link>
               <Link 
                 to="/apply"
-                className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#58A6FF]/60 hover:text-[#58A6FF] hover:bg-[#58A6FF]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide"
+                className="px-5 py-2 bg-[#0D1117] border border-[#30363D] hover:border-[#F97316]/60 hover:text-[#F97316] hover:bg-[#F97316]/5 text-gray-200 rounded-xl transition-all shadow-sm tracking-wide"
               >
                 方案選擇
               </Link>
@@ -73,7 +73,7 @@ function App() {
                 href="https://speed.cloudflare.com/" 
                 target="_blank" 
                 rel="noreferrer"
-                className="px-5 py-2 bg-[#238636]/20 border border-[#238636]/40 hover:bg-[#238636]/40 hover:border-[#238636]/70 text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2 hidden sm:flex"
+                className="px-5 py-2 bg-[#EF4444]/20 border border-[#EF4444]/40 hover:bg-[#EF4444]/40 hover:border-[#EF4444]/70 text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2 hidden sm:flex"
               >
                 網路測速
               </a>
@@ -81,7 +81,7 @@ function App() {
                 <div className="relative" ref={dropdownRef}>
                   <button 
                     onClick={() => setShowDropdown(!showDropdown)}
-                    className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+                    className="px-5 py-2 bg-gradient-to-r from-[#F97316] to-[#EF4444] hover:from-[#EA580C] hover:to-[#DC2626] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
                   >
                     <User size={16} />
                     <span className="hidden sm:inline">{memberName}</span>
@@ -111,7 +111,7 @@ function App() {
               ) : (
                 <Link 
                   to="/portal"
-                  className="px-5 py-2 bg-gradient-to-r from-[#58A6FF] to-[#238636] hover:from-[#408BE0] hover:to-[#1C6A2A] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
+                  className="px-5 py-2 bg-gradient-to-r from-[#F97316] to-[#EF4444] hover:from-[#EA580C] hover:to-[#DC2626] text-white rounded-xl transition-all shadow-sm tracking-wide flex items-center gap-2"
                 >
                   <User size={16} />
                   <span className="hidden sm:inline">用戶登入</span>
